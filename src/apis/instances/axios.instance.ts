@@ -10,12 +10,12 @@ export class AxiosInstance {
     this.instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
       paramsSerializer: {
-        encode: (params: any) => queryString.stringify(params),
+        encode: (params) => queryString.stringify(params),
       },
     });
 
     this.instance.interceptors.request.use(
-      (config: any) => ({
+      (config) => ({
         ...config,
         headers: {
           ...(config.headers && config.headers),
@@ -24,18 +24,18 @@ export class AxiosInstance {
           ...(privateURL && { Authorization: `Bearer ${getCookie('token')}` }),
         } as AxiosRequestHeaders,
       }),
-      (error: any) => {
+      (error) => {
         // return Promise.reject(error);
         throw error.response.data;
       },
     );
 
     this.instance.interceptors.response.use(
-      (response: any) => {
+      (response) => {
         if (response && response.data) return response.data;
         return response;
       },
-      (error: any) => {
+      (error) => {
         // return Promise.reject(error);
         throw error.response.data;
       },

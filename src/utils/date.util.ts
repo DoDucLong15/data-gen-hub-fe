@@ -1,5 +1,3 @@
-const REGEX = RegExp('^[+-]\\d{2}:\\d{2}$');
-
 export class DateUtils {
   static parseDate(strDate: string): Date {
     const dateParts = strDate.split('-');
