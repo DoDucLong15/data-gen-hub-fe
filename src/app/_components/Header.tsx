@@ -1,11 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/context/auth.context';
 import { NAVBAR_CONTENT } from '@/utils/constants/navbar-content.const';
 import Image from 'next/image';
 import Link from 'next/link';
 
 function Header() {
+  const { user, logout } = useAuth();
   return (
     <div>
       <div className="flex items-center justify-between p-5 shadow-sm">
@@ -18,8 +20,13 @@ function Header() {
           ))}
         </ul>
         <div className="flex gap-5">
-          <Button variant="ghost">Login</Button>
-          <Button>Register</Button>
+          {
+            !user ? (
+              <Button><Link href={'/account/login'} className='cursor-pointer'>Login</Link></Button>
+            ) : (
+              <Button onClick={logout} className='cursor-pointer'>Logout</Button>
+            )
+          }
         </div>
       </div>
     </div>
