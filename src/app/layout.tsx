@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { inter } from '@/configs/font.config';
 import { AuthProvider } from '@/context/auth.context';
+import { Toaster } from '@/components/ui/sonner';
+import { QueryProvider } from '@/context/query.context';
 
 export const metadata: Metadata = {
   title: 'Data gen hub',
@@ -16,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children} <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
