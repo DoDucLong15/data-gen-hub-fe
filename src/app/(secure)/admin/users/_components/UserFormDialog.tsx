@@ -17,14 +17,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useUsers } from '@/hooks/useUsers';
-import { useUser } from '@/hooks/useUser';
-import { UserFormData } from '@/utils/types/user.type';
+import { USERS_QUERY_KEY, useUsers } from '@/hooks/useUsers';
+import { User, UserFormData } from '@/utils/types/user.type';
 import { toast } from 'sonner';
 import { UserRole } from '@/configs/role.config';
 import { TRole } from '@/utils/types/role.type';
 import { AdminApi } from '@/apis/admin.api';
 import { capitalizeFirstLetters } from '@/utils/common.util';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Zod schema for form validation
 const userFormSchema = z.object({
@@ -45,9 +45,17 @@ type UserFormDialogProps = {
 };
 
 export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDialogProps) {
+  const queryClient = useQueryClient();
   const { addUser, updateUser } = useUsers();
-  const { user, isLoading } = useUser(userId);
-  const [roles, setRoles] = useState<TRole[]>([]);
+  const { data: user, isLoading } = useQuery({
+    queryKey: [...USERS_QUERY_KEY, 'user', userId],
+    queryFn: () => {
+      const users: User[] | undefined = queryClient.getQueryData(USERS_QUERY_KEY)
+      if (!users) return null
+      return users.find(u => u.id === userId)
+    },
+    enabled: !!userId
+  })
 
   const form = useForm<z.infer<typeof userFormSchema>>({
     resolver: zodResolver(userFormSchema),
@@ -61,18 +69,6 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       position: '',
     },
   });
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const data = await AdminApi.getAllRoles();
-        setRoles(data);
-      } catch (error) {
-        toast.error('Failed to fetch roles');
-      }
-    }
-    fetchRoles();
-  }, [])
 
   useEffect(() => {
     if (mode === 'edit' && user) {
@@ -184,9 +180,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem key={role.id} value={role.name}>
-                            {capitalizeFirstLetters(role.name)}
+                        {Object.values(UserRole).map((role, index) => (
+                          <SelectItem key={index} value={role}>
+                            {capitalizeFirstLetters(role)}
                           </SelectItem>
                         ))}
                       </SelectContent>

@@ -11,8 +11,10 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { useUser } from '@/hooks/useUser'
 import { UserRole } from '@/configs/role.config'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { USERS_QUERY_KEY } from '@/hooks/useUsers'
+import { User } from '@/utils/types/user.type'
 
 type UserDetailDialogProps = {
   open: boolean
@@ -21,7 +23,17 @@ type UserDetailDialogProps = {
 }
 
 export function UserDetailDialog({ open, onOpenChange, userId }: UserDetailDialogProps) {
-  const { user, isLoading } = useUser(userId)
+  const queryClient = useQueryClient();
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: [...USERS_QUERY_KEY, 'user', userId],
+    queryFn: () => {
+      const users: User[] | undefined = queryClient.getQueryData(USERS_QUERY_KEY)
+      if (!users) return null
+      return users.find(u => u.id === userId)
+    },
+    enabled: !!userId
+  })
 
   const getRoleBadge = (role: string) => {
     switch (role) {

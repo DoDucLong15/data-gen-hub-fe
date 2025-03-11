@@ -27,7 +27,6 @@ export function useUsers() {
     onSuccess: (newUser) => {
       // Cập nhật cache trong React Query
       queryClient.setQueryData(USERS_QUERY_KEY, (oldUsers: User[] = []) => [...oldUsers, newUser])
-      queryClient.setQueryData(['user', newUser.id], newUser)
     }
   })
 
@@ -39,7 +38,6 @@ export function useUsers() {
       queryClient.setQueryData(USERS_QUERY_KEY, (oldUsers: User[] = []) => 
         oldUsers.map(user => user.id === updatedUser.id ? updatedUser : user)
       )
-      queryClient.setQueryData(['user', updatedUser.id], updatedUser)
     }
   })
 
@@ -50,7 +48,6 @@ export function useUsers() {
       queryClient.setQueryData(USERS_QUERY_KEY, (oldUsers: User[] = []) => 
         oldUsers.filter(user => user.id !== id)
       )
-      queryClient.setQueryData(['user', id], null)
     }
   })
 
