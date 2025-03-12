@@ -1,5 +1,5 @@
-import ClientQueryProvider from "@/context/query.context";
-import Header from "../_components/Header";
+import ClientQueryProvider from '@/context/query.context';
+import Header from '../_components/Header';
 
 export default function SecureLayout({
   children,

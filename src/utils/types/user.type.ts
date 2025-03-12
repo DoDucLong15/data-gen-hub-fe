@@ -1,4 +1,4 @@
-import { UserRole } from "@/configs/role.config";
+import { UserRole } from '@/configs/role.config';
 
 export type User = {
   id: string;
@@ -11,7 +11,7 @@ export type User = {
   role: UserRole;
   createdAt?: Date;
   updatedAt?: Date;
-}
+};
 
 export type UserFormData = {
   id?: string;
@@ -22,4 +22,4 @@ export type UserFormData = {
   department?: string;
   position?: string;
   role: UserRole;
-}
+};

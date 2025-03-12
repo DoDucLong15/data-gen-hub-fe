@@ -1,90 +1,67 @@
 // src/components/admin/users/users-list.tsx
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { 
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { 
+import { useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Edit, MoreHorizontal, Trash2, Eye, RefreshCw } from 'lucide-react'
-import { toast } from 'sonner'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
-import { UserFormDialog } from './UserFormDialog'
-import { UserDetailDialog } from './UserDetailDialog'
-import { useUsers } from '@/hooks/useUsers'
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Edit, MoreHorizontal, Trash2, Eye } from 'lucide-react';
+import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { UserFormDialog } from './UserFormDialog';
+import { UserDetailDialog } from './UserDetailDialog';
+import { useUsers } from '@/hooks/useUsers';
 
 export function UsersList() {
-  const { users, isLoading, deleteUser, fetchUsers } = useUsers()
-  const [userToDelete, setUserToDelete] = useState<string | null>(null)
-  const [userToEdit, setUserToEdit] = useState<string | null>(null)
-  const [userToView, setUserToView] = useState<string | null>(null)
-  const [refreshing, setRefreshing] = useState(false)
+  const { users, isLoading, deleteUser } = useUsers();
+  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [userToEdit, setUserToEdit] = useState<string | null>(null);
+  const [userToView, setUserToView] = useState<string | null>(null);
 
   const handleDeleteUser = async () => {
-    if (!userToDelete) return
+    if (!userToDelete) return;
 
     try {
-      await deleteUser(userToDelete)
-      toast("Người dùng đã được xóa thành công.")
+      await deleteUser(userToDelete);
+      toast('Người dùng đã được xóa thành công.');
     } catch (error) {
-      toast.error("Có lỗi xảy ra khi xóa người dùng.")
+      toast.error('Có lỗi xảy ra khi xóa người dùng.');
     } finally {
-      setUserToDelete(null)
+      setUserToDelete(null);
     }
-  }
-
-  const handleRefresh = async () => {
-    setRefreshing(true)
-    try {
-      await fetchUsers() // force refresh từ server
-      toast("Đã cập nhật danh sách người dùng")
-    } catch (error) {
-      toast.error('Không thể làm mới dữ liệu');
-    } finally {
-      setRefreshing(false)
-    }
-  }
+  };
 
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'admin':
-        return <Badge className="bg-red-500">Admin</Badge>
+        return <Badge className="bg-red-500">Admin</Badge>;
       default:
-        return <Badge>Teacher</Badge>
+        return <Badge>Teacher</Badge>;
     }
-  }
+  };
 
   if (isLoading) {
-    return <div className="flex justify-center my-8">Loading...</div>
+    return <div className="my-8 flex justify-center">Loading...</div>;
   }
 
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={handleRefresh} 
-          disabled={refreshing || isLoading}
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-          Làm mới dữ liệu
-        </Button>
-      </div>
-
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -177,5 +154,5 @@ export function UsersList() {
         userId={userToView || undefined}
       />
     </>
-  )
+  );
 }

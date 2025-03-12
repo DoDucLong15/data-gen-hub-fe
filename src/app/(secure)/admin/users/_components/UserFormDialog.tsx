@@ -50,12 +50,12 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
   const { data: user, isLoading } = useQuery({
     queryKey: [...USERS_QUERY_KEY, 'user', userId],
     queryFn: () => {
-      const users: User[] | undefined = queryClient.getQueryData(USERS_QUERY_KEY)
-      if (!users) return null
-      return users.find(u => u.id === userId)
+      const users: User[] | undefined = queryClient.getQueryData(USERS_QUERY_KEY);
+      if (!users) return null;
+      return users.find((u) => u.id === userId);
     },
-    enabled: !!userId
-  })
+    enabled: !!userId,
+  });
 
   const form = useForm<z.infer<typeof userFormSchema>>({
     resolver: zodResolver(userFormSchema),
@@ -127,7 +127,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
-        <DialogHeader className='mb-5'>
+        <DialogHeader className="mb-5">
           <DialogTitle>{mode === 'add' ? 'Thêm người dùng mới' : 'Chỉnh sửa người dùng'}</DialogTitle>
           <DialogDescription>
             {mode === 'add' ? 'Nhập thông tin để tạo người dùng mới.' : 'Cập nhật thông tin người dùng.'}

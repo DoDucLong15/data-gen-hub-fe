@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { AxiosError } from 'axios';
