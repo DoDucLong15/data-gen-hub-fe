@@ -13,20 +13,33 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserRole } from '@/configs/role.config';
 import { useRouter } from 'next/navigation';
+import { User, Users, Shield, LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 function Header() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname(); // Lấy route hiện tại
+
   return (
     <div>
-      <div className="flex items-center justify-between p-5 shadow-sm">
+      <div className="flex items-center justify-between px-6 py-2 shadow-md">
         <Image src="/logo.svg" alt="logo" width={60} height={60} className="w-[150px] md:w-[200px]" />
         <ul className="hidden gap-14 text-lg font-medium md:flex">
-          {NAVBAR_CONTENT.map((item, index) => (
-            <Link key={index} href={item.href}>
-              <li className="cursor-pointer transition-all duration-300 hover:text-blue-500">{item.label}</li>
-            </Link>
-          ))}
+          {NAVBAR_CONTENT.map((item, index) => {
+            const isActive = pathname === item.href; // Kiểm tra route
+            return (
+              <Link key={index} href={item.href}>
+                <li
+                  className={`cursor-pointer rounded-2xl px-4 transition-all duration-300 ${
+                    isActive ? 'bg-slate-200' : 'hover:bg-slate-400'
+                  }`}
+                >
+                  {item.label}
+                </li>
+              </Link>
+            );
+          })}
         </ul>
         <div className="flex gap-5">
           {!user ? (
@@ -43,20 +56,24 @@ function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/my-account')}>
-                  My Account
+                  <User className="h-5 w-5" />
+                  <span>My Account</span>
                 </DropdownMenuItem>
                 {user?.role === UserRole.ADMIN && (
                   <>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
-                      Manage User
+                      <Users className="h-5 w-5" />
+                      <span>Manage User</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
-                      Manage Role
+                      <Shield className="h-5 w-5" />
+                      <span>Manage Role</span>
                     </DropdownMenuItem>
                   </>
                 )}
                 <DropdownMenuItem className="cursor-pointer" onClick={logout}>
-                  Logout
+                  <LogOut className="h-5 w-5" />
+                  <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
