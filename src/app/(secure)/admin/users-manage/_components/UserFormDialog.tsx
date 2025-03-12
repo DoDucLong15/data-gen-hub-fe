@@ -1,7 +1,7 @@
 // src/components/admin/users/user-form-dialog.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -25,6 +25,7 @@ import { TRole } from '@/utils/types/role.type';
 import { AdminApi } from '@/apis/admin.api';
 import { capitalizeFirstLetters } from '@/utils/common.util';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRoles } from '@/hooks/useRoles';
 
 // Zod schema for form validation
 const userFormSchema = z.object({
@@ -47,6 +48,7 @@ type UserFormDialogProps = {
 export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDialogProps) {
   const queryClient = useQueryClient();
   const { addUser, updateUser } = useUsers();
+  const { roles } = useRoles();
   const { data: user, isLoading } = useQuery({
     queryKey: [...USERS_QUERY_KEY, 'user', userId],
     queryFn: () => {
@@ -180,9 +182,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {Object.values(UserRole).map((role, index) => (
-                          <SelectItem key={index} value={role}>
-                            {capitalizeFirstLetters(role)}
+                        {roles.map((role, index) => (
+                          <SelectItem key={index} value={role.name}>
+                            {capitalizeFirstLetters(role.name)}
                           </SelectItem>
                         ))}
                       </SelectContent>

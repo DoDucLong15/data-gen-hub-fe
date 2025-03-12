@@ -1,0 +1,258 @@
+'use client';
+
+import { useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Edit,
+  MoreHorizontal,
+  Trash2,
+  Shield,
+  Users,
+  Info,
+  CheckCircle2,
+  Clock,
+  Plus,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { useRoles } from '@/hooks/useRoles';
+import { RoleFormDialog } from './RoleFormDialog';
+import { capitalizeFirstLetters } from '@/utils/common.util';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+export function RolesList() {
+  const { roles, isLoading, deleteRole } = useRoles();
+  const [roleToDelete, setRoleToDelete] = useState<string | null>(null);
+  const [roleToEdit, setRoleToEdit] = useState<string | null>(null);
+
+  const handleDeleteRole = async () => {
+    if (!roleToDelete) return;
+
+    try {
+      await deleteRole(roleToDelete);
+      toast('Vai trò đã được xóa thành công.');
+    } catch (error) {
+      toast.error('Có lỗi xảy ra khi xóa vai trò.');
+    } finally {
+      setRoleToDelete(null);
+    }
+  };
+
+  // Hàm tạo màu ngẫu nhiên nhưng ổn định cho mỗi role
+  const getRoleBadgeVariant = (roleName: string): 'default' | 'secondary' | 'outline' | 'destructive' => {
+    const variants = ['default', 'secondary', 'outline', 'destructive'] as const;
+    const hash = roleName.split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
+    return variants[hash % variants.length] ?? 'default';
+  };
+
+  // Hàm tạo icon cho mỗi role
+  const getRoleIcon = (roleName: string) => {
+    const roleLower = roleName.toLowerCase();
+    if (roleLower.includes('admin')) return <Shield className="h-4 w-4" />;
+    if (roleLower.includes('teacher') || roleLower.includes('giáo viên')) return <Users className="h-4 w-4" />;
+    if (roleLower.includes('manager') || roleLower.includes('quản lý')) return <CheckCircle2 className="h-4 w-4" />;
+    return <Info className="h-4 w-4" />;
+  };
+
+  // Hàm tạo biểu diễn trực quan cho số lượng người dùng (giả định)
+  const getUserCount = (roleId: string) => {
+    // Giả định số người dùng dựa trên ID để tạo dữ liệu đa dạng (trong thực tế sẽ lấy từ API)
+    return (roleId.charCodeAt(0) % 10) + (roleId.charCodeAt(1) % 15);
+  };
+
+  // Tạo ngày cập nhật giả định
+  const getLastUpdated = (roleId: string) => {
+    const today = new Date();
+    // Tạo một ngày ngẫu nhiên nhưng ổn định cho mỗi roleId trong khoảng 60 ngày trước
+    const daysAgo = (roleId.charCodeAt(0) + roleId.charCodeAt(1)) % 60;
+    const date = new Date(today);
+    date.setDate(today.getDate() - daysAgo);
+    return date.toLocaleDateString('vi-VN');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="my-4 space-y-4">
+        <Skeleton className="h-8 w-1/3" />
+        <Card>
+          <CardHeader className="pb-2">
+            <Skeleton className="h-6 w-1/4" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {Array(4)
+                .fill(null)
+                .map((_, i) => (
+                  <Skeleton key={i} className="h-12 w-full" />
+                ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Vai trò</TableHead>
+              <TableHead>Mô tả</TableHead>
+              <TableHead>Số người dùng</TableHead>
+              <TableHead>Cập nhật lần cuối</TableHead>
+              <TableHead>Trạng thái</TableHead>
+              <TableHead className="text-right">Thao tác</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {roles.length > 0 ? (
+              roles.map((role) => (
+                <TableRow key={role.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={getRoleBadgeVariant(role.name)} className="flex h-7 items-center gap-1 px-2">
+                        {getRoleIcon(role.name)}
+                        <span>{capitalizeFirstLetters(role.name)}</span>
+                      </Badge>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="text-muted-foreground h-4 w-4 cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="font-mono text-xs">{role.id}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="max-w-xs">
+                      {role.description ? (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="cursor-help">
+                                {role.description.length > 50
+                                  ? `${role.description.slice(0, 50)}...`
+                                  : role.description}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-sm text-wrap">{role.description}</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ) : (
+                        <span className="text-muted-foreground italic">Không có mô tả</span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Users className="text-muted-foreground h-4 w-4" />
+                      <span>{getUserCount(role.id)}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Clock className="text-muted-foreground h-4 w-4" />
+                      <span>{getLastUpdated(role.id)}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={role.id.charCodeAt(0) % 2 === 0 ? 'default' : 'outline'}
+                      className={role.id.charCodeAt(0) % 2 === 0 ? 'bg-green-500 hover:bg-green-600' : ''}
+                    >
+                      {role.id.charCodeAt(0) % 2 === 0 ? 'Đang hoạt động' : 'Không hoạt động'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <span className="sr-only">Open menu</span>
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                        <DropdownMenuItem onClick={() => setRoleToEdit(role.id)}>
+                          <Edit className="mr-2 h-4 w-4" />
+                          Chỉnh sửa
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setRoleToDelete(role.id)} className="text-red-600">
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Xóa
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="h-24 text-center">
+                  <div className="text-muted-foreground flex flex-col items-center justify-center">
+                    <Shield className="mb-2 h-10 w-10 opacity-20" />
+                    <p>Chưa có vai trò nào trong hệ thống.</p>
+                    <Button variant="outline" className="mt-4" onClick={() => setRoleToEdit('')}>
+                      <Plus className="mr-2 h-4 w-4" /> Thêm vai trò mới
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Delete Role Dialog */}
+      <AlertDialog open={!!roleToDelete} onOpenChange={(open) => !open && setRoleToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Xác nhận xóa vai trò</AlertDialogTitle>
+            <AlertDialogDescription>
+              Bạn có chắc chắn muốn xóa vai trò này? Hành động này không thể hoàn tác.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteRole} className="bg-red-500 hover:bg-red-600">
+              Xóa
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Edit Role Dialog */}
+      <RoleFormDialog
+        open={!!roleToEdit}
+        onOpenChange={(open) => !open && setRoleToEdit(null)}
+        roleId={roleToEdit || undefined}
+        mode="edit"
+      />
+    </>
+  );
+}

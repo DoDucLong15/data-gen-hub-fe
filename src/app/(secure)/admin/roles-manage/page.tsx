@@ -1,25 +1,26 @@
 // src/app/admin/users/page.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Plus, RefreshCw } from 'lucide-react';
-import { UsersList } from './_components/UsersList';
-import { UserFormDialog } from './_components/UserFormDialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useUsers } from '@/hooks/useUsers';
+import { useRoles } from '@/hooks/useRoles';
+import { RolesList } from './_components/RolesList';
+import { RoleFormDialog } from './_components/RoleFormDialog';
 
 export default function UsersPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { isLoading, error } = useUsers();
   const [refreshing, setRefreshing] = useState(false);
-  const { fetchUsers } = useUsers();
+  const { refetchRoles } = useRoles();
 
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
-      await fetchUsers(); // force refresh từ server
-      toast('Đã cập nhật danh sách người dùng');
+      await refetchRoles(); // force refresh từ server
+      toast('Đã cập nhật danh sách vai trò');
     } catch (error) {
       toast.error('Không thể làm mới dữ liệu');
     } finally {
@@ -28,7 +29,7 @@ export default function UsersPage() {
   };
 
   if (error) {
-    toast.error('Có lỗi xảy ra khi tải dữ liệu người dùng.');
+    toast.error('Có lỗi xảy ra khi tải dữ liệu vai trò.');
   }
 
   if (isLoading) return <div>Loading...</div>;
@@ -36,11 +37,11 @@ export default function UsersPage() {
   return (
     <div className="container mx-auto px-6 py-6">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Quản lý người dùng</h1>
+        <h1 className="text-2xl font-bold">Quản lý vai trò</h1>
         <div className="flex gap-2">
           <Button onClick={() => setIsAddDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Thêm người dùng
+            Thêm vai trò
           </Button>
           <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading}>
             <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
@@ -48,9 +49,9 @@ export default function UsersPage() {
         </div>
       </div>
 
-      <UsersList />
+      <RolesList />
 
-      <UserFormDialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen} mode="add" />
+      <RoleFormDialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen} mode="add" />
     </div>
   );
 }

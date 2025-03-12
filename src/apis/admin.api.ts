@@ -12,6 +12,9 @@ const ManageUserEndpoint = {
 
 const ManageRoleEndpoint = {
   GET_ALL: 'users/role',
+  CREATE: 'users/role',
+  UPDATE: 'users/role',
+  DELETE: (id: string) => `users/role/${id}`,
 };
 
 export const AdminApi = {
@@ -20,7 +23,6 @@ export const AdminApi = {
       const response = await apiClient.get(ManageUserEndpoint.GET_ALL);
       return response.data;
     } catch (error) {
-      console.log('Failed to fetch users:', error);
       throw error;
     }
   },
@@ -30,7 +32,6 @@ export const AdminApi = {
       const response = await apiClient.get(ManageUserEndpoint.GET_BY_ID(id));
       return response.data;
     } catch (error) {
-      console.log('Failed to fetch user:', error);
       throw error;
     }
   },
@@ -40,7 +41,6 @@ export const AdminApi = {
       const response = await apiClient.post(ManageUserEndpoint.CREATE, userData);
       return response.data;
     } catch (error) {
-      console.log('Failed to create user:', error);
       throw error;
     }
   },
@@ -50,7 +50,6 @@ export const AdminApi = {
       const response = await apiClient.patch(ManageUserEndpoint.UPDATE, { ...userData, id });
       return response.data;
     } catch (error) {
-      console.log('Failed to update user:', error);
       throw error;
     }
   },
@@ -59,7 +58,6 @@ export const AdminApi = {
     try {
       await apiClient.delete(ManageUserEndpoint.DELETE(id));
     } catch (error) {
-      console.log('Failed to delete user:', error);
       throw error;
     }
   },
@@ -69,7 +67,32 @@ export const AdminApi = {
       const response = await apiClient.get(ManageRoleEndpoint.GET_ALL);
       return response.data;
     } catch (error) {
-      console.log('Failed to fetch roles:', error);
+      throw error;
+    }
+  },
+
+  async createRole(role: TRole): Promise<TRole> {
+    try {
+      const response = await apiClient.post(ManageRoleEndpoint.CREATE, role);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async updateRole(id: string, role: TRole): Promise<TRole> {
+    try {
+      const response = await apiClient.patch(ManageRoleEndpoint.UPDATE, { ...role, id });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async deleteRole(id: string): Promise<void> {
+    try {
+      await apiClient.delete(ManageRoleEndpoint.DELETE(id));
+    } catch (error) {
       throw error;
     }
   },

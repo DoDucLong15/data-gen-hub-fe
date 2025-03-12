@@ -45,10 +45,12 @@ function Header() {
                 <DropdownMenuItem className="cursor-pointer">Account</DropdownMenuItem>
                 {user?.role === UserRole.ADMIN && (
                   <>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users')}>
+                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
                       Manage User
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">Manage Role</DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
+                      Manage Role
+                    </DropdownMenuItem>
                   </>
                 )}
                 <DropdownMenuItem className="cursor-pointer" onClick={logout}>
