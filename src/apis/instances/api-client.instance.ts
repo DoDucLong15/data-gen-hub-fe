@@ -79,7 +79,6 @@ export const createApiClient = (baseURL?: string): AxiosInstance => {
             return apiClient(originalRequest);
           }
         } catch (refreshError) {
-          console.error('Token refresh failed:', refreshError);
           // Gọi hàm logout
           await logoutHandler();
         }

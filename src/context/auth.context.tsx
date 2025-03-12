@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { AxiosError } from 'axios';
@@ -12,18 +12,7 @@ import {
 import { UserRole } from '@/configs/role.config';
 import { SignInResponse } from '@/apis/auth.api';
 import { redirect } from 'next/navigation';
-
-// Định nghĩa các kiểu dữ liệu
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-  phone?: string;
-  school?: string;
-  department?: string;
-  position?: string;
-  role: UserRole;
-}
+import { User } from '@/utils/types/user.type';
 
 interface AuthContextType {
   user: User | null;

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
-
 
 export default function Login() {
   const { login } = useAuth();
@@ -149,7 +148,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={loading}
-              className={`group relative flex w-full justify-center rounded-md border border-transparent cursor-pointer bg-indigo-600 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none ${loading ? 'cursor-not-allowed opacity-70' : ''}`}
+              className={`group relative flex w-full cursor-pointer justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none ${loading ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {loading ? (
                 <>

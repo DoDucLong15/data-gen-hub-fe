@@ -14,11 +14,11 @@ export type SignInResponse = {
 export type SignInRequest = {
   email: string;
   password: string;
-}
+};
 
 export type RefreshTokenRequest = {
   refreshToken: string;
-}
+};
 
 export const AuthApi = {
   async signIn(request: SignInRequest): Promise<ApiResponse<SignInResponse>> {
