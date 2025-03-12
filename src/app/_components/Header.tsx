@@ -42,7 +42,9 @@ function Header() {
                 {user?.name}
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem className="cursor-pointer">Account</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/my-account')}>
+                  My Account
+                </DropdownMenuItem>
                 {user?.role === UserRole.ADMIN && (
                   <>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>

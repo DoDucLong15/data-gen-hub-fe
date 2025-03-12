@@ -20,6 +20,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
+  updateUser: (userData: Partial<User>) => Promise<User>;
 }
 
 // Tạo context cho quản lý xác thực
@@ -91,6 +92,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateUser = async (userData: Partial<User>): Promise<User> => {
+    try {
+      setLoading(true);
+      const response = await apiClient.patch('/users', {
+        ...userData,
+        id: user?.id,
+      });
+      const updatedUser = response.data;
+      setUser((prevUser) => {
+        if (!prevUser) return updatedUser;
+        return {
+          ...prevUser,
+          ...updatedUser,
+        };
+      });
+      return response.data as User;
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -99,6 +123,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         isAuthenticated: !!user,
+        updateUser,
       }}
     >
       {children}

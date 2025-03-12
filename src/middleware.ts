@@ -7,7 +7,7 @@ export default function middleware(req: NextRequest) {
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
   // Các route cần xác thực
-  const protectedRoutes = ['/dashboard', '/admin'];
+  const protectedRoutes = ['/my-account', '/admin'];
 
   // Các route cho người dùng chưa đăng nhập
   const authRoutes = ['/account/login'];
@@ -24,7 +24,7 @@ export default function middleware(req: NextRequest) {
   // Nếu đã đăng nhập mà truy cập trang đăng nhập, đăng ký
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
   if (isAuthRoute && accessToken) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/my-account', req.url));
   }
 
   return NextResponse.next();
@@ -34,7 +34,7 @@ export default function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     // Các routes cần bảo vệ
-    '/dashboard/:path*',
+    '/my-account',
     '/admin/:path*',
     // Auth routes
     '/account/login',
