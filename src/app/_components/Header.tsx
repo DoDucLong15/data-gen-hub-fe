@@ -27,7 +27,7 @@ function Header() {
         <Image src="/logo.svg" alt="logo" width={60} height={60} className="w-[150px] md:w-[200px]" />
         <ul className="hidden gap-14 text-lg font-medium md:flex">
           {NAVBAR_CONTENT.map((item, index) => {
-            const isActive = pathname === item.href; // Kiểm tra route
+            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/'); // Kiểm tra route
             return (
               <Link key={index} href={item.href}>
                 <li
