@@ -7,7 +7,7 @@ export default function middleware(req: NextRequest) {
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
   // Các route cần xác thực
-  const protectedRoutes = ['/my-account', '/admin'];
+  const protectedRoutes = ['/my-account', '/admin', '/classes'];
 
   // Các route cho người dùng chưa đăng nhập
   const authRoutes = ['/account/login'];
@@ -36,6 +36,7 @@ export const config = {
     // Các routes cần bảo vệ
     '/my-account',
     '/admin/:path*',
+    '/classes/:path*',
     // Auth routes
     '/account/login',
   ],

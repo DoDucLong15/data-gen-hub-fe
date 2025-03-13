@@ -4,6 +4,7 @@ import { inter } from '@/configs/font.config';
 import { AuthProvider } from '@/context/auth.context';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/context/query.context';
+import Header from './_components/Header';
 
 export const metadata: Metadata = {
   title: 'Data gen hub',
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
+          <Header />
           {children} <Toaster />
         </AuthProvider>
       </body>

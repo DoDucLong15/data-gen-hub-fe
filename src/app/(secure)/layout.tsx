@@ -1,5 +1,4 @@
 import ClientQueryProvider from '@/context/query.context';
-import Header from '../_components/Header';
 
 export default function SecureLayout({
   children,
@@ -9,7 +8,6 @@ export default function SecureLayout({
   return (
     <>
       <ClientQueryProvider>
-        <Header />
         {children}
       </ClientQueryProvider>
     </>
