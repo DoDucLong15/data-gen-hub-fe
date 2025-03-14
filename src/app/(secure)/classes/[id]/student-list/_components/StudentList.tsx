@@ -48,7 +48,8 @@ export function StudentList({ onExport, classId }: StudentListProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { students, studentsIsLoading, createStudent, updateStudent, deleteStudent, studentsRefetch } = useStudents(classId);
+  const { students, studentsIsLoading, createStudent, updateStudent, deleteStudent, studentsRefetch } =
+    useStudents(classId);
 
   const handleFilterChange = (key: keyof StudentFilter, value: string) => {
     setFilters((prev) => ({

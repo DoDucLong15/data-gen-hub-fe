@@ -3,7 +3,7 @@ export enum EProgressType {
   GUIDANCE_REVIEWS = 'guidance_reviews',
   SUPERVISORY_COMMENTS = 'supervisory_comments',
   STUDENT_LIST = 'student_list',
-} 
+}
 
 export enum EProgressStatus {
   PROCESSING = 'processing',

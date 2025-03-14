@@ -101,7 +101,7 @@ export const StudentApi = {
     message: string;
     data: {
       processId: string;
-    }
+    };
   }> {
     try {
       const formData = new FormData();

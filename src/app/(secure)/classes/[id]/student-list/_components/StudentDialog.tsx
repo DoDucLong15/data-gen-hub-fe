@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -70,9 +77,9 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md md:max-w-2xl p-0 overflow-hidden bg-white dark:bg-gray-950 rounded-lg border dark:border-gray-800">
-        <DialogHeader className="p-6 pb-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30">
-          <DialogTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+      <DialogContent className="overflow-hidden rounded-lg border bg-white p-0 sm:max-w-md md:max-w-2xl dark:border-gray-800 dark:bg-gray-950">
+        <DialogHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 pb-2 dark:from-blue-950/30 dark:to-indigo-950/30">
+          <DialogTitle className="flex items-center gap-2 text-2xl font-bold text-gray-800 dark:text-gray-100">
             {student ? (
               <>
                 <User className="h-5 w-5 text-slate-600 dark:text-slate-400" />
@@ -89,11 +96,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
             {student ? 'Update student information' : 'Fill in the student details below'}
           </DialogDescription>
         </DialogHeader>
-        
+
         <ScrollArea className="max-h-[70vh]">
           <Tabs defaultValue="personal" className="w-full">
             <div className="px-6 pt-2">
-              <TabsList className="w-full grid grid-cols-2">
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="personal" className="rounded-md">
                   <User className="mr-2 h-4 w-4" />
                   Personal Info
@@ -104,29 +111,29 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                 </TabsTrigger>
               </TabsList>
             </div>
-            
+
             <TabsContent value="personal" className="p-6">
               <Card className="border-0 shadow-none">
                 <CardContent className="p-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="mssv" className="text-sm font-medium flex items-center">
-                        <FileText className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
-                        MSSV (Student ID) <span className="text-red-500 ml-1">*</span>
+                      <Label htmlFor="mssv" className="flex items-center text-sm font-medium">
+                        <FileText className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
+                        MSSV (Student ID) <span className="ml-1 text-red-500">*</span>
                       </Label>
                       <Input
                         id="mssv"
                         placeholder="Enter student ID"
                         value={form.mssv}
                         onChange={(e) => handleChange('mssv', e.target.value)}
-                        className="border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
+                        className="border-gray-300 focus:border-slate-500 focus:ring-2 focus:ring-slate-500 dark:border-gray-700"
                         required
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="studentClassName" className="text-sm font-medium flex items-center">
-                        <BookOpen className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="studentClassName" className="flex items-center text-sm font-medium">
+                        <BookOpen className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Student Class Name
                       </Label>
                       <Input
@@ -137,10 +144,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="lastName" className="text-sm font-medium flex items-center">
-                        <User className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="lastName" className="flex items-center text-sm font-medium">
+                        <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Last Name
                       </Label>
                       <Input
@@ -151,10 +158,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="middleName" className="text-sm font-medium flex items-center">
-                        <User className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="middleName" className="flex items-center text-sm font-medium">
+                        <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Middle Name
                       </Label>
                       <Input
@@ -165,10 +172,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="firstName" className="text-sm font-medium flex items-center">
-                        <User className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="firstName" className="flex items-center text-sm font-medium">
+                        <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         First Name
                       </Label>
                       <Input
@@ -179,10 +186,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium flex items-center">
-                        <Mail className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="email" className="flex items-center text-sm font-medium">
+                        <Mail className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Email
                       </Label>
                       <Input
@@ -194,10 +201,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium flex items-center">
-                        <Phone className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="phone" className="flex items-center text-sm font-medium">
+                        <Phone className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Phone
                       </Label>
                       <Input
@@ -212,14 +219,14 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                 </CardContent>
               </Card>
             </TabsContent>
-            
+
             <TabsContent value="academic" className="p-6">
               <Card className="border-0 shadow-none">
                 <CardContent className="p-0">
                   <div className="grid grid-cols-1 gap-5">
                     <div className="space-y-2">
-                      <Label htmlFor="projectTitle" className="text-sm font-medium flex items-center">
-                        <FileText className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                      <Label htmlFor="projectTitle" className="flex items-center text-sm font-medium">
+                        <FileText className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                         Project Title
                       </Label>
                       <Input
@@ -230,11 +237,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                         className="border-gray-300 dark:border-gray-700"
                       />
                     </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label htmlFor="supervisor" className="text-sm font-medium flex items-center">
-                          <UserCheck className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                        <Label htmlFor="supervisor" className="flex items-center text-sm font-medium">
+                          <UserCheck className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                           Supervisor
                         </Label>
                         <Input
@@ -245,10 +252,10 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                           className="border-gray-300 dark:border-gray-700"
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
-                        <Label htmlFor="reviewer" className="text-sm font-medium flex items-center">
-                          <UserCheck className="h-4 w-4 mr-1 text-slate-500 dark:text-slate-400" />
+                        <Label htmlFor="reviewer" className="flex items-center text-sm font-medium">
+                          <UserCheck className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
                           Reviewer
                         </Label>
                         <Input
@@ -266,18 +273,18 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
             </TabsContent>
           </Tabs>
         </ScrollArea>
-        
-        <DialogFooter className="p-6 pt-2 border-t bg-gray-50 dark:bg-gray-900 flex justify-end gap-2">
-          <Button 
-            variant="outline" 
+
+        <DialogFooter className="flex justify-end gap-2 border-t bg-gray-50 p-6 pt-2 dark:bg-gray-900">
+          <Button
+            variant="outline"
             onClick={onClose}
-            className="border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="border-gray-300 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             Cancel
           </Button>
-          <Button 
+          <Button
             onClick={handleSubmit}
-            className="bg-slate-600 hover:bg-slate-700 text-white dark:bg-slate-700 dark:hover:bg-slate-800"
+            className="bg-slate-600 text-white hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-800"
           >
             {student ? 'Update Student' : 'Save Student'}
           </Button>

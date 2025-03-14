@@ -1,5 +1,4 @@
-import { EProgressAction, EProgressStatus, EProgressType } from "../enums/progress.enum";
-
+import { EProgressAction, EProgressStatus, EProgressType } from '../enums/progress.enum';
 
 export type TProcess = {
   id: string;
@@ -10,14 +9,14 @@ export type TProcess = {
   classId: string;
   createBy: string;
   createdAt: Date;
-}
+};
 
 export type TProcessFilter = {
   type?: EProgressType;
   status?: EProgressStatus;
   classId: string;
   action?: EProgressAction;
-}
+};
 
 export type TProgressFilter = {
   types?: EProgressType[];
@@ -25,4 +24,4 @@ export type TProgressFilter = {
   processIds?: string[];
   actions?: EProgressAction[];
   classIds: string[];
-}
+};

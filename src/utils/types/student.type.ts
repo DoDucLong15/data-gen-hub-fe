@@ -11,7 +11,7 @@ export type TStudent = {
   reviewer?: string;
   studentClassName?: string;
   classId: string;
-}
+};
 
 export interface StudentFilter {
   mssv?: string;

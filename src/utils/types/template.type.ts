@@ -1,4 +1,4 @@
-import { EProgressAction } from "../enums/progress.enum";
+import { EProgressAction } from '../enums/progress.enum';
 
 export type TTemplate = {
   id: string;
@@ -6,4 +6,4 @@ export type TTemplate = {
   action: EProgressAction;
   templateFile?: string;
   jsonFile: string;
-}
+};

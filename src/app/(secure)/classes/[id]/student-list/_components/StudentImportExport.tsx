@@ -14,15 +14,8 @@ import { ProcessTable } from './ProcessTable';
 export function ImportExport({ classId }: { classId: string }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
-  const {
-    exportStudents,
-    templateImport,
-    processes,
-    processesIsLoading,
-    importStudents,
-    isImporting,
-    uploadTemplate,
-  } = useStudents(classId);
+  const { exportStudents, templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
+    useStudents(classId);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

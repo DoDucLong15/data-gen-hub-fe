@@ -7,9 +7,7 @@ export default function SecureLayout({
 }>) {
   return (
     <>
-      <ClientQueryProvider>
-        {children}
-      </ClientQueryProvider>
+      <ClientQueryProvider>{children}</ClientQueryProvider>
     </>
   );
 }

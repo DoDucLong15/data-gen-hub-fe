@@ -30,7 +30,7 @@ export function useStudents(classId: string) {
         types: [EProgressType.STUDENT_LIST],
       }),
     refetchInterval: 10 * 1000,
-    enabled: !!classId
+    enabled: !!classId,
   });
 
   const createStudentMutation = useMutation({
@@ -104,11 +104,11 @@ export function useStudents(classId: string) {
 
   const importStudents = async (files: File[]) => {
     return importMutation.mutateAsync(files);
-  }
+  };
 
   const uploadTemplate = async (template: File, id: string) => {
     return uploadTemplateMutation.mutateAsync({ template, id });
-  }
+  };
 
   return {
     students: studentsQuery.data || [],
@@ -127,6 +127,6 @@ export function useStudents(classId: string) {
     exportStudents,
     importStudents,
     uploadTemplate,
-    isImporting: importMutation.isPending
+    isImporting: importMutation.isPending,
   };
 }

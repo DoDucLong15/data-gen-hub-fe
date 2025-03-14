@@ -1,15 +1,19 @@
-import { apiClient } from "./instances/api-client.instance"
+import { apiClient } from './instances/api-client.instance';
 
 const StorageEndpoint = {
   DOWNLOAD: '/storage/download',
-}
+};
 
 export const StorageApi = {
   async downloadFile(paths: string[]): Promise<void> {
     try {
-      const response = await apiClient.post(StorageEndpoint.DOWNLOAD, { paths }, {
-        responseType: 'blob',
-      });
+      const response = await apiClient.post(
+        StorageEndpoint.DOWNLOAD,
+        { paths },
+        {
+          responseType: 'blob',
+        },
+      );
       const blob = response.data;
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -22,5 +26,5 @@ export const StorageApi = {
     } catch (error) {
       throw error;
     }
-  }
-}
+  },
+};
