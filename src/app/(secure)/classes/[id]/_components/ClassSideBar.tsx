@@ -22,6 +22,10 @@ const data = {
       url: 'dashboard',
     },
     {
+      title: 'Student List',
+      url: 'student-list',
+    },
+    {
       title: 'Assignment',
       isActive: false,
       items: [
