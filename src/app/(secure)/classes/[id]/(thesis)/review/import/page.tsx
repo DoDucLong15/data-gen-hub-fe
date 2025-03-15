@@ -7,7 +7,7 @@ import { ImportManagement } from '../../_components/import/ImportManagement';
 import ProcessTable from '../../_components/import/ProcessTable';
 import { ThesisTable } from '../../_components/import/ThesisTable';
 
-export default function AssignmentSheetImportPage() {
+export default function GuidanceReviewImportPage() {
   const { id } = useParams();
   return (
     <div className="container space-y-6 py-6">
@@ -16,7 +16,7 @@ export default function AssignmentSheetImportPage() {
           <CardTitle>Execute Import</CardTitle>
         </CardHeader>
         <CardContent>
-          <ImportManagement classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+          <ImportManagement classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
         </CardContent>
       </Card>
 
@@ -25,7 +25,7 @@ export default function AssignmentSheetImportPage() {
           <CardTitle>Phiếu đã import</CardTitle>
         </CardHeader>
         <CardContent>
-          <ThesisTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+          <ThesisTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
         </CardContent>
       </Card>
 
@@ -34,7 +34,7 @@ export default function AssignmentSheetImportPage() {
           <CardTitle>Tiến trình xử lý</CardTitle>
         </CardHeader>
         <CardContent>
-          <ProcessTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+          <ProcessTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
         </CardContent>
       </Card>
     </div>

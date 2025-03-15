@@ -8,7 +8,7 @@ import GenerateForm from '../../_components/generate/GeneratedForm';
 import GeneratedSheetsTable from '../../_components/generate/GeneratedSheetTable';
 import ProcessTable from '../../_components/generate/ProcessTable';
 
-export default function AssignmentSheetGeneratePage() {
+export default function SupervisoryCommentGeneratePage() {
   const { id } = useParams();
   return (
     <div className="container space-y-6 py-6">
@@ -18,16 +18,16 @@ export default function AssignmentSheetGeneratePage() {
             <CardTitle>Quản lý Template</CardTitle>
           </CardHeader>
           <CardContent>
-            <TemplateManagement classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+            <TemplateManagement classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Generate Phiếu Giao Nhiệm Vụ</CardTitle>
+            <CardTitle>Generate Phiếu Nhận Xét Phản Biện</CardTitle>
           </CardHeader>
           <CardContent>
-            <GenerateForm classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+            <GenerateForm classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
           </CardContent>
         </Card>
       </div>
@@ -37,7 +37,7 @@ export default function AssignmentSheetGeneratePage() {
           <CardTitle>Phiếu đã tạo</CardTitle>
         </CardHeader>
         <CardContent>
-          <GeneratedSheetsTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+          <GeneratedSheetsTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
         </CardContent>
       </Card>
 
@@ -46,7 +46,7 @@ export default function AssignmentSheetGeneratePage() {
           <CardTitle>Tiến trình xử lý</CardTitle>
         </CardHeader>
         <CardContent>
-          <ProcessTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
+          <ProcessTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
         </CardContent>
       </Card>
     </div>
