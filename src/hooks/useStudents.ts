@@ -9,7 +9,7 @@ export const STUDENTS_QUERY_KEY = (classId: string) => ['students', classId];
 export const TEMPLATE_IMPORT_CLASS_QUERY_KEY = (classId: string) => ['template-import', classId];
 export const PROGRESS_STUDENTS_QUERY_KEY = (classId: string) => ['progress-students', classId];
 
-export function useStudents(classId: string) {
+export function useStudents(classId: string, getProgress: boolean = true) {
   const queryClient = useQueryClient();
 
   const studentsQuery = useQuery({
@@ -32,7 +32,7 @@ export function useStudents(classId: string) {
         types: [EProgressType.STUDENT_LIST],
       }),
     refetchInterval: 10 * 1000,
-    enabled: !!classId,
+    enabled: !!classId && getProgress,
   });
 
   const createStudentMutation = useMutation({
