@@ -55,17 +55,12 @@ export function ImportExport({ classId }: { classId: string }) {
 
   const handleDownloadTemplate = () => {
     if (templateImport?.jsonFile) {
-      StorageApi.downloadFile([templateImport.jsonFile]).catch((error) =>
+      StorageApi.downloadOneFile(templateImport.jsonFile).catch((error) =>
         toast.error('Failed to download template. Please try again.'),
       );
     } else {
       toast.error('Template not found. Please upload a template');
     }
-  };
-
-  const handleExportAll = () => {
-    exportStudents({ classId });
-    toast.success('Export started successfully');
   };
 
   const getStatusBadge = (status: string) => {

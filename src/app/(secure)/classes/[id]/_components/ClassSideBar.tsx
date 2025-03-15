@@ -15,6 +15,7 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const data = {
   navMain: [
@@ -29,6 +30,7 @@ const data = {
     {
       title: 'Assignment',
       isActive: false,
+      url: 'assignment/generate',
       items: [
         {
           title: 'Generate',
@@ -43,6 +45,7 @@ const data = {
     {
       title: 'Supervise',
       isActive: false,
+      url: 'supervise/generate',
       items: [
         {
           title: 'Generate',
@@ -57,6 +60,7 @@ const data = {
     {
       title: 'Review',
       isActive: false,
+      url: 'review/generate',
       items: [
         {
           title: 'Generate',
@@ -72,6 +76,11 @@ const data = {
 };
 
 export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const params = useParams();
+  const id = params?.id as string;
+  const getUrlWithId = (url: string) => {
+    return id ? `/classes/${id}/${url}` : `/${url}`; // Thêm id vào các URL khác nếu cần
+  };
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -99,9 +108,13 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton isActive={item.isActive}>
-                      <Link href={item?.url ?? '#'}>{item.title}</Link>{' '}
-                      <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                      <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+                      <Link href={getUrlWithId(item?.url ?? '#')}>{item.title}</Link>{' '}
+                      {item.items?.length && (
+                        <>
+                          <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
+                          <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+                        </>
+                      )}
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   {item.items?.length ? (
@@ -110,7 +123,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                         {item.items.map((item) => (
                           <SidebarMenuSubItem key={item.title}>
                             <SidebarMenuSubButton asChild>
-                              <Link href={item.url}>{item.title}</Link>
+                              <Link href={getUrlWithId(item.url)}>{item.title}</Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
