@@ -33,13 +33,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Spinner } from '@/components/ui/spinner';
 
 interface StudentListProps {
-  onExport: (options: TExportOptions) => void;
   classId: string;
 }
 
-export function StudentList({ onExport, classId }: StudentListProps) {
+export function StudentList({ classId }: StudentListProps) {
   const [filters, setFilters] = useState<StudentFilter>({});
   const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -48,8 +48,23 @@ export function StudentList({ onExport, classId }: StudentListProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { students, studentsIsLoading, createStudent, updateStudent, deleteStudent, studentsRefetch } =
-    useStudents(classId);
+  const {
+    students,
+    studentsIsLoading,
+    createStudent,
+    updateStudent,
+    deleteStudent,
+    studentsRefetch,
+    isExporting,
+    exportStudents,
+  } = useStudents(classId);
+
+  const handleExport = () => {
+    exportStudents({
+      studentIds: selectedStudents.length > 0 ? selectedStudents : undefined,
+      classId,
+    });
+  };
 
   const handleFilterChange = (key: keyof StudentFilter, value: string) => {
     setFilters((prev) => ({
@@ -103,13 +118,6 @@ export function StudentList({ onExport, classId }: StudentListProps) {
     } else {
       setSelectedStudents(paginatedStudents?.map((s) => s.id).filter((id): id is string => id !== undefined) || []);
     }
-  };
-
-  const handleExport = () => {
-    onExport({
-      studentIds: selectedStudents.length > 0 ? selectedStudents : undefined,
-      classId,
-    });
   };
 
   const getFullName = (student: TStudent) => {
@@ -169,6 +177,7 @@ export function StudentList({ onExport, classId }: StudentListProps) {
             <Download className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Export</span>
             {selectedStudents.length > 0 && <span className="ml-1">({selectedStudents.length})</span>}
+            {isExporting && <Spinner />}
           </Button>
           <Button variant="outline" onClick={() => studentsRefetch()} disabled={studentsIsLoading}>
             <RefreshCw className={`h-4 w-4`} />

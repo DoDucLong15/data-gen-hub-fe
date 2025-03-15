@@ -1,9 +1,4 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Student Management System',
-  description: 'Manage student records with CRUD operations, filtering, import and export functionality',
-};
+'use client';
 
 export default function StudentsLayout({ children }: { children: React.ReactNode }) {
   return (

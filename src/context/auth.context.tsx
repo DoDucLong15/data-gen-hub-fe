@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Xóa token
     deleteCookie('accessToken');
     deleteCookie('refreshToken');
-
+    localStorage.removeItem('user');
     // Cập nhật user state
     setUser(null);
 
@@ -52,10 +52,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       const accessToken = getCookie('accessToken');
+      const cachedUser = localStorage.getItem('user');
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser) as User);
+      }
       if (accessToken) {
         try {
           const response = await apiClient.get('/users/me');
           setUser(response.data as User);
+          localStorage.setItem('user', JSON.stringify(response.data));
         } catch (error) {
           console.error('Failed to fetch user data:', error);
           deleteCookie('accessToken');

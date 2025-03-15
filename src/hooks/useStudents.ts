@@ -1,7 +1,9 @@
+import { ProcessApi } from '@/apis/process.api';
 import { StudentApi } from '@/apis/student.api';
 import { EProgressAction, EProgressType } from '@/utils/enums/progress.enum';
 import { TExportOptions, TStudent } from '@/utils/types/student.type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export const STUDENTS_QUERY_KEY = (classId: string) => ['students', classId];
 export const TEMPLATE_IMPORT_CLASS_QUERY_KEY = (classId: string) => ['template-import', classId];
@@ -25,7 +27,7 @@ export function useStudents(classId: string) {
   const processesQuery = useQuery({
     queryKey: PROGRESS_STUDENTS_QUERY_KEY(classId),
     queryFn: () =>
-      StudentApi.getProcessList({
+      ProcessApi.getProgress({
         classIds: [classId],
         types: [EProgressType.STUDENT_LIST],
       }),
@@ -64,6 +66,12 @@ export function useStudents(classId: string) {
 
   const exportMutation = useMutation({
     mutationFn: (data: TExportOptions) => StudentApi.exportStudents(data),
+    onSuccess: () => {
+      toast.success('Export success');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   const importMutation = useMutation({
@@ -128,5 +136,6 @@ export function useStudents(classId: string) {
     importStudents,
     uploadTemplate,
     isImporting: importMutation.isPending,
+    isExporting: exportMutation.isPending,
   };
 }

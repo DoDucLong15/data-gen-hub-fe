@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { useMemo } from 'react';
@@ -48,7 +49,7 @@ export default function ClassDetailLayout({
 
   return (
     <SidebarProvider>
-      <ClassSideBar className="absolute top-15 w-60" />
+      <ClassSideBar className="fixed w-60" />
       <SidebarInset className="top-1">
         <header className="flex h-10 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
@@ -62,7 +63,9 @@ export default function ClassDetailLayout({
                     {item.isCurrentPage ? (
                       <BreadcrumbPage>{item.label}</BreadcrumbPage>
                     ) : (
-                      <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+                      <BreadcrumbLink asChild>
+                        <Link href={item.href}>{item.label}</Link>
+                      </BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
                 </React.Fragment>

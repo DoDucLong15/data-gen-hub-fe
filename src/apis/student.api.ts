@@ -61,7 +61,7 @@ export const StudentApi = {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `students-export-${new Date().toISOString().slice(0, 10)}.xlsx`;
+      a.download = `students-export-${Date.now()}.xlsx`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -113,32 +113,6 @@ export const StudentApi = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  async getProgressById(processId: string, classId: string): Promise<TProcess> {
-    try {
-      const response = await apiClient.get(StudentEnpoint.GET_POGRESS, {
-        params: {
-          processIds: processId,
-          classIds: classId,
-        },
-      });
-      const [progress] = response.data;
-      return progress;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  async getProcessList(filter: TProgressFilter): Promise<TProcess[]> {
-    try {
-      const response = await apiClient.get(StudentEnpoint.GET_POGRESS, {
-        params: filter,
       });
       return response.data;
     } catch (error) {

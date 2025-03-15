@@ -11,11 +11,6 @@ import { ImportExport } from './_components/StudentImportExport';
 export default function StudentsPage() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('list');
-  const { exportStudents } = useStudents(id as string);
-
-  const handleExport = (options: TExportOptions) => {
-    exportStudents(options);
-  };
 
   return (
     <div className="container mx-auto py-1">
@@ -26,7 +21,7 @@ export default function StudentsPage() {
         </TabsList>
         <div className="mt-2">
           <TabsContent value="list">
-            <StudentList onExport={handleExport} classId={id as string} />
+            <StudentList classId={id as string} />
           </TabsContent>
           <TabsContent value="import-export">
             <ImportExport classId={id as string} />
