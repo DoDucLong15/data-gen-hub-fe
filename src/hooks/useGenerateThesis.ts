@@ -9,9 +9,21 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-const TEMPLATE_EXPORT_THESIS_QUERY_KEYS = (type: EThesisDocumentType) => ['thesis-template-export', type];
-const PROCESS_EXPORT_THESIS_QUERY_KEYS = (type: EThesisDocumentType) => ['process-export-thesis', type];
-const GENERATED_SHEETS_QUERY_KEY = (type: EThesisDocumentType) => ['generated-sheets-export', type];
+const TEMPLATE_EXPORT_THESIS_QUERY_KEYS = (type: EThesisDocumentType, classId: string) => [
+  'thesis-template-export',
+  type,
+  classId,
+];
+const PROCESS_EXPORT_THESIS_QUERY_KEYS = (type: EThesisDocumentType, classId: string) => [
+  'process-export-thesis',
+  type,
+  classId,
+];
+const GENERATED_SHEETS_QUERY_KEY = (type: EThesisDocumentType, classId: string) => [
+  'generated-sheets-export',
+  type,
+  classId,
+];
 
 export const useGenerateThesis = (type: EThesisDocumentType, classId: string) => {
   const queryClient = useQueryClient();
@@ -21,7 +33,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { data: template, isLoading: loadingTemplates } = useQuery({
-    queryKey: TEMPLATE_EXPORT_THESIS_QUERY_KEYS(type),
+    queryKey: TEMPLATE_EXPORT_THESIS_QUERY_KEYS(type, classId),
     queryFn: () => thesisApiInstance.getTemplate(classId, EProgressAction.EXPORT),
   });
 
@@ -29,7 +41,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
     mutationFn: ({ file, id, type }: { file: File; id: string; type: 'excel' | 'json' }) =>
       thesisApiInstance.updateTemplate(file, id, type),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: TEMPLATE_EXPORT_THESIS_QUERY_KEYS(type) });
+      queryClient.invalidateQueries({ queryKey: TEMPLATE_EXPORT_THESIS_QUERY_KEYS(type, classId) });
       toast.success('Template uploaded successfully');
     },
     onError: (error) => {
@@ -53,8 +65,8 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
         classId,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PROCESS_EXPORT_THESIS_QUERY_KEYS(type) });
-      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type) });
+      queryClient.invalidateQueries({ queryKey: PROCESS_EXPORT_THESIS_QUERY_KEYS(type, classId) });
+      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
       toast.success('Đã gửi yêu cầu tạo phiếu');
     },
     onError: (error) => {
@@ -76,11 +88,12 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
     isLoading: processesIsLoafing,
     refetch: refetchProcesses,
   } = useQuery({
-    queryKey: PROCESS_EXPORT_THESIS_QUERY_KEYS(type),
+    queryKey: PROCESS_EXPORT_THESIS_QUERY_KEYS(type, classId),
     queryFn: () =>
       ProcessApi.getProgress({
         classIds: [classId],
         types: [type as unknown as EProgressType],
+        actions: [EProgressAction.EXPORT],
       }),
     refetchInterval: 10 * 1000,
     enabled: !!classId,
@@ -103,7 +116,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
     isLoading: generatedSheetsIsLoading,
     refetch: refetchGeneratedSheets,
   } = useQuery({
-    queryKey: GENERATED_SHEETS_QUERY_KEY(type),
+    queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId),
     queryFn: () => thesisApiInstance.list(classId, EProgressAction.EXPORT),
   });
 
@@ -114,7 +127,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
         ids: [sheetId],
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type) });
+      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
       toast.success('Đã xóa phiếu');
     },
     onError: (error) => {
@@ -128,7 +141,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
         classId,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type) });
+      queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
       toast.success('Đã xóa tất cả phiếu');
     },
     onError: (error) => {

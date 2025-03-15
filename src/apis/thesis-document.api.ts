@@ -11,6 +11,10 @@ export const ThesisDocumentsEndpoint = {
   LIST: '/thesis-management/list',
   DOWNLOAD_THESIS_FILE: '/thesis-management/download-file',
   DELETE_THESIS_FILE: '/thesis-management/delete-file',
+  IMPORT_THESIS_FILE: '/student-v2/thesis-document/import',
+  CREATE_THESIS: '/thesis-management',
+  UPDATE_THESIS: '/thesis-management',
+  DELETE_THESIS: '/thesis-management',
 };
 
 export const ThesisDocumentApi = <T extends object = any>(type: EThesisDocumentType) => ({
@@ -68,7 +72,7 @@ export const ThesisDocumentApi = <T extends object = any>(type: EThesisDocumentT
         if (action === EProgressAction.EXPORT) {
           return 'outputPath' in item && item.outputPath;
         } else {
-          return 'inputPath' in item && item.inputPath;
+          return ('inputPath' in item && item.inputPath) || ('outputPath' in item && !item.outputPath);
         }
       });
     } catch (error) {
@@ -106,6 +110,61 @@ export const ThesisDocumentApi = <T extends object = any>(type: EThesisDocumentT
     try {
       await apiClient.post(ThesisDocumentsEndpoint.DELETE_THESIS_FILE, {
         ...request,
+        thesisDocType: type,
+      });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async importFile(files: File[], classId: string): Promise<void> {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
+      formData.append('classId', classId);
+      formData.append('thesisDocType', type);
+      await apiClient.post(ThesisDocumentsEndpoint.IMPORT_THESIS_FILE, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async deleteThesis(id: string): Promise<void> {
+    try {
+      await apiClient.delete(ThesisDocumentsEndpoint.DELETE_THESIS, {
+        data: {
+          id,
+          thesisDocType: type,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async createThesis(data: T, classId: string): Promise<void> {
+    try {
+      await apiClient.post(ThesisDocumentsEndpoint.CREATE_THESIS, {
+        ...data,
+        thesisDocType: type,
+        classId,
+      });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async updateThesis(id: string, data: Partial<T>): Promise<void> {
+    try {
+      await apiClient.patch(ThesisDocumentsEndpoint.UPDATE_THESIS, {
+        id,
+        ...data,
         thesisDocType: type,
       });
     } catch (error) {

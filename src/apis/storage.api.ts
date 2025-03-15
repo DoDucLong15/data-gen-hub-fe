@@ -7,7 +7,7 @@ const StorageEndpoint = {
 };
 
 export const StorageApi = {
-  async downloadFile(paths: string[]): Promise<void> {
+  async downloadFile(paths: string[], fileName?: string): Promise<void> {
     try {
       const response = await apiClient.post(
         StorageEndpoint.DOWNLOAD,
@@ -20,7 +20,7 @@ export const StorageApi = {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'student-import-template.zip';
+      link.download = fileName ?? 'student-import-template.zip';
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
