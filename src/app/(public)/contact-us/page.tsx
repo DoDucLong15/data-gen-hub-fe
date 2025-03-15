@@ -61,9 +61,9 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">Email</h3>
-                      <a href="mailto:info@gradproject.vn" className="text-slate-600 hover:underline">
+                      <Link href="mailto:info@gradproject.vn" className="text-slate-600 hover:underline">
                         info@gradproject.vn
-                      </a>
+                      </Link>
                     </div>
                   </div>
 
@@ -73,9 +73,9 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">Điện Thoại</h3>
-                      <a href="tel:+84912345678" className="text-slate-600 hover:underline">
+                      <Link href="tel:+84912345678" className="text-slate-600 hover:underline">
                         +84 912 345 678
-                      </a>
+                      </Link>
                     </div>
                   </div>
 

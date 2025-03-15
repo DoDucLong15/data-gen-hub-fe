@@ -14,12 +14,17 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import Link from 'next/link';
 
 const data = {
   navMain: [
     {
       title: 'Dashboard',
       url: 'dashboard',
+    },
+    {
+      title: 'Student List',
+      url: 'student-list',
     },
     {
       title: 'Assignment',
@@ -73,7 +78,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="#">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <GalleryVerticalEnd className="size-4" />
                 </div>
@@ -81,7 +86,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                   <span className="font-semibold">Thesis</span>
                   <span className="">Manage Document</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -94,7 +99,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton isActive={item.isActive}>
-                      <a href={item?.url}>{item.title}</a>{' '}
+                      <Link href={item?.url ?? '#'}>{item.title}</Link>{' '}
                       <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                       <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
                     </SidebarMenuButton>
@@ -105,7 +110,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                         {item.items.map((item) => (
                           <SidebarMenuSubItem key={item.title}>
                             <SidebarMenuSubButton asChild>
-                              <a href={item.url}>{item.title}</a>
+                              <Link href={item.url}>{item.title}</Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
