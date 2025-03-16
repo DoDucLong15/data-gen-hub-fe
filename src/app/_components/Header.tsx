@@ -13,13 +13,15 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserRole } from '@/configs/role.config';
 import { useRouter } from 'next/navigation';
-import { User, Users, Shield, LogOut } from 'lucide-react';
+import { User, Users, Shield, LogOut, Sun, Moon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 function Header() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname(); // Lấy route hiện tại
+  const { theme, setTheme } = useTheme();
 
   return (
     <div>
@@ -29,23 +31,29 @@ function Header() {
           {NAVBAR_CONTENT.map((item, index) => {
             const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/');
             return (
-              <Link 
-                key={index} 
+              <Link
+                key={index}
                 href={item.href}
-                className={`flex items-center h-full transition-all duration-300 ${
-                  isActive 
-                    ? 'bg-slate-200 hover:bg-slate-300' 
-                    : 'hover:bg-slate-100'
+                className={`flex h-full items-center transition-all duration-300 ${
+                  isActive ? 'bg-slate-200 hover:bg-slate-300' : 'hover:bg-slate-100'
                 }`}
               >
-                <li className="px-4 py-2">
-                  {item.label}
-                </li>
+                <li className="px-4 py-2">{item.label}</li>
               </Link>
             );
           })}
         </ul>
         <div className="flex gap-5">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="rounded-full"
+          >
+            <Sun className="h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <Moon className="absolute h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
           {!user ? (
             <Button>
               <Link href={'/account/login'} className="cursor-pointer">

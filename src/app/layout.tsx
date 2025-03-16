@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/auth.context';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/context/query.context';
 import Header from './_components/Header';
+import { ThemeProvider } from '@/context/theme.context';
 
 export const metadata: Metadata = {
   title: 'Data gen hub',
@@ -17,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          <Header />
-          {children} <Toaster />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Header />
+            {children} <Toaster />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

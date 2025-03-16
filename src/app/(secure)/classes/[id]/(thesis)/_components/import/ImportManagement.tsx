@@ -106,7 +106,7 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
                 <h4 className="mb-2 font-medium">Selected Files:</h4>
                 <ul className="max-h-32 space-y-1 overflow-y-auto rounded-md border p-2 text-sm">
                   {selectedFiles.map((file, index) => (
-                    <li key={index} className="flex items-center justify-between text-gray-600 group">
+                    <li key={index} className="group flex items-center justify-between text-gray-600">
                       <div className="flex items-center">
                         <FileText className="mr-2 h-4 w-4 text-gray-400" />
                         {file.name}
@@ -116,7 +116,7 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
                           const newFiles = selectedFiles.filter((_, i) => i !== index);
                           setSelectedFiles(newFiles);
                         }}
-                        className="hidden group-hover:flex items-center justify-center h-5 w-5 rounded-full hover:bg-gray-100"
+                        className="hidden h-5 w-5 items-center justify-center rounded-full group-hover:flex hover:bg-gray-100"
                       >
                         <X className="h-3 w-3 text-gray-500" />
                       </button>
