@@ -43,6 +43,21 @@ const data = {
       ],
     },
     {
+      title: 'Review',
+      isActive: false,
+      url: 'review/generate',
+      items: [
+        {
+          title: 'Generate',
+          url: 'review/generate',
+        },
+        {
+          title: 'Import',
+          url: 'review/import',
+        },
+      ],
+    },
+    {
       title: 'Supervise',
       isActive: false,
       url: 'supervise/generate',
@@ -58,19 +73,9 @@ const data = {
       ],
     },
     {
-      title: 'Review',
+      title: 'Other documents',
       isActive: false,
-      url: 'review/generate',
-      items: [
-        {
-          title: 'Generate',
-          url: 'review/generate',
-        },
-        {
-          title: 'Import',
-          url: 'review/import',
-        },
-      ],
+      url: 'other-documents',
     },
   ],
 };

@@ -3,6 +3,7 @@ export enum EProgressType {
   GUIDANCE_REVIEWS = 'guidance_reviews',
   SUPERVISORY_COMMENTS = 'supervisory_comments',
   STUDENT_LIST = 'student_list',
+  OTHER_DOCUMENT = 'other_document',
 }
 
 export enum EProgressStatus {
