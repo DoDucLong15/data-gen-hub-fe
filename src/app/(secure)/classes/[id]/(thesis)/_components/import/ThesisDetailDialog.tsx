@@ -213,7 +213,7 @@ export function ThesisDetailDialog({
                 </div>
                 <div className="flex items-center justify-between rounded border border-blue-200 bg-blue-50 p-3">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-blue-600" />
+                    <FileText className="h-5 w-5 text-slate-600" />
                     <div>
                       <p className="max-w-[200px] truncate text-sm font-medium text-gray-800 md:max-w-[300px]">
                         {entity.fileName || entity.inputPath.split('/').pop() || 'Tài liệu đính kèm'}
@@ -236,7 +236,7 @@ export function ThesisDetailDialog({
         </ScrollArea>
 
         <DialogFooter className="mt-auto flex justify-end gap-2 border-t bg-gray-50 p-4">
-          <Button onClick={() => onOpenChange(false)} className="h-9 bg-blue-600 px-4 py-0 text-sm hover:bg-blue-700">
+          <Button onClick={() => onOpenChange(false)} className="h-9 bg-slate-600 px-4 py-0 text-sm hover:bg-slate-700">
             Đóng
           </Button>
         </DialogFooter>

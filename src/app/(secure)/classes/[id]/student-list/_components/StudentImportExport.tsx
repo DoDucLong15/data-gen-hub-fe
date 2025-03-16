@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Upload, Download, RefreshCw, AlertCircle, FileText } from 'lucide-react';
+import { Upload, Download, RefreshCw, AlertCircle, FileText, X } from 'lucide-react';
 import { useStudents } from '@/hooks/useStudents';
 import { toast } from 'sonner';
 import { StorageApi } from '@/apis/storage.api';
@@ -14,11 +14,15 @@ import { ProcessTable } from './ProcessTable';
 export function ImportExport({ classId }: { classId: string }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
-  const { exportStudents, templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
+  const { templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
     useStudents(classId);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      if (Array.from(e.target.files).length > 10) {
+        toast.error('You can only upload up to 10 files at a time');
+        return;
+      }
       setSelectedFiles(Array.from(e.target.files));
     }
   };
@@ -123,9 +127,20 @@ export function ImportExport({ classId }: { classId: string }) {
                     <h4 className="mb-2 font-medium">Selected Files:</h4>
                     <ul className="max-h-32 space-y-1 overflow-y-auto rounded-md border p-2 text-sm">
                       {selectedFiles.map((file, index) => (
-                        <li key={index} className="flex items-center text-gray-600">
-                          <FileText className="mr-2 h-4 w-4 text-gray-400" />
-                          {file.name}
+                        <li key={index} className="group flex items-center justify-between text-gray-600">
+                          <div className="flex items-center">
+                            <FileText className="mr-2 h-4 w-4 text-gray-400" />
+                            {file.name}
+                          </div>
+                          <button
+                            onClick={() => {
+                              const newFiles = selectedFiles.filter((_, i) => i !== index);
+                              setSelectedFiles(newFiles);
+                            }}
+                            className="hidden h-5 w-5 items-center justify-center rounded-full group-hover:flex hover:bg-gray-100"
+                          >
+                            <X className="h-3 w-3 text-gray-500" />
+                          </button>
                         </li>
                       ))}
                     </ul>

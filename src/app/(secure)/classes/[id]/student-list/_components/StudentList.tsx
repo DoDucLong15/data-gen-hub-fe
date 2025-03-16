@@ -57,7 +57,7 @@ export function StudentList({ classId }: StudentListProps) {
     studentsRefetch,
     isExporting,
     exportStudents,
-  } = useStudents(classId);
+  } = useStudents(classId, false);
 
   const handleExport = () => {
     exportStudents({
@@ -191,7 +191,7 @@ export function StudentList({ classId }: StudentListProps) {
             <div className="flex justify-center p-4">Loading...</div>
           ) : (
             <>
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto pr-5">
                 <Table className="w-full table-fixed">
                   <TableHeader>
                     <TableRow>

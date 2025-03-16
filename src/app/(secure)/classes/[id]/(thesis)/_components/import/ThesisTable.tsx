@@ -133,7 +133,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
   };
 
   // Visible columns (exclude hidden ones)
-  const visibleColumns = config.columns.filter((column) => !column.hidden);
+  const visibleColumns = config.columns.filter((column) => !column.hidden).slice(0, 5);
 
   return (
     <div className="space-y-4">

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload, Download, RefreshCw, FileText } from 'lucide-react';
+import { Upload, Download, RefreshCw, FileText, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { StorageApi } from '@/apis/storage.api';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -17,6 +17,10 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      if (Array.from(e.target.files).length > 10) {
+        toast.error('You can only upload up to 10 files at a time');
+        return;
+      }
       setSelectedFiles(Array.from(e.target.files));
     }
   };
@@ -102,9 +106,20 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
                 <h4 className="mb-2 font-medium">Selected Files:</h4>
                 <ul className="max-h-32 space-y-1 overflow-y-auto rounded-md border p-2 text-sm">
                   {selectedFiles.map((file, index) => (
-                    <li key={index} className="flex items-center text-gray-600">
-                      <FileText className="mr-2 h-4 w-4 text-gray-400" />
-                      {file.name}
+                    <li key={index} className="flex items-center justify-between text-gray-600 group">
+                      <div className="flex items-center">
+                        <FileText className="mr-2 h-4 w-4 text-gray-400" />
+                        {file.name}
+                      </div>
+                      <button
+                        onClick={() => {
+                          const newFiles = selectedFiles.filter((_, i) => i !== index);
+                          setSelectedFiles(newFiles);
+                        }}
+                        className="hidden group-hover:flex items-center justify-center h-5 w-5 rounded-full hover:bg-gray-100"
+                      >
+                        <X className="h-3 w-3 text-gray-500" />
+                      </button>
                     </li>
                   ))}
                 </ul>
