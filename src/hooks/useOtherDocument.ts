@@ -1,8 +1,11 @@
 import { apiClient } from '@/apis/instances/api-client.instance';
+import { ProcessApi } from '@/apis/process.api';
 import { GeneratorOtherDocumentFormValues } from '@/app/(secure)/classes/[id]/(thesis)/other-documents/utils/validations';
 import { generatorSchema } from '@/app/(secure)/classes/[id]/(thesis)/other-documents/utils/validations';
+import { EProgressType } from '@/utils/enums/progress.enum';
 import { ExportType, GeneratorRequestData, GeneratorResponse, InputType } from '@/utils/types/other-document.type';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -59,7 +62,7 @@ interface UseGeneratorSubmitOptions {
   onError?: (error: Error) => void;
 }
 
-export const useOtherDocumentGeneratorSubmit = (options?: UseGeneratorSubmitOptions) => {
+export const useOtherDocumentGeneratorSubmit = (classId: string, options?: UseGeneratorSubmitOptions) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submitGenerator = async (data: GeneratorRequestData) => {
@@ -81,7 +84,12 @@ export const useOtherDocumentGeneratorSubmit = (options?: UseGeneratorSubmitOpti
       // Thêm các trường thông thường
       formData.append('importType', data.importType);
       formData.append('exportType', data.exportType);
-      formData.append('shareEmails', JSON.stringify(data.shareEmails));
+
+      formData.append('classId', classId);
+
+      data.shareEmails.forEach((email) => {
+        formData.append('shareEmails', email);
+      });
 
       const response = await apiClient.post('/office/import-export-dynamic', formData, {
         headers: {
@@ -89,7 +97,7 @@ export const useOtherDocumentGeneratorSubmit = (options?: UseGeneratorSubmitOpti
         },
       });
 
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         throw new Error('Submission failed');
       }
 
@@ -139,5 +147,28 @@ export const useOtherDocumentEmailList = (initialEmails: string[] = ['']) => {
     addEmail,
     removeEmail,
     updateEmail,
+  };
+};
+
+export const useOtherDocumentHistory = (classId: string) => {
+  const {
+    data: processes = [],
+    isLoading: processesIsLoafing,
+    refetch: refetchProcesses,
+  } = useQuery({
+    queryKey: ['process-other-document', classId],
+    queryFn: () =>
+      ProcessApi.getProgress({
+        classIds: [classId],
+        types: [EProgressType.OTHER_DOCUMENT],
+      }),
+    refetchInterval: 10 * 1000,
+    enabled: !!classId,
+  });
+
+  return {
+    processes,
+    processesIsLoafing,
+    refetchProcesses,
   };
 };

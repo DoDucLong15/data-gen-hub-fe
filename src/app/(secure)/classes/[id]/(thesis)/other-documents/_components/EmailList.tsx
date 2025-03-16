@@ -10,9 +10,10 @@ import { UseFormReturn } from 'react-hook-form';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 interface EmailListProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
+  key: string;
 }
 
-export function EmailList({ form }: EmailListProps) {
+export function EmailList({ form, key }: EmailListProps) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'shareEmails' as never,

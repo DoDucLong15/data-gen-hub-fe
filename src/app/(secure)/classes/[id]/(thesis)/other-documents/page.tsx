@@ -3,8 +3,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GeneratorForm } from './_components/GeneratorFrom';
 import { FileText, History } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import HistoryOtherDocument from './_components/History';
 
 function OtherDocumentsPage() {
+  const { id } = useParams();
+
   return (
     <div className="container mx-auto px-6 py-4">
       <Tabs defaultValue="generator" className="space-y-4">
@@ -20,11 +24,11 @@ function OtherDocumentsPage() {
         </TabsList>
 
         <TabsContent value="generator">
-          <GeneratorForm />
+          <GeneratorForm classId={id as string} />
         </TabsContent>
 
         <TabsContent value="history">
-          <div className="rounded-lg border p-8 text-center">Lịch sử tạo tài liệu sẽ được hiển thị ở đây</div>
+          <HistoryOtherDocument classId={id as string} />
         </TabsContent>
       </Tabs>
     </div>

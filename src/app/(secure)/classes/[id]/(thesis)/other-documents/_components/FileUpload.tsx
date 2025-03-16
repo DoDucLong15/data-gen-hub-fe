@@ -16,9 +16,10 @@ interface FileUploadProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
   multiple?: boolean;
   accept?: string;
+  key: string;
 }
 
-export function FileUpload({ name, label, description, form, multiple = false, accept }: FileUploadProps) {
+export function FileUpload({ name, label, description, form, multiple = false, accept, key }: FileUploadProps) {
   const [fileNames, setFileNames] = useState<string[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
