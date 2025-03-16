@@ -23,18 +23,22 @@ function Header() {
 
   return (
     <div>
-      <div className="flex items-center justify-between px-6 py-2 shadow-md">
+      <div className="flex items-center justify-between px-6 shadow-md">
         <Image src="/logo.svg" alt="logo" width={60} height={60} className="w-[150px] md:w-[200px]" />
         <ul className="hidden gap-14 text-lg font-medium md:flex">
           {NAVBAR_CONTENT.map((item, index) => {
-            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/'); // Kiểm tra route
+            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/');
             return (
-              <Link key={index} href={item.href}>
-                <li
-                  className={`cursor-pointer rounded-2xl px-4 transition-all duration-300 ${
-                    isActive ? 'bg-slate-200' : 'hover:bg-slate-400'
-                  }`}
-                >
+              <Link 
+                key={index} 
+                href={item.href}
+                className={`flex items-center h-full transition-all duration-300 ${
+                  isActive 
+                    ? 'bg-slate-200 hover:bg-slate-300' 
+                    : 'hover:bg-slate-100'
+                }`}
+              >
+                <li className="px-4 py-2">
                   {item.label}
                 </li>
               </Link>

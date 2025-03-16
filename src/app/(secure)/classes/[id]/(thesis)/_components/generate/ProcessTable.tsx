@@ -62,6 +62,7 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>#</TableHead>
                 <TableHead>Action</TableHead>
                 <TableHead>Loại</TableHead>
                 <TableHead>Lỗi (nếu có)</TableHead>
@@ -84,8 +85,9 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
                   </TableCell>
                 </TableRow>
               ) : (
-                currentItems.map((process) => (
+                currentItems.map((process, index) => (
                   <TableRow key={process.id}>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{process.action}</TableCell>
                     <TableCell>{process.type}</TableCell>
                     <TableCell className="truncate">{process.error ? JSON.stringify(process.error) : ''}</TableCell>

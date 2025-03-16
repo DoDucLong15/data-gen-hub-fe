@@ -15,8 +15,10 @@ import { TGenerateThesisDocFormData } from '@/utils/types/thesis-doc.type';
 import { useGenerateThesis } from '@/hooks/useGenerateThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { useStudents } from '@/hooks/useStudents';
+import { entityConfigs } from '../../_config/thesis.config';
 
 export default function GenerateForm({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
+  const config = entityConfigs[thesisType];
   const { generateSheets, isGenerating, openStudentSelection, closeStudentSelection, isDialogOpen, selectedStudents } =
     useGenerateThesis(thesisType, classId);
   const { students } = useStudents(classId, false);
@@ -76,107 +78,109 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
             </div>
           </FormItem>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <FormField
-              control={form.control}
-              name="thesisStartDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Ngày bắt đầu</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
-                        >
-                          {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={field.onChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          {thesisType === EThesisDocumentType.ASSIGNMENT_SHEET && (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <FormField
+                control={form.control}
+                name="thesisStartDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Ngày bắt đầu</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={'outline'}
+                            className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                          >
+                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="thesisEndDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Ngày kết thúc</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
-                        >
-                          {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={field.onChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="thesisEndDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Ngày kết thúc</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={'outline'}
+                            className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                          >
+                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="teacherSignatureDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Ngày ký</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
-                        >
-                          {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
-                        onSelect={field.onChange}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+              <FormField
+                control={form.control}
+                name="teacherSignatureDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Ngày ký</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={'outline'}
+                            className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                          >
+                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value ? new Date(field.value) : undefined}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          )}
 
           <div className="flex justify-end">
             <Button type="submit" disabled={isGenerating}>
-              {isGenerating ? 'Đang xử lý...' : 'Tạo phiếu giao nhiệm vụ'}
+              {isGenerating ? 'Đang xử lý...' : `Tạo ${config.title.toLowerCase()}`}
             </Button>
           </div>
         </form>
