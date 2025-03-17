@@ -91,11 +91,15 @@ export const useOtherDocumentGeneratorSubmit = (classId: string, options?: UseGe
         formData.append('shareEmails', email);
       });
 
-      const response = await apiClient.post('/office/import-export-dynamic', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const response = await apiClient.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/office/import-export-dynamic`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      });
+      );
 
       if (response.status !== 201) {
         throw new Error('Submission failed');

@@ -11,10 +11,10 @@ import { ListFilter, FileInput } from 'lucide-react';
 
 interface InputTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
-  key: string;
+  componentId: string;
 }
 
-export function InputTypeSelector({ form, key }: InputTypeSelectorProps) {
+export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps) {
   return (
     <FormField
       control={form.control}

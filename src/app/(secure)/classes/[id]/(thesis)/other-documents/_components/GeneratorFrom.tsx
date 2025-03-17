@@ -16,12 +16,12 @@ import { useState } from 'react';
 
 export function GeneratorForm({ classId }: { classId: string }) {
   const { form, isSubmitting, setIsSubmitting } = useOtherDocumentGeneratorForm();
-  const [resetKey, setResetKey] = useState(0);
+  const [componentId, setComponentId] = useState(0);
   const { submitGenerator } = useOtherDocumentGeneratorSubmit(classId, {
     onSuccess: (data) => {
       toast.success(`Process ID: ${data.processId}`);
       form.reset();
-      setResetKey(resetKey + 1);
+      setComponentId((prev) => prev + 1);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -51,7 +51,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
             <Form {...form}>
               <div className="space-y-6">
                 <FileUpload
-                  key={`inputFiles-${resetKey}`}
+                  componentId={`inputFiles-${componentId}`}
                   name="inputFiles"
                   label="Input Files"
                   description="Upload your input files"
@@ -60,7 +60,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 />
                 <Separator />
                 <FileUpload
-                  key={`specificationInput-${resetKey}`}
+                  componentId={`specificationInput-${componentId}`}
                   name="specificationInput"
                   label="Input Configuration"
                   description="Upload JSON file that defines which fields to extract"
@@ -68,7 +68,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
                   accept=".json"
                 />
                 <Separator />
-                <InputTypeSelector form={form} key={`inputType-${resetKey}`} />
+                <InputTypeSelector form={form} componentId={`inputType-${componentId}`} />
               </div>
             </Form>
           </CardContent>
@@ -83,7 +83,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
             <Form {...form}>
               <div className="space-y-6">
                 <FileUpload
-                  key={`specificationOutput-${resetKey}`}
+                  componentId={`specificationOutput-${componentId}`}
                   name="specificationOutput"
                   label="Output Configuration"
                   description="Upload JSON file that defines output format"
@@ -92,14 +92,14 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 />
                 <Separator />
                 <FileUpload
-                  key={`templateFile-${resetKey}`}
+                  componentId={`templateFile-${componentId}`}
                   name="templateFile"
                   label="Template File"
                   description="Upload template file for data output"
                   form={form}
                 />
                 <Separator />
-                <ExportTypeSelector form={form} key={`exportType-${resetKey}`} />
+                <ExportTypeSelector form={form} componentId={`exportType-${componentId}`} />
               </div>
             </Form>
           </CardContent>
@@ -114,7 +114,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <EmailList form={form} key={`emailList-${resetKey}`} />
+              <EmailList form={form} componentId={`emailList-${componentId}`} />
               <Button type="submit" disabled={isSubmitting} className="w-full">
                 {isSubmitting ? 'Submitting...' : 'Generate Data'}
               </Button>

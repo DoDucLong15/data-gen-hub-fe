@@ -11,10 +11,10 @@ import { FileText, Files } from 'lucide-react';
 
 interface ExportTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
-  key: string;
+  componentId: string;
 }
 
-export function ExportTypeSelector({ form, key }: ExportTypeSelectorProps) {
+export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProps) {
   return (
     <FormField
       control={form.control}
