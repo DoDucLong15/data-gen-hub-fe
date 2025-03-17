@@ -91,7 +91,7 @@ export const useOtherDocumentGeneratorSubmit = (classId: string, options?: UseGe
         formData.append('shareEmails', email);
       });
 
-      const response = await apiClient.post('/office/import-export-dynamic', formData, {
+      const response = await apiClient.post(`/office/import-export-dynamic`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
