@@ -8,10 +8,15 @@ export type User = {
   school?: string;
   department?: string;
   position?: string;
-  role: UserRole;
+  role: string;
+  roleId: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  permissions: {
+    action: string;
+    subject: string;
+  }[];
 };
 
 export type UserFormData = {
@@ -22,5 +27,5 @@ export type UserFormData = {
   school?: string;
   department?: string;
   position?: string;
-  role: UserRole;
+  roleId: string;
 };

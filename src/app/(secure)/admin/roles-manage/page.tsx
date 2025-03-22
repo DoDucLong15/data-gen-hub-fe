@@ -9,8 +9,10 @@ import { useUsers } from '@/hooks/useUsers';
 import { useRoles } from '@/hooks/useRoles';
 import { RolesList } from './_components/RolesList';
 import { RoleFormDialog } from './_components/RoleFormDialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { PermissionsList } from './_components/_permissions/PermissionList';
 
-export default function UsersPage() {
+export default function RolesPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { isLoading, error } = useUsers();
   const [refreshing, setRefreshing] = useState(false);
@@ -36,20 +38,36 @@ export default function UsersPage() {
 
   return (
     <div className="container mx-auto px-6 py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Quản lý vai trò</h1>
-        <div className="flex gap-2">
-          <Button onClick={() => setIsAddDialogOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            Thêm vai trò
-          </Button>
-          <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading}>
-            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-          </Button>
-        </div>
-      </div>
+      <Tabs defaultValue="roles" className="w-full space-y-6">
+        <TabsList className="w-full justify-start border-b">
+          <TabsTrigger value="roles" className="px-8 py-3 text-base">
+            Danh sách vai trò
+          </TabsTrigger>
+          <TabsTrigger value="permissions" className="px-8 py-3 text-base">
+            Quản lý quyền hạn
+          </TabsTrigger>
+        </TabsList>
 
-      <RolesList />
+        <TabsContent value="roles" className="mt-6 rounded-lg border p-6">
+          <div className="mb-6 flex items-center justify-end">
+            <div className="flex gap-2">
+              <Button onClick={() => setIsAddDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" />
+                Thêm vai trò
+              </Button>
+              <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading}>
+                <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+              </Button>
+            </div>
+          </div>
+
+          <RolesList />
+        </TabsContent>
+
+        <TabsContent value="permissions" className="mt-6 rounded-lg border p-6">
+          <PermissionsList />
+        </TabsContent>
+      </Tabs>
 
       <RoleFormDialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen} mode="add" />
     </div>

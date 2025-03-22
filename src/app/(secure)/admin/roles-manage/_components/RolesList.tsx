@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, MoreHorizontal, Trash2, Shield, Users, Info, CheckCircle2, Clock, Plus } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash2, Shield, Users, Info, CheckCircle2, Clock, Plus, Key } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -64,20 +64,9 @@ export function RolesList() {
     return <Info className="h-4 w-4" />;
   };
 
-  // Hàm tạo biểu diễn trực quan cho số lượng người dùng (giả định)
-  const getUserCount = (roleId: string) => {
-    // Giả định số người dùng dựa trên ID để tạo dữ liệu đa dạng (trong thực tế sẽ lấy từ API)
-    return (roleId.charCodeAt(0) % 10) + (roleId.charCodeAt(1) % 15);
-  };
-
   // Tạo ngày cập nhật giả định
-  const getLastUpdated = (roleId: string) => {
-    const today = new Date();
-    // Tạo một ngày ngẫu nhiên nhưng ổn định cho mỗi roleId trong khoảng 60 ngày trước
-    const daysAgo = (roleId.charCodeAt(0) + roleId.charCodeAt(1)) % 60;
-    const date = new Date(today);
-    date.setDate(today.getDate() - daysAgo);
-    return date.toLocaleDateString('vi-VN');
+  const getLastUpdated = (createdAt?: string) => {
+    return createdAt ? new Date(createdAt).toLocaleDateString('vi-VN') : new Date().toLocaleDateString('vi-VN');
   };
 
   if (isLoading) {
@@ -111,6 +100,7 @@ export function RolesList() {
               <TableHead>Vai trò</TableHead>
               <TableHead>Mô tả</TableHead>
               <TableHead>Số người dùng</TableHead>
+              <TableHead>Số quyền</TableHead>
               <TableHead>Cập nhật lần cuối</TableHead>
               <TableHead>Trạng thái</TableHead>
               <TableHead className="text-right">Thao tác</TableHead>
@@ -161,13 +151,19 @@ export function RolesList() {
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Users className="text-muted-foreground h-4 w-4" />
-                      <span>{getUserCount(role.id)}</span>
+                      <span>{role.userCount || 0}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Key className="text-muted-foreground h-4 w-4" />
+                      <span>{role.permissions?.length || 0}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Clock className="text-muted-foreground h-4 w-4" />
-                      <span>{getLastUpdated(role.id)}</span>
+                      <span>{getLastUpdated(role.createdAt)}</span>
                     </div>
                   </TableCell>
                   <TableCell>

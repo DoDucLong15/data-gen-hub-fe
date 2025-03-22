@@ -26,7 +26,7 @@ export function useRoles() {
     mutationFn: (roleData: any) => AdminApi.createRole(roleData),
     onSuccess: (newRole) => {
       // Cập nhật cache trong React Query
-      queryClient.setQueryData(ROLES_QUERY_KEY, (oldRoles: TRole[] = []) => [...oldRoles, newRole]);
+      queryClient.invalidateQueries({ queryKey: ROLES_QUERY_KEY });
     },
   });
 
@@ -34,9 +34,7 @@ export function useRoles() {
   const updateRoleMutation = useMutation({
     mutationFn: ({ id, roleData }: { id: string; roleData: any }) => AdminApi.updateRole(id, roleData),
     onSuccess: (updatedRole) => {
-      queryClient.setQueryData(ROLES_QUERY_KEY, (oldRoles: TRole[] = []) =>
-        oldRoles.map((role) => (role.id === updatedRole.id ? updatedRole : role)),
-      );
+      queryClient.invalidateQueries({ queryKey: ROLES_QUERY_KEY });
     },
   });
 
@@ -44,7 +42,7 @@ export function useRoles() {
   const deleteRoleMutation = useMutation({
     mutationFn: (id: string) => AdminApi.deleteRole(id),
     onSuccess: (_, id) => {
-      queryClient.setQueryData(ROLES_QUERY_KEY, (oldRoles: TRole[] = []) => oldRoles.filter((role) => role.id !== id));
+      queryClient.invalidateQueries({ queryKey: ROLES_QUERY_KEY });
     },
   });
 
