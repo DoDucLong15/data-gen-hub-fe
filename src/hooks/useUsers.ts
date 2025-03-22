@@ -44,7 +44,7 @@ export function useUsers() {
   const deleteUserMutation = useMutation({
     mutationFn: (id: string) => AdminApi.deleteUser(id),
     onSuccess: (_, id) => {
-      queryClient.setQueryData(USERS_QUERY_KEY, (oldUsers: User[] = []) => oldUsers.filter((user) => user.id !== id));
+      queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
     },
   });
 

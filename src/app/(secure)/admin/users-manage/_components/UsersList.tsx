@@ -71,6 +71,7 @@ export function UsersList() {
               <TableHead>Email</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>Created At</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -83,6 +84,17 @@ export function UsersList() {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{getRoleBadge(user.role)}</TableCell>
                   <TableCell>{user.createdAt && new Date(user.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>
+                    {user.deletedAt ? (
+                      <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-100">
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-100">
+                        Active
+                      </Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
