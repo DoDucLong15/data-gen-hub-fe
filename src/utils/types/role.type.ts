@@ -1,3 +1,5 @@
+import { TPermission } from "./permission.type";
+
 export type TRole = {
   id: string;
   name: string;
@@ -5,10 +7,12 @@ export type TRole = {
   userCount?: number;
   createdAt?: string;
   updatedAt?: string;
+  permissions: TPermission[];
 };
 
 export type TRoleFormData = {
   id?: string;
   name: string;
   description?: string;
+  permissionIds?: string[];
 };

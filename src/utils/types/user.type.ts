@@ -13,6 +13,10 @@ export type User = {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  permissions: {
+    action: string;
+    subject: string;
+  }[];
 };
 
 export type UserFormData = {

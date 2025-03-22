@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, MoreHorizontal, Trash2, Shield, Users, Info, CheckCircle2, Clock, Plus } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash2, Shield, Users, Info, CheckCircle2, Clock, Plus, Key } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -100,6 +100,7 @@ export function RolesList() {
               <TableHead>Vai trò</TableHead>
               <TableHead>Mô tả</TableHead>
               <TableHead>Số người dùng</TableHead>
+              <TableHead>Số quyền</TableHead>
               <TableHead>Cập nhật lần cuối</TableHead>
               <TableHead>Trạng thái</TableHead>
               <TableHead className="text-right">Thao tác</TableHead>
@@ -151,6 +152,12 @@ export function RolesList() {
                     <div className="flex items-center gap-1">
                       <Users className="text-muted-foreground h-4 w-4" />
                       <span>{role.userCount || 0}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Key className="text-muted-foreground h-4 w-4" />
+                      <span>{role.permissions?.length || 0}</span>
                     </div>
                   </TableCell>
                   <TableCell>
