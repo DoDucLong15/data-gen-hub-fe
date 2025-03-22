@@ -11,6 +11,7 @@ export type User = {
   role: UserRole;
   createdAt?: Date;
   updatedAt?: Date;
+  deletedAt?: Date;
 };
 
 export type UserFormData = {
