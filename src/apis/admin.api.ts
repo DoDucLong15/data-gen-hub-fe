@@ -11,10 +11,10 @@ const ManageUserEndpoint = {
 };
 
 const ManageRoleEndpoint = {
-  GET_ALL: 'users/role',
-  CREATE: 'users/role',
-  UPDATE: 'users/role',
-  DELETE: (id: string) => `users/role/${id}`,
+  GET_ALL: 'roles',
+  CREATE: 'roles',
+  UPDATE: 'roles',
+  DELETE: (id: string) => `roles/${id}`,
 };
 
 export const AdminApi = {

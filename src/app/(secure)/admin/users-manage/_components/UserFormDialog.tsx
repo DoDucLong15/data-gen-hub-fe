@@ -31,7 +31,7 @@ import { useRoles } from '@/hooks/useRoles';
 const userFormSchema = z.object({
   name: z.string().min(2, { message: 'Tên phải có ít nhất 2 ký tự' }),
   email: z.string().email({ message: 'Email không hợp lệ' }),
-  role: z.enum(['admin', 'teacher']),
+  roleId: z.string(),
   phone: z.string().min(10, { message: 'Số điện thoại không hợp lệ' }).optional(),
   school: z.string().min(2, { message: 'Tên trường không hợp lệ' }).optional(),
   department: z.string().min(2, { message: 'Tên khoa không hợp lệ' }).optional(),
@@ -64,7 +64,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
     defaultValues: {
       name: '',
       email: '',
-      role: 'teacher',
+      roleId: '',
       phone: '',
       school: '',
       department: '',
@@ -77,8 +77,8 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       form.reset({
         name: user.name,
         email: user.email,
-        role: user.role,
         phone: user.phone,
+        roleId: user.roleId,
         school: user.school,
         department: user.department,
         position: user.position,
@@ -87,7 +87,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       form.reset({
         name: '',
         email: '',
-        role: 'teacher',
+        roleId: '',
         phone: '',
         school: '',
         department: '',
@@ -101,7 +101,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       const formData: UserFormData = {
         name: data.name,
         email: data.email,
-        role: data.role as UserRole,
+        roleId: data.roleId,
         phone: data.phone?.length ? data.phone : undefined,
         school: data.school?.length ? data.school : undefined,
         department: data.department?.length ? data.department : undefined,
@@ -171,7 +171,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
 
               <FormField
                 control={form.control}
-                name="role"
+                name="roleId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Vai trò</FormLabel>
@@ -183,7 +183,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                       </FormControl>
                       <SelectContent>
                         {roles.map((role, index) => (
-                          <SelectItem key={index} value={role.name}>
+                          <SelectItem key={index} value={role.id}>
                             {capitalizeFirstLetters(role.name)}
                           </SelectItem>
                         ))}
