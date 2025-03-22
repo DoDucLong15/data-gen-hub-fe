@@ -3,6 +3,7 @@ import { apiClient } from './instances/api-client.instance';
 import { TRole } from '@/utils/types/role.type';
 import { TPermission } from '@/utils/types/permission.type';
 import { TPermissionFormData } from '@/hooks/usePermissions';
+import { TSystemConfig } from '@/utils/types/system-config.type';
 
 const ManageUserEndpoint = {
   GET_ALL: '/users',
@@ -24,6 +25,13 @@ const ManagePermissionEndpoint = {
   CREATE: 'permissions',
   UPDATE: 'permissions',
   DELETE: (id: string) => `permissions/${id}`,
+};
+
+const ManageSystemConfigEndpoint = {
+  GET_ALL: 'system-configuration',
+  UPDATE: 'system-configuration',
+  DELETE: (key: string) => `system-configuration/${key}`,
+  CREATE: 'system-configuration',
 };
 
 export const AdminApi = {
@@ -136,6 +144,41 @@ export const AdminApi = {
   async deletePermission(id: string): Promise<void> {
     try {
       await apiClient.delete(ManagePermissionEndpoint.DELETE(id));
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getAllSystemConfig(): Promise<TSystemConfig[]> {
+    try {
+      const response = await apiClient.get(ManageSystemConfigEndpoint.GET_ALL);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async updateSystemConfig(key: string, config: TSystemConfig): Promise<TSystemConfig> {
+    try {
+      const response = await apiClient.put(ManageSystemConfigEndpoint.UPDATE, { ...config, key });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async deleteSystemConfig(key: string): Promise<void> {
+    try {
+      await apiClient.delete(ManageSystemConfigEndpoint.DELETE(key));
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async createSystemConfig(config: TSystemConfig): Promise<TSystemConfig> {
+    try {
+      const response = await apiClient.post(ManageSystemConfigEndpoint.CREATE, config);
+      return response.data;
     } catch (error) {
       throw error;
     }
