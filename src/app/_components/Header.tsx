@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserRole } from '@/configs/role.config';
 import { useRouter } from 'next/navigation';
-import { User, Users, Shield, LogOut, Sun, Moon } from 'lucide-react';
+import { User, Users, Shield, LogOut, Sun, Moon, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -80,6 +80,10 @@ function Header() {
                     <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
                       <Shield className="h-5 w-5" />
                       <span>Manage Role</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/system-config-manage')}>
+                      <Settings className="h-5 w-5" />
+                      <span>Settings</span>
                     </DropdownMenuItem>
                   </>
                 )}
