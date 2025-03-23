@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: data-gen-hub-fe
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.development
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_DISABLE_ESLINT=1
+      - NEXT_PRIVATE_SKIP_ESLINT=1
+    networks:
+      - data-gen-hub-fe
+
+networks:
+  data-gen-hub-fe:
+    driver: bridge

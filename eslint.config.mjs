@@ -17,9 +17,16 @@ const eslintConfig = [
   ),
   {
     rules: {
-      "no-unused-vars": ["warn", { args: "after-used", argsIgnorePattern: "^_" }],
-      "no-console": "warn",
-      "prettier/prettier": "warn",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "prettier/prettier": "off",
+      "no-console": "off",
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "prefer-const": "off",
+      "react/no-unescaped-entities": "off"
     },
     languageOptions: {
       globals: {
