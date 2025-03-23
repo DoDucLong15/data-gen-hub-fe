@@ -37,6 +37,7 @@ export const config = {
     '/my-account',
     '/admin/:path*',
     '/classes/:path*',
+    '/classes',
     // Auth routes
     '/account/login',
   ],
