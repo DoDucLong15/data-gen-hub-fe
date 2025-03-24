@@ -11,7 +11,7 @@ import {
 } from '@/apis/instances/api-client.instance';
 import { UserRole } from '@/configs/role.config';
 import { SignInResponse } from '@/apis/auth.api';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { User } from '@/utils/types/user.type';
 
 interface AuthContextType {
@@ -29,18 +29,25 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   // Logout function
   const logout = async (): Promise<void> => {
     // Xóa token
-    deleteCookie('accessToken');
-    deleteCookie('refreshToken');
+    deleteCookie('accessToken', { path: '/' });
+    deleteCookie('refreshToken', { path: '/' });
+
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+    document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+
     localStorage.removeItem('user');
     // Cập nhật user state
     setUser(null);
 
+    sessionStorage.clear();
+
     // Chuyển hướng về trang login
-    redirect('/');
+    router.push('/account/login');
   };
 
   // Đăng ký hàm logout với API client
@@ -89,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const userResponse = await apiClient.get('/users/me');
       // Cập nhật user state
       setUser(userResponse.data as User);
+      localStorage.setItem('user', JSON.stringify(userResponse.data));
       return true;
     } catch (error) {
       console.error('Login failed:', error);
