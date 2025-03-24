@@ -29,16 +29,3 @@ export default function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
-
-// Các paths cần áp dụng middleware
-export const config = {
-  matcher: [
-    // Các routes cần bảo vệ
-    '/my-account',
-    '/admin/:path*',
-    '/classes/:path*',
-    '/classes',
-    // Auth routes
-    '/account/login',
-  ],
-};

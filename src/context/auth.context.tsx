@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
 
     // Chuyển hướng về trang login
-    redirect('/account/login');
+    redirect('/');
   };
 
   // Đăng ký hàm logout với API client

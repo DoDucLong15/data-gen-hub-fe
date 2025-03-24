@@ -11,6 +11,7 @@ export const REFRESH_TOKEN_EXPIRES_IN = 7 * 24 * 60 * 60 * 1000; // 7 ngày
 let logoutHandler: () => Promise<void> = async () => {
   deleteCookie('accessToken');
   deleteCookie('refreshToken');
+  localStorage.removeItem('user');
   window.location.href = '/account/login';
 };
 
