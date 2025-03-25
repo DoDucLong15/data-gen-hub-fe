@@ -81,7 +81,10 @@ function Header() {
                       <Shield className="h-5 w-5" />
                       <span>Manage Role</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/system-config-manage')}>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => router.push('/admin/system-config-manage')}
+                    >
                       <Settings className="h-5 w-5" />
                       <span>Settings</span>
                     </DropdownMenuItem>

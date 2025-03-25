@@ -1,4 +1,4 @@
-import { EConfigValueType } from "@/app/(secure)/admin/system-config-manage/_constants/value.type";
+import { EConfigValueType } from '@/app/(secure)/admin/system-config-manage/_constants/value.type';
 
 export type TSystemConfig = {
   key: string;
