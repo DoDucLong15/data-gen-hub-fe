@@ -1,4 +1,4 @@
-import { TPermission } from "./permission.type";
+import { TPermission } from './permission.type';
 
 export type TRole = {
   id: string;

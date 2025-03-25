@@ -40,13 +40,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
   const [showActionSuggestions, setShowActionSuggestions] = useState(false);
   const [showSubjectSuggestions, setShowSubjectSuggestions] = useState(false);
   const [isDialogInitialized, setIsDialogInitialized] = useState(false);
-  
+
   const actionInputRef = useRef<HTMLInputElement>(null);
   const subjectInputRef = useRef<HTMLInputElement>(null);
 
-  const permission = permissionId 
-    ? permissions?.find((p) => p.id === permissionId)
-    : undefined;
+  const permission = permissionId ? permissions?.find((p) => p.id === permissionId) : undefined;
 
   const form = useForm<z.infer<typeof permissionFormSchema>>({
     resolver: zodResolver(permissionFormSchema),
@@ -61,7 +59,7 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
     if (open && !isDialogInitialized) {
       setIsDialogInitialized(true);
     }
-    
+
     if (!open) {
       setIsDialogInitialized(false);
       setShowActionSuggestions(false);
@@ -110,15 +108,13 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
   };
 
   const commonActions = ['create', 'read', 'update', 'delete', 'manage'];
-  
+
   const handleActionChange = (value: string) => {
     form.setValue('action', value, { shouldValidate: true });
-    
+
     const allActions = Array.from(new Set([...commonActions, ...(actions || [])]));
     if (value) {
-      const filtered = allActions.filter(action => 
-        action.toLowerCase().includes(value.toLowerCase())
-      );
+      const filtered = allActions.filter((action) => action.toLowerCase().includes(value.toLowerCase()));
       setActionSuggestions(filtered);
       setShowActionSuggestions(filtered.length > 0);
     } else {
@@ -129,12 +125,10 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
 
   const handleSubjectChange = (value: string) => {
     form.setValue('subject', value, { shouldValidate: true });
-    
+
     const allSubjects = subjects || [];
     if (value) {
-      const filtered = allSubjects.filter(subject => 
-        subject.toLowerCase().includes(value.toLowerCase())
-      );
+      const filtered = allSubjects.filter((subject) => subject.toLowerCase().includes(value.toLowerCase()));
       setSubjectSuggestions(filtered);
       setShowSubjectSuggestions(filtered.length > 0);
     } else {
@@ -169,9 +163,9 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -201,7 +195,7 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               control={form.control}
               name="action"
               render={({ field }) => (
-                <FormItem className="flex flex-col relative">
+                <FormItem className="relative flex flex-col">
                   <FormLabel>Hành động</FormLabel>
                   <div className="flex space-x-2" ref={actionInputRef}>
                     <FormControl>
@@ -213,11 +207,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
                       />
                     </FormControl>
                     {showActionSuggestions && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border rounded-md shadow-lg z-50 max-h-32 overflow-auto">
+                      <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-32 overflow-auto rounded-md border bg-white shadow-lg dark:bg-gray-800">
                         {actionSuggestions.map((action) => (
                           <div
                             key={action}
-                            className="px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                            className="cursor-pointer px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                             onClick={() => selectAction(action)}
                           >
                             {action}
@@ -235,7 +229,7 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               control={form.control}
               name="subject"
               render={({ field }) => (
-                <FormItem className="flex flex-col relative">
+                <FormItem className="relative flex flex-col">
                   <FormLabel>Đối tượng</FormLabel>
                   <div className="flex space-x-2" ref={subjectInputRef}>
                     <FormControl>
@@ -247,11 +241,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
                       />
                     </FormControl>
                     {showSubjectSuggestions && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border rounded-md shadow-lg z-50 max-h-32 overflow-auto">
+                      <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-32 overflow-auto rounded-md border bg-white shadow-lg dark:bg-gray-800">
                         {subjectSuggestions.map((subject) => (
                           <div
                             key={subject}
-                            className="px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                            className="cursor-pointer px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                             onClick={() => selectSubject(subject)}
                           >
                             {subject}
@@ -272,11 +266,7 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
                 <FormItem>
                   <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Nhập mô tả cho quyền này" 
-                      {...field} 
-                      value={field.value || ''}
-                    />
+                    <Textarea placeholder="Nhập mô tả cho quyền này" {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

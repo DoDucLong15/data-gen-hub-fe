@@ -4,4 +4,3 @@ export enum EConfigValueType {
   BOOLEAN = 'boolean',
   JSON = 'json',
 }
-

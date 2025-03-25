@@ -2,34 +2,25 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { JsonEditor } from './JsonEditor';
 import { TSystemConfig } from '@/utils/types/system-config.type';
-import { getConfigValueType, createConfigWithValue, getConfigValue } from '@/app/(secure)/admin/system-config-manage/_helpers/config.helper';
+import {
+  getConfigValueType,
+  createConfigWithValue,
+  getConfigValue,
+} from '@/app/(secure)/admin/system-config-manage/_helpers/config.helper';
 import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   key: z.string().min(1, 'Key is required'),
   valueType: z.enum(['string', 'number', 'boolean', 'json']),
-  value: z.any()
+  value: z.any(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -44,26 +35,26 @@ export const ConfigForm = ({ initialData, onSubmit, isLoading = false }: ConfigF
   // Determine initial value type and value
   const initialValueType = initialData ? getConfigValueType(initialData) || 'string' : 'string';
   const initialValue = initialData ? getConfigValue(initialData) : '';
-  
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       key: initialData?.key || '',
       valueType: initialValueType as 'string' | 'number' | 'boolean' | 'json',
-      value: initialValue
-    }
+      value: initialValue,
+    },
   });
-  
+
   const valueType = form.watch('valueType');
-  
+
   const handleSubmit = (data: FormValues) => {
     const config = createConfigWithValue(data.key, data.value, data.valueType);
     onSubmit(config);
   };
-  
+
   const renderValueInput = () => {
     const value = form.watch('value');
-    
+
     switch (valueType) {
       case 'string':
         return (
@@ -114,7 +105,7 @@ export const ConfigForm = ({ initialData, onSubmit, isLoading = false }: ConfigF
         return null;
     }
   };
-  
+
   return (
     <Card className="w-full">
       <CardContent>
@@ -127,17 +118,13 @@ export const ConfigForm = ({ initialData, onSubmit, isLoading = false }: ConfigF
                 <FormItem>
                   <FormLabel>Key</FormLabel>
                   <FormControl>
-                    <Input 
-                      {...field} 
-                      disabled={!!initialData || isLoading}
-                      placeholder="Enter configuration key" 
-                    />
+                    <Input {...field} disabled={!!initialData || isLoading} placeholder="Enter configuration key" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="valueType"
@@ -169,22 +156,20 @@ export const ConfigForm = ({ initialData, onSubmit, isLoading = false }: ConfigF
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="value"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Value</FormLabel>
-                  <FormControl>
-                    {renderValueInput()}
-                  </FormControl>
+                  <FormControl>{renderValueInput()}</FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
-            <Button type="submit" disabled={isLoading} className='w-full'>
+
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </form>

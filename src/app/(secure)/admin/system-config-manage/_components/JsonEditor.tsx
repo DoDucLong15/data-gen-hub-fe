@@ -11,10 +11,10 @@ const JSONEditor = dynamic(
     await import('ace-builds/src-noconflict/theme-monokai');
     return ace;
   },
-  { 
+  {
     ssr: false,
-    loading: () => <Skeleton className="h-64 w-full" />
-  }
+    loading: () => <Skeleton className="h-64 w-full" />,
+  },
 );
 
 interface JsonEditorProps {

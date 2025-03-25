@@ -38,7 +38,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     deleteCookie('refreshToken', { path: '/' });
 
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
-    document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+    document.cookie =
+      'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
 
     localStorage.removeItem('user');
     // Cập nhật user state
@@ -72,6 +73,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           console.error('Failed to fetch user data:', error);
           deleteCookie('accessToken');
           deleteCookie('refreshToken');
+          localStorage.removeItem('user');
+          sessionStorage.clear();
+          setUser(null);
         }
       }
       setLoading(false);

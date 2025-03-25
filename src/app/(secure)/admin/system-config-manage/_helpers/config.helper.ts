@@ -1,4 +1,4 @@
-import { TSystemConfig } from "@/utils/types/system-config.type";
+import { TSystemConfig } from '@/utils/types/system-config.type';
 
 export function getConfigValueType(config: TSystemConfig): 'string' | 'number' | 'boolean' | 'json' | null {
   if (config.stringValue !== undefined && config.stringValue !== null) {
@@ -18,7 +18,7 @@ export function getConfigValueType(config: TSystemConfig): 'string' | 'number' |
 
 export function getConfigValue(config: TSystemConfig): any {
   const type = getConfigValueType(config);
-  
+
   switch (type) {
     case 'string':
       return config.stringValue;
@@ -33,9 +33,13 @@ export function getConfigValue(config: TSystemConfig): any {
   }
 }
 
-export function createConfigWithValue(key: string, value: any, type: 'string' | 'number' | 'boolean' | 'json'): TSystemConfig {
+export function createConfigWithValue(
+  key: string,
+  value: any,
+  type: 'string' | 'number' | 'boolean' | 'json',
+): TSystemConfig {
   const config: TSystemConfig = { key };
-  
+
   switch (type) {
     case 'string':
       config.stringValue = String(value);
@@ -50,6 +54,6 @@ export function createConfigWithValue(key: string, value: any, type: 'string' | 
       config.jsonValue = typeof value === 'string' ? JSON.parse(value) : value;
       break;
   }
-  
+
   return config;
 }
