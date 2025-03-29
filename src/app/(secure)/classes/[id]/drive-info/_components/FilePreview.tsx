@@ -6,6 +6,7 @@ import { useFileDownload } from '@/hooks/useDrive';
 import { formatDate } from '../_helpers/file-helper.helper';
 import { FileItem } from '@/utils/types/file.type';
 import { FileIcon } from './FileIcon';
+import Image from 'next/image';
 
 interface FilePreviewProps {
   classId: string;
@@ -77,10 +78,12 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
           <div className="flex h-[70%] flex-grow items-center justify-center overflow-auto bg-gradient-to-br from-slate-50 to-gray-100 p-1 md:h-auto">
             {isImage && (
               <div className="flex h-full w-full justify-center p-6">
-                <img
+                <Image
                   src={file.webViewLink}
                   alt={file.name}
                   className="max-h-full max-w-full rounded-md border border-gray-200 object-contain shadow-lg transition-all hover:shadow-xl"
+                  width={file.imageMediaMetadata?.width}
+                  height={file.imageMediaMetadata?.height}
                 />
               </div>
             )}
@@ -182,10 +185,12 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
                   </h4>
                   <div className="flex items-center space-x-4 rounded-lg border border-gray-100 bg-slate-50 p-4 transition-colors hover:bg-slate-100">
                     {file.owners[0].photoLink ? (
-                      <img
+                      <Image
+                        width={36}
+                        height={36}
                         src={file.owners[0].photoLink}
                         alt={file.owners[0].displayName}
-                        className="h-12 w-12 rounded-full border-2 border-white object-cover shadow-md"
+                        className="rounded-full border-2 border-white object-cover shadow-md"
                       />
                     ) : (
                       <div className="flex h-12 w-12 items-center justify-center rounded-full border border-indigo-200 bg-indigo-100 font-medium text-indigo-700 shadow-sm">

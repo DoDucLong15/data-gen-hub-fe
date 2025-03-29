@@ -1,5 +1,5 @@
 import React from 'react';
-import { Folder, File, FileText, Image, Video, FileSpreadsheet, Music } from 'lucide-react';
+import { Folder, File, FileText, Image as ImageIcon, Video, FileSpreadsheet, Music } from 'lucide-react';
 import { getFileIcon } from '../_helpers/file-helper.helper';
 
 interface FileIconProps {
@@ -16,7 +16,7 @@ export const FileIcon: React.FC<FileIconProps> = ({ mimeType, className }) => {
     case 'file-text':
       return <FileText className={className} />;
     case 'image':
-      return <Image className={className} />;
+      return <ImageIcon className={className} />;
     case 'video':
       return <Video className={className} />;
     case 'audio':

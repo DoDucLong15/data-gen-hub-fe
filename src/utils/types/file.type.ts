@@ -15,6 +15,16 @@ export interface FileItem {
   modifiedTime: string;
   trashed: boolean;
   children?: FileItem[];
+  imageMediaMetadata: {
+    height?: number;
+    rotation?: number;
+    width?: number;
+  } | null;
+  videoMediaMetadata?: {
+    durationMillis?: string;
+    height?: number;
+    width?: number;
+  } | null;
 }
 
 export type FileTreeResponse = FileItem;
