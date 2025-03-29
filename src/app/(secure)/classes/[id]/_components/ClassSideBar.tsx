@@ -77,6 +77,11 @@ const data = {
       isActive: false,
       url: 'other-documents',
     },
+    {
+      title: 'Drive Info',
+      isActive: false,
+      url: 'drive-info',
+    },
   ],
 };
 

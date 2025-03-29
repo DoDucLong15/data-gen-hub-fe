@@ -1,12 +1,18 @@
 import axios from 'axios';
 import { apiClient } from './instances/api-client.instance';
 import { TClass } from '@/utils/types/classes.type';
+import { FileItem, FileTreeResponse, UploadFileResponse } from '@/utils/types/file.type';
 
 const ClassApiEndpoint = {
   GET_ALL: '/class',
   CREATE: '/class',
   UPDATE: '/class',
   DELETE: (id: string) => `/class/${id}`,
+  GET_DRIVE_INFO: (id: string) => `/class/${id}/drive-info`,
+  DOWNLOAD_FILE: (id: string) => `/class/${id}/drive-info/download`,
+  UPLOAD_FILE: (id: string) => `/class/${id}/drive-info/upload`,
+  DELETE_FILE: (classId: string, fileId: string) => `/class/${classId}/drive-info/${fileId}`,
+  CREATE_FOLDER: (classId: string) => `/class/${classId}/drive-info/folders`,
 };
 
 export const ClassesApi = {
@@ -40,6 +46,67 @@ export const ClassesApi = {
   async delete(id: string): Promise<void> {
     try {
       await apiClient.delete(ClassApiEndpoint.DELETE(id));
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getDriveInfoTree(classId: string): Promise<FileTreeResponse> {
+    try {
+      const response = await apiClient.get(ClassApiEndpoint.GET_DRIVE_INFO(classId));
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async downloadFile(classId: string, fileIds: string[]): Promise<Blob> {
+    try {
+      const response = await apiClient.get(ClassApiEndpoint.DOWNLOAD_FILE(classId), {
+        params: { fileIds: fileIds },
+        responseType: 'blob',
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async uploadFiles(classId: string, files: File[], folderId: string): Promise<UploadFileResponse[]> {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
+      formData.append('folderId', folderId);
+
+      const response = await apiClient.post(ClassApiEndpoint.UPLOAD_FILE(classId), formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async createFolder(classId: string, folderName: string, parentId: string): Promise<FileItem> {
+    try {
+      const response = await apiClient.post(ClassApiEndpoint.CREATE_FOLDER(classId), {
+        folderName,
+        parentFolderId: parentId,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async deleteFile(classId: string, fileId: string): Promise<{ success: boolean }> {
+    try {
+      await apiClient.delete(ClassApiEndpoint.DELETE_FILE(classId, fileId));
+      return { success: true };
     } catch (error) {
       throw error;
     }

@@ -105,7 +105,7 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
             onChange={handleChange}
             placeholder="e.g. 1A2B3C4D5E6F7G8H9I0J"
           />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Enter the Google Drive folder ID where class materials will be stored. This is optional.
           </p>
         </div>
