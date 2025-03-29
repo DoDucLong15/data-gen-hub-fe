@@ -6,4 +6,5 @@ export type TClass = {
   semester: string;
   studentPaths?: string[];
   outputPath?: string;
+  driveId?: string;
 };
