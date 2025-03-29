@@ -29,7 +29,11 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'driveId') {
+      setFormData((prev) => ({ ...prev, [name]: value.trim() === '' ? undefined : value }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -90,6 +94,20 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
               placeholder="e.g. Fall 2025"
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="driveId">Drive ID</Label>
+          <Input
+            id="driveId"
+            name="driveId"
+            value={formData.driveId || ''}
+            onChange={handleChange}
+            placeholder="e.g. 1A2B3C4D5E6F7G8H9I0J"
+          />
+          <p className="text-sm text-muted-foreground">
+            Enter the Google Drive folder ID where class materials will be stored. This is optional.
+          </p>
         </div>
       </div>
 
