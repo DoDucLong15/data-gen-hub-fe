@@ -4,6 +4,7 @@ export enum EProgressType {
   SUPERVISORY_COMMENTS = 'supervisory_comments',
   STUDENT_LIST = 'student_list',
   OTHER_DOCUMENT = 'other_document',
+  DRIVE_DATA = 'drive_data',
 }
 
 export enum EProgressStatus {

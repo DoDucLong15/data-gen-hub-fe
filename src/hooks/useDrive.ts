@@ -1,7 +1,12 @@
-import { ClassesApi } from '@/apis/classes.api';
+import { ClassesApi, ESyncDriveDataType } from '@/apis/classes.api';
 import { FileItem, FileSelectionMode } from '@/utils/types/file.type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
+import { STUDENTS_QUERY_KEY } from './useStudents';
+import { GENERATED_SHEETS_QUERY_KEY } from './useGenerateThesis';
+import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
+import { ProcessApi } from '@/apis/process.api';
+import { EProgressType } from '@/utils/enums/progress.enum';
 
 export const fileKeys = (classId: string) => ({
   all: ['files', classId] as const,
@@ -16,6 +21,8 @@ export const useDrives = (classId: string) => {
     data: fileTree,
     isLoading: loadingFileTree,
     isError: errorFileTree,
+    refetch: refetchFileTree,
+    isRefetching: isRefetchingFileTree,
   } = useQuery({
     queryKey: fileKeys(classId).tree(),
     queryFn: () => ClassesApi.getDriveInfoTree(classId),
@@ -45,13 +52,34 @@ export const useDrives = (classId: string) => {
     },
   });
 
+  const syncDriveDataMutation = useMutation({
+    mutationFn: (types?: ESyncDriveDataType[]) => ClassesApi.syncDriveData([classId], types),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: STUDENTS_QUERY_KEY(classId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: GENERATED_SHEETS_QUERY_KEY(EThesisDocumentType.ASSIGNMENT_SHEET, classId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: GENERATED_SHEETS_QUERY_KEY(EThesisDocumentType.GUIDANCE_REVIEW, classId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: GENERATED_SHEETS_QUERY_KEY(EThesisDocumentType.SUPERVISORY_COMMENTS, classId),
+      });
+    },
+  });
+
   return {
     fileTree,
     loadingFileTree,
     errorFileTree,
+    refetchFileTree,
+    isRefetchingFileTree,
     uploadFilesMutation,
     createFolderMutation,
     deleteFileMutation,
+    syncDriveDataMutation,
   };
 };
 
@@ -149,4 +177,27 @@ export const useFileDownload = () => {
   }, []);
 
   return { downloadFile };
+};
+
+export const useDriveDataSyncHistory = (classId: string) => {
+  const {
+    data: processes = [],
+    isLoading: processesIsLoafing,
+    refetch: refetchProcesses,
+  } = useQuery({
+    queryKey: ['process-other-document', classId],
+    queryFn: () =>
+      ProcessApi.getProgress({
+        classIds: [classId],
+        types: [EProgressType.DRIVE_DATA],
+      }),
+    refetchInterval: 10 * 1000,
+    enabled: !!classId,
+  });
+
+  return {
+    processes,
+    processesIsLoafing,
+    refetchProcesses,
+  };
 };

@@ -4,6 +4,7 @@ import { FileItem } from '@/utils/types/file.type';
 import { useFileDownload } from '@/hooks/useDrive';
 import { formatDate, isFolder } from '../_helpers/file-helper.helper';
 import { FileIcon } from './FileIcon';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface FileGridProps {
   classId: string;
@@ -51,6 +52,20 @@ export const FileGrid: React.FC<FileGridProps> = ({
     }
   };
 
+  // Hàm kiểm tra nếu tên file quá dài
+  const isLongFileName = (name: string) => name.length > 18;
+
+  // Hàm cắt ngắn tên file
+  const truncateFileName = (name: string) => {
+    if (name.length <= 18) return name;
+
+    const extension = name.includes('.') ? name.split('.').pop() : '';
+    const nameWithoutExt = extension ? name.slice(0, -(extension.length + 1)) : name;
+
+    if (nameWithoutExt.length <= 12) return name;
+    return `${nameWithoutExt.slice(0, 12)}...${extension ? `.${extension}` : ''}`;
+  };
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {filteredFiles.map((file) => (
@@ -68,10 +83,21 @@ export const FileGrid: React.FC<FileGridProps> = ({
         >
           <CardContent className="flex flex-col items-center p-4">
             <FileIcon mimeType={file.mimeType} className="mb-2 h-12 w-12" />
-            <div className="text-center">
-              <p className="max-w-full truncate text-sm font-medium" title={file.name}>
-                {file.name}
-              </p>
+            <div className="w-full text-center">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <p className="max-w-full truncate text-sm font-medium">
+                      {isLongFileName(file.name) ? truncateFileName(file.name) : file.name}
+                    </p>
+                  </TooltipTrigger>
+                  {isLongFileName(file.name) && (
+                    <TooltipContent side="top" align="center" className="max-w-xs">
+                      <p className="text-sm break-words">{file.name}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
               <p className="text-xs text-gray-500">{formatDate(file.modifiedTime)}</p>
             </div>
           </CardContent>

@@ -13,7 +13,15 @@ const ClassApiEndpoint = {
   UPLOAD_FILE: (id: string) => `/class/${id}/drive-info/upload`,
   DELETE_FILE: (classId: string, fileId: string) => `/class/${classId}/drive-info/${fileId}`,
   CREATE_FOLDER: (classId: string) => `/class/${classId}/drive-info/folders`,
+  SYNC_DRIVE_DATA: `/class/drive-info/sync`,
 };
+
+export enum ESyncDriveDataType {
+  GUIDANCE_REVIEW = 'guidance_reviews',
+  SUPERVISORY_COMMENTS = 'supervisory_comments',
+  ASSIGNMENT_SHEET = 'assignment_sheets',
+  STUDENT_LIST = 'student_list',
+}
 
 export const ClassesApi = {
   async getAll(): Promise<TClass[]> {
@@ -107,6 +115,18 @@ export const ClassesApi = {
     try {
       await apiClient.delete(ClassApiEndpoint.DELETE_FILE(classId, fileId));
       return { success: true };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async syncDriveData(classIds?: string[], types?: ESyncDriveDataType[]): Promise<any> {
+    try {
+      const response = await apiClient.post(ClassApiEndpoint.SYNC_DRIVE_DATA, {
+        classIds,
+        types,
+      });
+      return response.data;
     } catch (error) {
       throw error;
     }
