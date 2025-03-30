@@ -5,6 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { Upload, X, Check, AlertCircle } from 'lucide-react';
 import { useDrives } from '@/hooks/useDrive';
 import { useDropzone } from 'react-dropzone';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface FileUploaderProps {
   classId: string;
@@ -62,6 +63,20 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Hàm cắt ngắn tên file nếu quá dài
+  const truncateFileName = (fileName: string, maxLength: number = 20) => {
+    if (fileName.length <= maxLength) return fileName;
+
+    const extension = fileName.split('.').pop() || '';
+    const nameWithoutExtension = fileName.substring(0, fileName.length - extension.length - 1);
+
+    if (nameWithoutExtension.length <= maxLength - 5) {
+      return fileName;
+    }
+
+    return `${nameWithoutExtension.substring(0, maxLength - 5)}...${extension ? `.${extension}` : ''}`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -88,11 +103,22 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
               <div className="max-h-40 space-y-2 overflow-y-auto">
                 {files.map((file, index) => (
                   <div key={index} className="flex items-center justify-between rounded-md bg-gray-50 p-2">
-                    <div className="flex items-center space-x-2 truncate">
-                      <span className="truncate text-sm">{file.name}</span>
-                      <span className="text-xs text-gray-500">({(file.size / 1024).toFixed(1)} KB)</span>
-                    </div>
-                    <Button variant="ghost" size="sm" onClick={() => removeFile(index)}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex max-w-[80%] items-center space-x-2">
+                            <span className="truncate text-sm font-medium">{truncateFileName(file.name)}</span>
+                            <span className="text-xs whitespace-nowrap text-gray-500">
+                              ({(file.size / 1024).toFixed(1)} KB)
+                            </span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{file.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <Button variant="ghost" size="sm" onClick={() => removeFile(index)} className="ml-2 flex-shrink-0">
                       <X className="h-4 w-4" />
                     </Button>
                   </div>

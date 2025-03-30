@@ -19,7 +19,7 @@ const PROCESS_EXPORT_THESIS_QUERY_KEYS = (type: EThesisDocumentType, classId: st
   type,
   classId,
 ];
-const GENERATED_SHEETS_QUERY_KEY = (type: EThesisDocumentType, classId: string) => [
+export const GENERATED_SHEETS_QUERY_KEY = (type: EThesisDocumentType, classId: string) => [
   'generated-sheets-export',
   type,
   classId,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid3X3, List, Upload, Download, Trash2, Search } from 'lucide-react';
+import { Grid3X3, List, Upload, Download, Trash2, Search, RefreshCw, FolderSync } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FileViewMode } from '@/utils/types/file.type';
@@ -38,7 +38,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   selectedFiles,
   clearSelection,
 }) => {
-  const { deleteFileMutation: deleteItem } = useDrives(classId);
+  const {
+    deleteFileMutation: deleteItem,
+    refetchFileTree,
+    isRefetchingFileTree,
+    syncDriveDataMutation,
+  } = useDrives(classId);
   const { downloadFile } = useFileDownload();
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
@@ -53,6 +58,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       toast.error('Failed to delete the selected files');
     } finally {
       setIsDeleteAlertOpen(false);
+    }
+  };
+
+  const handleSync = async () => {
+    try {
+      await syncDriveDataMutation.mutateAsync(undefined);
+      toast.success('Drive data synced successfully');
+    } catch (error) {
+      toast.error('Failed to sync drive data');
     }
   };
 
@@ -109,6 +123,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Button variant="default" size="sm" onClick={onUploadClick}>
           <Upload className="mr-2 h-4 w-4" />
           Upload
+        </Button>
+        <Button variant="outline" onClick={() => refetchFileTree()} disabled={isRefetchingFileTree}>
+          <RefreshCw className={`h-4 w-4 ${isRefetchingFileTree ? 'animate-spin' : ''}`} />
+        </Button>
+        <Button variant="outline" onClick={handleSync} disabled={syncDriveDataMutation.isPending}>
+          <FolderSync className={`h-4 w-4 ${syncDriveDataMutation.isPending ? 'animate-spin' : ''}`} />
+          Sync Drive
         </Button>
       </div>
 

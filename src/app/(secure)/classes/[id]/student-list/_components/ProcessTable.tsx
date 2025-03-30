@@ -105,6 +105,7 @@ export function ProcessTable({
             <TableHead>Action</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead>Error</TableHead>
             <TableHead>Created By</TableHead>
             <TableHead>Created At</TableHead>
           </TableRow>
@@ -116,6 +117,18 @@ export function ProcessTable({
               <TableCell>{process.action}</TableCell>
               <TableCell>{process.type}</TableCell>
               <TableCell>{getStatusBadge(process.status)}</TableCell>
+              <TableCell className="max-w-[200px] truncate">
+                {process.error ? (
+                  <div
+                    className="overflow-hidden text-ellipsis whitespace-nowrap"
+                    title={JSON.stringify(process.error)}
+                  >
+                    {JSON.stringify(process.error)}
+                  </div>
+                ) : (
+                  ''
+                )}
+              </TableCell>
               <TableCell>{process.createBy}</TableCell>
               <TableCell>{new Date(process.createdAt).toLocaleString()}</TableCell>
             </TableRow>

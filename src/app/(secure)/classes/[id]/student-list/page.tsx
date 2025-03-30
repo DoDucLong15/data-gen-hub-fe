@@ -15,7 +15,7 @@ export default function StudentsPage() {
   return (
     <div className="container mx-auto py-1 lg:px-4">
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-[400px] grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="list">Student List</TabsTrigger>
           <TabsTrigger value="import-export">Import</TabsTrigger>
         </TabsList>

@@ -108,9 +108,9 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
           <p className="text-muted-foreground text-sm">
             Enter the Google Drive folder ID to store class materials. This field is optional.
             <br />
-            <span className="font-medium">Important:</span> Before using this feature, please share editing access to
-            your folder with our service account:
-            <span className="rounded bg-gray-100 px-1 font-mono text-xs">
+            <span className="font-bold text-red-400">Important:</span> Before using this feature, please share editing
+            access to your folder with our service account:
+            <span className="rounded bg-red-200 px-1 font-mono text-xs">
               data-gen-hub@oauth2-402816.iam.gserviceaccount.com
             </span>
           </p>
