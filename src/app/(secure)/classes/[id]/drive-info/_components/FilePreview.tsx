@@ -108,7 +108,7 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
                 src={file.webViewLink}
                 title={file.name}
                 className="m-2 h-full w-full rounded-md border-0 shadow-lg"
-                sandbox="allow-scripts allow-same-origin allow-forms"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               />
             )}
 
