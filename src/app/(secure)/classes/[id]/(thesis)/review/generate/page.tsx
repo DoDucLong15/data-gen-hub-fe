@@ -11,7 +11,7 @@ import ProcessTable from '../../_components/generate/ProcessTable';
 export default function GuidanceReviewGeneratePage() {
   const { id } = useParams();
   return (
-    <div className="container space-y-6 py-6">
+    <div className="container mx-auto space-y-6 py-4">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>

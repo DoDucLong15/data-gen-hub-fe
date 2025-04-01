@@ -10,7 +10,7 @@ import { ThesisTable } from '../../_components/import/ThesisTable';
 export default function SupervisoryCommentImportPage() {
   const { id } = useParams();
   return (
-    <div className="container space-y-6 py-6">
+    <div className="container mx-auto space-y-6 py-4">
       <Card>
         <CardHeader>
           <CardTitle>Execute Import</CardTitle>

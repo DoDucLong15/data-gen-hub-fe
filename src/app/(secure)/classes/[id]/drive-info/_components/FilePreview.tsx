@@ -25,6 +25,19 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
     }
   };
 
+  const isLongFileName = (name: string) => name.length > 50;
+
+  // Hàm cắt ngắn tên file
+  const truncateFileName = (name: string) => {
+    if (name.length <= 50) return name;
+
+    const extension = name.includes('.') ? name.split('.').pop() : '';
+    const nameWithoutExt = extension ? name.slice(0, -(extension.length + 1)) : name;
+
+    if (nameWithoutExt.length <= 40) return name;
+    return `${nameWithoutExt.slice(0, 40)}...${extension ? `.${extension}` : ''}`;
+  };
+
   // If no file, render elegant dialog with message
   if (!file) {
     return (
@@ -69,7 +82,9 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
         <DialogHeader className="border-b border-gray-200 bg-gradient-to-r from-slate-50 to-white px-8 py-5">
           <DialogTitle className="flex items-center gap-3">
             <FileIcon mimeType={file.mimeType} className="h-6 w-6 text-indigo-600" />
-            <span className="line-clamp-1 font-serif text-xl text-slate-800">{file.name}</span>
+            <span className="line-clamp-1 cursor-help font-serif text-xl text-slate-800" title={file.name}>
+              {isLongFileName(file.name) ? truncateFileName(file.name) : file.name}
+            </span>
           </DialogTitle>
         </DialogHeader>
 
