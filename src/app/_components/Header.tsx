@@ -16,6 +16,9 @@ import { useRouter } from 'next/navigation';
 import { User, Users, Shield, LogOut, Sun, Moon, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 function Header() {
   const { user, logout } = useAuth();
@@ -71,25 +74,33 @@ function Header() {
                   <User className="h-5 w-5" />
                   <span>My Account</span>
                 </DropdownMenuItem>
-                {user?.role === UserRole.ADMIN && (
-                  <>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
-                      <Users className="h-5 w-5" />
-                      <span>Manage User</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
-                      <Shield className="h-5 w-5" />
-                      <span>Manage Role</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onClick={() => router.push('/admin/system-config-manage')}
-                    >
-                      <Settings className="h-5 w-5" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                  </>
-                )}
+                <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Users }]}>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
+                    <Users className="h-5 w-5" />
+                    <span>Manage User</span>
+                  </DropdownMenuItem>
+                </ProtectedComponent>
+                <ProtectedComponent
+                  permissions={[
+                    { action: EAction.READ, subject: ESubject.System_Roles },
+                    { action: EAction.READ, subject: ESubject.System_Permissions },
+                  ]}
+                  logic="OR"
+                >
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
+                    <Shield className="h-5 w-5" />
+                    <span>Manage Role</span>
+                  </DropdownMenuItem>
+                </ProtectedComponent>
+                <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Configuration }]}>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => router.push('/admin/system-config-manage')}
+                  >
+                    <Settings className="h-5 w-5" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                </ProtectedComponent>
                 <DropdownMenuItem className="cursor-pointer" onClick={logout}>
                   <LogOut className="h-5 w-5" />
                   <span>Logout</span>

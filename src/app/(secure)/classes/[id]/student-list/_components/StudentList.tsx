@@ -34,6 +34,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Spinner } from '@/components/ui/spinner';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 interface StudentListProps {
   classId: string;
@@ -165,9 +168,11 @@ export function StudentList({ classId }: StudentListProps) {
         </div>
 
         <div className="flex gap-2">
-          <Button onClick={handleCreate} className="sm:whitespace-nowrap">
-            Add Student
-          </Button>
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Students }]}>
+            <Button onClick={handleCreate} className="sm:whitespace-nowrap">
+              Add Student
+            </Button>
+          </ProtectedComponent>
           <Button
             variant="outline"
             onClick={handleExport}
@@ -236,30 +241,34 @@ export function StudentList({ classId }: StudentListProps) {
                           <TableCell className="hidden truncate xl:table-cell">{student.reviewer}</TableCell>
                           <TableCell>
                             <div className="flex gap-2">
-                              <Button variant="ghost" size="icon" onClick={() => handleEdit(student)}>
-                                <Edit className="h-4 w-4" />
-                              </Button>
+                              <ProtectedComponent
+                                permissions={[{ action: EAction.MANAGE, subject: ESubject.Students }]}
+                              >
+                                <Button variant="ghost" size="icon" onClick={() => handleEdit(student)}>
+                                  <Edit className="h-4 w-4" />
+                                </Button>
 
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <Button variant="ghost" size="icon" onClick={() => confirmDelete(student.id!)}>
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete the student record from
-                                      the database.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" size="icon" onClick={() => confirmDelete(student.id!)}>
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        This action cannot be undone. This will permanently delete the student record
+                                        from the database.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                      <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </ProtectedComponent>
 
                               <div className="md:hidden">
                                 <DropdownMenu>

@@ -1,4 +1,5 @@
 import { UserRole } from '@/configs/role.config';
+import { IPermission } from './authorization.type';
 
 export type User = {
   id: string;
@@ -13,10 +14,7 @@ export type User = {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
-  permissions: {
-    action: string;
-    subject: string;
-  }[];
+  permissions: IPermission[];
 };
 
 export type UserFormData = {

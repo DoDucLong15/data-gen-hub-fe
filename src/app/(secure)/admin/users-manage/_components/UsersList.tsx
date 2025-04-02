@@ -27,6 +27,9 @@ import {
 import { UserFormDialog } from './UserFormDialog';
 import { UserDetailDialog } from './UserDetailDialog';
 import { useUsers } from '@/hooks/useUsers';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 export function UsersList() {
   const { users, isLoading, deleteUser } = useUsers();
@@ -109,14 +112,16 @@ export function UsersList() {
                           <Eye className="mr-2 h-4 w-4" />
                           View
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setUserToEdit(user.id)}>
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setUserToDelete(user.id)} className="text-red-600">
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </DropdownMenuItem>
+                        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
+                          <DropdownMenuItem onClick={() => setUserToEdit(user.id)}>
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setUserToDelete(user.id)} className="text-red-600">
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </ProtectedComponent>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

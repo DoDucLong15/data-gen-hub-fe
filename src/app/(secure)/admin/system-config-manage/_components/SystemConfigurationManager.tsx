@@ -7,6 +7,9 @@ import { useSystemConfig } from '@/hooks/useSystemConfig';
 import { TSystemConfig } from '@/utils/types/system-config.type';
 import { useState } from 'react';
 import { Plus, RefreshCcw } from 'lucide-react';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 export default function SystemConfigurationManager() {
   // Query hooks
@@ -66,10 +69,12 @@ export default function SystemConfigurationManager() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">System Configuration</h1>
         <div className="flex items-center gap-2">
-          <Button onClick={handleAddNew}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add New
-          </Button>
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Configuration }]}>
+            <Button onClick={handleAddNew}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add New
+            </Button>
+          </ProtectedComponent>
           <Button onClick={() => refetch()} variant={'outline'}>
             <RefreshCcw className="h-4 w-4" />
           </Button>

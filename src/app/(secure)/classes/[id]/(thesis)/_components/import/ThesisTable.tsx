@@ -34,6 +34,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { ThesisDetailDialog } from './ThesisDetailDialog';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 interface ThesisTableProps {
   thesisType: EThesisDocumentType;
@@ -145,10 +148,19 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
             Làm mới
           </Button>
 
-          <Button variant="default" size="sm" onClick={handleCreate} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Tạo mới
-          </Button>
+          <ProtectedComponent
+            permissions={[
+              { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
+              { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
+              { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
+            ]}
+            logic="OR"
+          >
+            <Button variant="default" size="sm" onClick={handleCreate} className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              Tạo mới
+            </Button>
+          </ProtectedComponent>
         </div>
 
         <div className="flex gap-2">
@@ -242,32 +254,41 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
                             <Download className="h-4 w-4" />
                           </Button>
                         )}
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(entity)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <AlertDialog>
-                          {/* Nút kích hoạt AlertDialog */}
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <Trash className="h-4 w-4" />
-                            </Button>
-                          </AlertDialogTrigger>
+                        <ProtectedComponent
+                          permissions={[
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
+                          ]}
+                          logic="OR"
+                        >
+                          <Button variant="ghost" size="icon" onClick={() => handleEdit(entity)}>
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <AlertDialog>
+                            {/* Nút kích hoạt AlertDialog */}
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
 
-                          {/* Nội dung hộp thoại */}
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete the thesis with ID:{' '}
-                                {entity.id}.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => deleteThesis(entity.id)}>Confirm</AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+                            {/* Nội dung hộp thoại */}
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. This will permanently delete the thesis with ID:{' '}
+                                  {entity.id}.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => deleteThesis(entity.id)}>Confirm</AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </ProtectedComponent>
                       </div>
                     </TableCell>
                   </TableRow>

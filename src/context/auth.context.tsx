@@ -13,6 +13,9 @@ import { UserRole } from '@/configs/role.config';
 import { SignInResponse } from '@/apis/auth.api';
 import { redirect, useRouter } from 'next/navigation';
 import { User } from '@/utils/types/user.type';
+import { ESubject, IPermission } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { AuthorizationHelper } from '@/utils/helper/authorization.helper';
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +24,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   updateUser: (userData: Partial<User>) => Promise<User>;
+  hasPermission: (action: EAction, subject: ESubject) => boolean;
+  checkPermissions: (permissions: Array<{ action: EAction; subject: ESubject }>, logic?: 'AND' | 'OR') => boolean;
 }
 
 // Tạo context cho quản lý xác thực
@@ -132,6 +137,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const permissionCheck = (action: EAction, subject: ESubject) => {
+    if (!user) return false;
+    return AuthorizationHelper.hasPermission(user.permissions, action, subject);
+  };
+
+  const permissionsCheck = (
+    permissions: Array<{ action: EAction; subject: ESubject }>,
+    logic: 'AND' | 'OR' = 'AND',
+  ) => {
+    if (!user) return false;
+    return AuthorizationHelper.checkPermissions(user.permissions, permissions, logic);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -141,6 +159,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout,
         isAuthenticated: !!user,
         updateUser,
+        hasPermission: permissionCheck,
+        checkPermissions: permissionsCheck,
       }}
     >
       {children}

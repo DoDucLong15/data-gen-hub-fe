@@ -39,6 +39,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 export function PermissionsList() {
   const { permissions, permissionsBySubject, subjects, isLoading, deletePermission, refetch } = usePermissions();
@@ -201,9 +204,11 @@ export function PermissionsList() {
   return (
     <>
       <div className="mb-4 flex items-center justify-end">
-        <Button onClick={() => setShowAddPermission(true)}>
-          <Plus className="mr-2 h-4 w-4" /> Thêm quyền mới
-        </Button>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Permissions }]}>
+          <Button onClick={() => setShowAddPermission(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Thêm quyền mới
+          </Button>
+        </ProtectedComponent>
         <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading} className="ml-2">
           <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
         </Button>
@@ -281,28 +286,32 @@ export function PermissionsList() {
                         </div>
                       </TableCell>
                       <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                              <span className="sr-only">Open menu</span>
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => setPermissionToEdit(permission.id)}>
-                              <Edit className="mr-2 h-4 w-4" />
-                              Chỉnh sửa
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => setPermissionToDelete(permission.id)}
-                              className="text-red-600"
-                            >
-                              <Trash2 className="mr-2 h-4 w-4" />
-                              Xóa
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <ProtectedComponent
+                          permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Permissions }]}
+                        >
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                              <DropdownMenuItem onClick={() => setPermissionToEdit(permission.id)}>
+                                <Edit className="mr-2 h-4 w-4" />
+                                Chỉnh sửa
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => setPermissionToDelete(permission.id)}
+                                className="text-red-600"
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Xóa
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </ProtectedComponent>
                       </TableCell>
                     </TableRow>
                   ))

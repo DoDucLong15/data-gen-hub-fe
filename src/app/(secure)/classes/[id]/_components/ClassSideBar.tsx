@@ -16,21 +16,29 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { EAction, ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 const data = {
   navMain: [
     {
       title: 'Dashboard',
       url: 'dashboard',
+      action: EAction.READ,
+      subject: ESubject.Classes,
     },
     {
       title: 'Student List',
       url: 'student-list',
+      action: EAction.READ,
+      subject: ESubject.Students,
     },
     {
       title: 'Assignment',
       isActive: false,
       url: 'assignment/generate',
+      action: EAction.READ,
+      subject: ESubject.Thesis_AssignmentSheets,
       items: [
         {
           title: 'Generate',
@@ -46,6 +54,8 @@ const data = {
       title: 'Review',
       isActive: false,
       url: 'review/generate',
+      action: EAction.READ,
+      subject: ESubject.Thesis_GuidanceReviews,
       items: [
         {
           title: 'Generate',
@@ -61,6 +71,8 @@ const data = {
       title: 'Supervise',
       isActive: false,
       url: 'supervise/generate',
+      action: EAction.READ,
+      subject: ESubject.Thesis_SupervisoryComments,
       items: [
         {
           title: 'Generate',
@@ -76,11 +88,15 @@ const data = {
       title: 'Other documents',
       isActive: false,
       url: 'other-documents',
+      action: EAction.MANAGE,
+      subject: ESubject.Thesis_OtherDocuments,
     },
     {
       title: 'Drive Info',
       isActive: false,
       url: 'drive-info',
+      action: EAction.READ,
+      subject: ESubject.Thesis_Drive,
     },
   ],
 };
@@ -114,34 +130,36 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
         <SidebarGroup>
           <SidebarMenu>
             {data.navMain.map((item, index) => (
-              <Collapsible key={item.title} defaultOpen={index === 1} className="group/collapsible">
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton isActive={item.isActive}>
-                      <Link href={getUrlWithId(item?.url ?? '#')}>{item.title}</Link>{' '}
-                      {item.items?.length && (
-                        <>
-                          <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                          <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
-                        </>
-                      )}
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  {item.items?.length ? (
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.items.map((item) => (
-                          <SidebarMenuSubItem key={item.title}>
-                            <SidebarMenuSubButton asChild>
-                              <Link href={getUrlWithId(item.url)}>{item.title}</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  ) : null}
-                </SidebarMenuItem>
-              </Collapsible>
+              <ProtectedComponent key={item.title} permissions={[{ action: item.action, subject: item.subject }]}>
+                <Collapsible defaultOpen={index === 1} className="group/collapsible">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton isActive={item.isActive}>
+                        <Link href={getUrlWithId(item?.url ?? '#')}>{item.title}</Link>{' '}
+                        {item.items?.length && (
+                          <>
+                            <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
+                            <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+                          </>
+                        )}
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    {item.items?.length ? (
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {item.items.map((item) => (
+                            <SidebarMenuSubItem key={item.title}>
+                              <SidebarMenuSubButton asChild>
+                                <Link href={getUrlWithId(item.url)}>{item.title}</Link>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          ))}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    ) : null}
+                  </SidebarMenuItem>
+                </Collapsible>
+              </ProtectedComponent>
             ))}
           </SidebarMenu>
         </SidebarGroup>

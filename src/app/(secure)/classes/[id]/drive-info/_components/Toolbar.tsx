@@ -16,6 +16,9 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 interface ToolbarProps {
   classId: string;
@@ -100,10 +103,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       <div className="flex w-full items-center justify-end gap-2 md:w-auto">
         {selectedFiles.length > 0 && (
           <>
-            <Button variant="outline" size="sm" onClick={() => setIsDeleteAlertOpen(true)}>
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete
-            </Button>
+            <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+              <Button variant="outline" size="sm" onClick={() => setIsDeleteAlertOpen(true)}>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete
+              </Button>
+            </ProtectedComponent>
 
             <Button
               variant="outline"
@@ -120,17 +125,21 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </>
         )}
 
-        <Button variant="default" size="sm" onClick={onUploadClick}>
-          <Upload className="mr-2 h-4 w-4" />
-          Upload
-        </Button>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+          <Button variant="default" size="sm" onClick={onUploadClick}>
+            <Upload className="mr-2 h-4 w-4" />
+            Upload
+          </Button>
+        </ProtectedComponent>
         <Button variant="outline" onClick={() => refetchFileTree()} disabled={isRefetchingFileTree}>
           <RefreshCw className={`h-4 w-4 ${isRefetchingFileTree ? 'animate-spin' : ''}`} />
         </Button>
-        <Button variant="outline" onClick={handleSync} disabled={syncDriveDataMutation.isPending}>
-          <FolderSync className={`h-4 w-4 ${syncDriveDataMutation.isPending ? 'animate-spin' : ''}`} />
-          Sync Drive
-        </Button>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+          <Button variant="outline" onClick={handleSync} disabled={syncDriveDataMutation.isPending}>
+            <FolderSync className={`h-4 w-4 ${syncDriveDataMutation.isPending ? 'animate-spin' : ''}`} />
+            Sync Drive
+          </Button>
+        </ProtectedComponent>
       </div>
 
       <AlertDialog open={isDeleteAlertOpen} onOpenChange={setIsDeleteAlertOpen}>

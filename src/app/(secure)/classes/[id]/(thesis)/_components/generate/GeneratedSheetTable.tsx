@@ -32,6 +32,9 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { Input } from '@/components/ui/input';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
 
 export default function GeneratedSheetsTable({
   classId,
@@ -113,38 +116,47 @@ export default function GeneratedSheetsTable({
             Tải tất cả
           </Button>
 
-          <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="sm"
-                disabled={generatedSheets.length === 0 || isDeletingAllSheets}
-                className="flex items-center gap-2"
-              >
-                <Trash2 className="h-4 w-4" />
-                Xóa tất cả
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Xác nhận xóa tất cả</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Bạn có chắc chắn muốn xóa tất cả phiếu giao nhiệm vụ? Hành động này không thể hoàn tác.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Hủy</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    deleteAllSheets();
-                    setIsDeleteDialogOpen(false);
-                  }}
+          <ProtectedComponent
+            permissions={[
+              { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
+              { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
+              { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
+            ]}
+            logic="OR"
+          >
+            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  disabled={generatedSheets.length === 0 || isDeletingAllSheets}
+                  className="flex items-center gap-2"
                 >
+                  <Trash2 className="h-4 w-4" />
                   Xóa tất cả
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Xác nhận xóa tất cả</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Bạn có chắc chắn muốn xóa tất cả phiếu giao nhiệm vụ? Hành động này không thể hoàn tác.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Hủy</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      deleteAllSheets();
+                      setIsDeleteDialogOpen(false);
+                    }}
+                  >
+                    Xóa tất cả
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </ProtectedComponent>
         </div>
       </div>
 
@@ -211,9 +223,18 @@ export default function GeneratedSheetsTable({
                         <Button variant="ghost" size="icon" onClick={() => downloadOneFile(sheet.outputPath)}>
                           <Download className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => deleteSheet(sheet.id)}>
-                          <Trash className="h-4 w-4" />
-                        </Button>
+                        <ProtectedComponent
+                          permissions={[
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
+                            { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
+                          ]}
+                          logic="OR"
+                        >
+                          <Button variant="ghost" size="icon" onClick={() => deleteSheet(sheet.id)}>
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        </ProtectedComponent>
                       </div>
                     </TableCell>
                   </TableRow>

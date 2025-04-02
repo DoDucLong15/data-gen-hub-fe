@@ -1,4 +1,7 @@
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { ESubject } from '@/utils/types/authorization.type';
 import { Button } from '@/components/ui/button';
+import { EAction } from '@/utils/types/authorization.type';
 import { PlusIcon, RefreshCw } from 'lucide-react';
 
 interface ClassPageHeaderProps {
@@ -18,10 +21,12 @@ export function ClassPageHeader({ title, description, actionLabel, onAction, onR
       </div>
       <div className="flex gap-2">
         {actionLabel && onAction && (
-          <Button onClick={onAction} className="shrink-0">
-            <PlusIcon className="mr-2 h-4 w-4" />
-            {actionLabel}
-          </Button>
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Classes }]}>
+            <Button onClick={onAction} className="shrink-0">
+              <PlusIcon className="mr-2 h-4 w-4" />
+              {actionLabel}
+            </Button>
+          </ProtectedComponent>
         )}
         <Button variant="outline" size="sm" onClick={onRefresh}>
           <RefreshCw className="h-4 w-4" />
