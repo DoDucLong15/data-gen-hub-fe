@@ -11,6 +11,9 @@ import { Badge } from '@/components/ui/badge';
 import { TSystemConfig } from '@/utils/types/system-config.type';
 import { getConfigValueType, getConfigValue } from '@/app/(secure)/admin/system-config-manage/_helpers/config.helper';
 import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 interface ConfigListProps {
   configs: TSystemConfig[];
@@ -79,26 +82,30 @@ export const ConfigList = ({ configs, onEdit, onDelete, isLoading = false }: Con
                 <TableCell>{getValueTypeBadge(config)}</TableCell>
                 <TableCell className="overflow-hidden text-ellipsis">{formatValue(config)}</TableCell>
                 <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <EllipsisVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => onEdit(config)}>
-                        <Pencil className="mr-2 h-4 w-4" />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="text-destructive focus:text-destructive"
-                        onClick={() => onDelete(config.key)}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <ProtectedComponent
+                    permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Configuration }]}
+                  >
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <EllipsisVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => onEdit(config)}>
+                          <Pencil className="mr-2 h-4 w-4" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive focus:text-destructive"
+                          onClick={() => onDelete(config.key)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </ProtectedComponent>
                 </TableCell>
               </TableRow>
             ))
