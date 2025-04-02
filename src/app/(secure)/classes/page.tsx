@@ -8,6 +8,9 @@ import { TClass } from '@/utils/types/classes.type';
 import { ClassList } from './_components/ClassList';
 import { ClassDialog } from './_components/ClassDialog';
 import { ClassPageHeader } from './_components/ClassPageHeader';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 export default function ClassesPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,40 +47,42 @@ export default function ClassesPage() {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8">
-      <ClassPageHeader
-        title="Classes Management"
-        description="Manage all your classes in one place."
-        actionLabel="Add Class"
-        onAction={() => setIsAddDialogOpen(true)}
-        onRefresh={handleRefresh}
-      />
+    <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Classes }]}>
+      <div className="container mx-auto px-6 py-8">
+        <ClassPageHeader
+          title="Classes Management"
+          description="Manage all your classes in one place."
+          actionLabel="Add Class"
+          onAction={() => setIsAddDialogOpen(true)}
+          onRefresh={handleRefresh}
+        />
 
-      <div className="mb-8">
-        <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          onSubmit={handleSearch}
-          isLoading={isSearching}
-          placeholder="Search classes by name or code..."
+        <div className="mb-8">
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            onSubmit={handleSearch}
+            isLoading={isSearching}
+            placeholder="Search classes by name or code..."
+          />
+        </div>
+
+        <ClassList
+          classes={displayedClasses}
+          isLoading={isLoading || isSearching}
+          onRefresh={handleRefresh}
+          onAdd={() => setIsAddDialogOpen(true)}
+          searchQuery={searchQuery}
+        />
+
+        <ClassDialog
+          open={isAddDialogOpen}
+          onOpenChange={setIsAddDialogOpen}
+          onSubmit={handleAddClass}
+          isSubmitting={isCreating}
+          mode="create"
         />
       </div>
-
-      <ClassList
-        classes={displayedClasses}
-        isLoading={isLoading || isSearching}
-        onRefresh={handleRefresh}
-        onAdd={() => setIsAddDialogOpen(true)}
-        searchQuery={searchQuery}
-      />
-
-      <ClassDialog
-        open={isAddDialogOpen}
-        onOpenChange={setIsAddDialogOpen}
-        onSubmit={handleAddClass}
-        isSubmitting={isCreating}
-        mode="create"
-      />
-    </div>
+    </ProtectedComponent>
   );
 }

@@ -5,6 +5,9 @@ import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TClass } from '@/utils/types/classes.type';
 import { ClassCard } from './ClassCard';
+import { ESubject } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { EAction } from '@/utils/types/authorization.type';
 
 interface ClassListProps {
   classes: TClass[];
@@ -36,12 +39,14 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
     }
 
     return (
-      <EmptyState
-        title="No classes yet"
-        description="Create your first class to get started."
-        actionLabel="Add Class"
-        onAction={onAdd}
-      />
+      <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Classes }]}>
+        <EmptyState
+          title="No classes yet"
+          description="Create your first class to get started."
+          actionLabel="Add Class"
+          onAction={onAdd}
+        />
+      </ProtectedComponent>
     );
   }
 

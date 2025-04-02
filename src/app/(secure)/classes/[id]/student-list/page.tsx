@@ -7,6 +7,9 @@ import { useStudents } from '@/hooks/useStudents';
 import { TExportOptions } from '@/utils/types/student.type';
 import { StudentList } from './_components/StudentList';
 import { ImportExport } from './_components/StudentImportExport';
+import { ESubject } from '@/utils/types/authorization.type';
+import { EAction } from '@/utils/types/authorization.type';
+import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 
 export default function StudentsPage() {
   const { id } = useParams();
@@ -16,8 +19,12 @@ export default function StudentsPage() {
     <div className="container mx-auto py-1 lg:px-4">
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="list">Student List</TabsTrigger>
-          <TabsTrigger value="import-export">Import</TabsTrigger>
+          <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Students }]}>
+            <TabsTrigger value="list">Student List</TabsTrigger>
+          </ProtectedComponent>
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Students }]}>
+            <TabsTrigger value="import-export">Import</TabsTrigger>
+          </ProtectedComponent>
         </TabsList>
         <div className="mt-2">
           <TabsContent value="list">
