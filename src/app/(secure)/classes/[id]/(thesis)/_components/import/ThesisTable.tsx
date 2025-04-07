@@ -37,6 +37,8 @@ import { ThesisDetailDialog } from './ThesisDetailDialog';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 interface ThesisTableProps {
   thesisType: EThesisDocumentType;
@@ -44,6 +46,12 @@ interface ThesisTableProps {
 }
 
 export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
+  const pathName = usePathname();
+  const subjectCheck = pathName.includes('assignment')
+    ? ESubject.Thesis_AssignmentSheets
+    : pathName.includes('review')
+      ? ESubject.Thesis_GuidanceReviews
+      : ESubject.Thesis_SupervisoryComments;
   const config = entityConfigs[thesisType];
   const {
     listThesis,
@@ -148,14 +156,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
             Làm mới
           </Button>
 
-          <ProtectedComponent
-            permissions={[
-              { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
-              { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
-              { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
-            ]}
-            logic="OR"
-          >
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
             <Button variant="default" size="sm" onClick={handleCreate} className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Tạo mới
@@ -254,14 +255,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
                             <Download className="h-4 w-4" />
                           </Button>
                         )}
-                        <ProtectedComponent
-                          permissions={[
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
-                          ]}
-                          logic="OR"
-                        >
+                        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
                           <Button variant="ghost" size="icon" onClick={() => handleEdit(entity)}>
                             <Edit className="h-4 w-4" />
                           </Button>

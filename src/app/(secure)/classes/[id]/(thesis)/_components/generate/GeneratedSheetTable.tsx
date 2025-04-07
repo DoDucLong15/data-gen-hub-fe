@@ -35,6 +35,7 @@ import { Input } from '@/components/ui/input';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
+import { usePathname } from 'next/navigation';
 
 export default function GeneratedSheetsTable({
   classId,
@@ -43,6 +44,12 @@ export default function GeneratedSheetsTable({
   classId: string;
   thesisType: EThesisDocumentType;
 }) {
+  const pathName = usePathname();
+  const subjectCheck = pathName.includes('assignment')
+    ? ESubject.Thesis_AssignmentSheets
+    : pathName.includes('review')
+      ? ESubject.Thesis_GuidanceReviews
+      : ESubject.Thesis_SupervisoryComments;
   const {
     generatedSheets,
     generatedSheetsIsLoading,
@@ -116,14 +123,7 @@ export default function GeneratedSheetsTable({
             Tải tất cả
           </Button>
 
-          <ProtectedComponent
-            permissions={[
-              { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
-              { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
-              { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
-            ]}
-            logic="OR"
-          >
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
             <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
               <AlertDialogTrigger asChild>
                 <Button
@@ -223,14 +223,7 @@ export default function GeneratedSheetsTable({
                         <Button variant="ghost" size="icon" onClick={() => downloadOneFile(sheet.outputPath)}>
                           <Download className="h-4 w-4" />
                         </Button>
-                        <ProtectedComponent
-                          permissions={[
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_AssignmentSheets },
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_GuidanceReviews },
-                            { action: EAction.MANAGE, subject: ESubject.Thesis_SupervisoryComments },
-                          ]}
-                          logic="OR"
-                        >
+                        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
                           <Button variant="ghost" size="icon" onClick={() => deleteSheet(sheet.id)}>
                             <Trash className="h-4 w-4" />
                           </Button>
