@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { UserRole } from '@/configs/role.config';
+import { HEADER } from '@/configs/messages.config';
 import { useRouter } from 'next/navigation';
 import { User, Users, Shield, LogOut, Sun, Moon, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -55,12 +56,12 @@ function Header() {
           >
             <Sun className="h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
             <Moon className="absolute h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">{HEADER.TOGGLE_THEME}</span>
           </Button>
           {!user ? (
             <Button>
               <Link href={'/account/login'} className="cursor-pointer">
-                Login
+                {HEADER.LOGIN}
               </Link>
             </Button>
           ) : (
@@ -72,12 +73,12 @@ function Header() {
               <DropdownMenuContent>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/my-account')}>
                   <User className="h-5 w-5" />
-                  <span>My Account</span>
+                  <span>{HEADER.MY_ACCOUNT}</span>
                 </DropdownMenuItem>
                 <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Users }]}>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
                     <Users className="h-5 w-5" />
-                    <span>Manage User</span>
+                    <span>{HEADER.MANAGE_USER}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <ProtectedComponent
@@ -89,7 +90,7 @@ function Header() {
                 >
                   <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
                     <Shield className="h-5 w-5" />
-                    <span>Manage Role</span>
+                    <span>{HEADER.MANAGE_ROLE}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Configuration }]}>
@@ -98,12 +99,12 @@ function Header() {
                     onClick={() => router.push('/admin/system-config-manage')}
                   >
                     <Settings className="h-5 w-5" />
-                    <span>Settings</span>
+                    <span>{HEADER.SETTINGS}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <DropdownMenuItem className="cursor-pointer" onClick={logout}>
                   <LogOut className="h-5 w-5" />
-                  <span>Logout</span>
+                  <span>{HEADER.LOGOUT}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
