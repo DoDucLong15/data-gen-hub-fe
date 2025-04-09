@@ -30,6 +30,7 @@ import { useUsers } from '@/hooks/useUsers';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { USERS_LIST } from '@/configs/messages.config';
 
 export function UsersList() {
   const { users, isLoading, deleteUser } = useUsers();
@@ -42,9 +43,9 @@ export function UsersList() {
 
     try {
       await deleteUser(userToDelete);
-      toast('Người dùng đã được xóa thành công.');
+      toast(USERS_LIST.TOAST.DELETE_SUCCESS);
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi xóa người dùng.');
+      toast.error(USERS_LIST.TOAST.DELETE_ERROR);
     } finally {
       setUserToDelete(null);
     }
@@ -53,14 +54,14 @@ export function UsersList() {
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'admin':
-        return <Badge className="bg-red-500">Admin</Badge>;
+        return <Badge className="bg-red-500">{USERS_LIST.TABLE.ROLES.ADMIN}</Badge>;
       default:
-        return <Badge>Teacher</Badge>;
+        return <Badge>{USERS_LIST.TABLE.ROLES.TEACHER}</Badge>;
     }
   };
 
   if (isLoading) {
-    return <div className="my-8 flex justify-center">Loading...</div>;
+    return <div className="my-8 flex justify-center">{USERS_LIST.LOADING}</div>;
   }
 
   return (
@@ -69,13 +70,13 @@ export function UsersList() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Created At</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.ID}</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.NAME}</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.EMAIL}</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.ROLE}</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.CREATED_AT}</TableHead>
+              <TableHead>{USERS_LIST.TABLE.HEADERS.STATUS}</TableHead>
+              <TableHead className="text-right">{USERS_LIST.TABLE.HEADERS.ACTIONS}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -90,11 +91,11 @@ export function UsersList() {
                   <TableCell>
                     {user.deletedAt ? (
                       <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-100">
-                        Deleted
+                        {USERS_LIST.TABLE.STATUS.DELETED}
                       </Badge>
                     ) : (
                       <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-100">
-                        Active
+                        {USERS_LIST.TABLE.STATUS.ACTIVE}
                       </Badge>
                     )}
                   </TableCell>
@@ -107,19 +108,19 @@ export function UsersList() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>{USERS_LIST.DROPDOWN.LABEL}</DropdownMenuLabel>
                         <DropdownMenuItem onClick={() => setUserToView(user.id)}>
                           <Eye className="mr-2 h-4 w-4" />
-                          View
+                          {USERS_LIST.DROPDOWN.VIEW}
                         </DropdownMenuItem>
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
                           <DropdownMenuItem onClick={() => setUserToEdit(user.id)}>
                             <Edit className="mr-2 h-4 w-4" />
-                            Edit
+                            {USERS_LIST.DROPDOWN.EDIT}
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => setUserToDelete(user.id)} className="text-red-600">
                             <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
+                            {USERS_LIST.DROPDOWN.DELETE}
                           </DropdownMenuItem>
                         </ProtectedComponent>
                       </DropdownMenuContent>
@@ -130,7 +131,7 @@ export function UsersList() {
             ) : (
               <TableRow>
                 <TableCell colSpan={7} className="h-24 text-center">
-                  No users found.
+                  {USERS_LIST.TABLE.EMPTY}
                 </TableCell>
               </TableRow>
             )}
@@ -142,15 +143,13 @@ export function UsersList() {
       <AlertDialog open={!!userToDelete} onOpenChange={(open) => !open && setUserToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận xóa người dùng</AlertDialogTitle>
-            <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{USERS_LIST.DELETE_DIALOG.TITLE}</AlertDialogTitle>
+            <AlertDialogDescription>{USERS_LIST.DELETE_DIALOG.DESCRIPTION}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogCancel>{USERS_LIST.DELETE_DIALOG.CANCEL}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteUser} className="bg-red-500 hover:bg-red-600">
-              Xóa
+              {USERS_LIST.DELETE_DIALOG.CONFIRM}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -12,21 +12,22 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { PROFILE_FORM } from '@/configs/messages.config';
 
 const formSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: 'Tên phải có ít nhất 2 ký tự.',
+      message: PROFILE_FORM.FORM.NAME.VALIDATION,
     })
     .optional(),
   email: z.string().email({
-    message: 'Vui lòng nhập địa chỉ email hợp lệ.',
+    message: PROFILE_FORM.FORM.EMAIL.VALIDATION,
   }),
   phone: z
     .string()
     .min(10, {
-      message: 'Số điện thoại phải có ít nhất 10 chữ số.',
+      message: PROFILE_FORM.FORM.PHONE.VALIDATION,
     })
     .optional(),
   school: z.string().optional(),
@@ -71,14 +72,14 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
         position: values.position,
       });
 
-      toast.success('Cập nhật thông tin thành công!', {
-        description: 'Thông tin cá nhân của bạn đã được cập nhật.',
+      toast.success(PROFILE_FORM.TOAST.SUCCESS.TITLE, {
+        description: PROFILE_FORM.TOAST.SUCCESS.DESCRIPTION,
       });
 
       onSuccess();
     } catch (error) {
-      toast.error('Cập nhật thông tin thất bại!', {
-        description: 'Đã xảy ra lỗi. Vui lòng thử lại sau.',
+      toast.error(PROFILE_FORM.TOAST.ERROR.TITLE, {
+        description: PROFILE_FORM.TOAST.ERROR.DESCRIPTION,
       });
     } finally {
       setIsSubmitting(false);
@@ -89,8 +90,8 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
     <Card className="bg-card/30 overflow-hidden backdrop-blur-sm">
       <CardHeader className="bg-muted/30 border-b pb-6">
         <div className="space-y-1">
-          <CardTitle className="text-2xl">Chỉnh sửa thông tin</CardTitle>
-          <CardDescription>Cập nhật thông tin cá nhân của bạn</CardDescription>
+          <CardTitle className="text-2xl">{PROFILE_FORM.TITLE}</CardTitle>
+          <CardDescription>{PROFILE_FORM.DESCRIPTION}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6">
@@ -102,9 +103,9 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Họ và tên</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.NAME.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nguyễn Văn A" {...field} value={field.value || ''} />
+                      <Input placeholder={PROFILE_FORM.FORM.NAME.PLACEHOLDER} {...field} value={field.value || ''} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,9 +116,9 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.EMAIL.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="example@email.com" {...field} disabled />
+                      <Input placeholder={PROFILE_FORM.FORM.EMAIL.PLACEHOLDER} {...field} disabled />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -128,9 +129,9 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Số điện thoại</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.PHONE.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="0123456789" {...field} value={field.value || ''} />
+                      <Input placeholder={PROFILE_FORM.FORM.PHONE.PLACEHOLDER} {...field} value={field.value || ''} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -141,9 +142,9 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="school"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Trường học</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.SCHOOL.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Trường của bạn" {...field} value={field.value || ''} />
+                      <Input placeholder={PROFILE_FORM.FORM.SCHOOL.PLACEHOLDER} {...field} value={field.value || ''} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -154,9 +155,13 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="department"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Khoa/Phòng ban</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.DEPARTMENT.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Khoa/Phòng ban của bạn" {...field} value={field.value || ''} />
+                      <Input
+                        placeholder={PROFILE_FORM.FORM.DEPARTMENT.PLACEHOLDER}
+                        {...field}
+                        value={field.value || ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -167,9 +172,13 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="position"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Chức vụ</FormLabel>
+                    <FormLabel>{PROFILE_FORM.FORM.POSITION.LABEL}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Chức vụ của bạn" {...field} value={field.value || ''} />
+                      <Input
+                        placeholder={PROFILE_FORM.FORM.POSITION.PLACEHOLDER}
+                        {...field}
+                        value={field.value || ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -180,18 +189,18 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
             <div className="flex justify-end space-x-2">
               <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting} className="gap-2">
                 <X className="h-4 w-4" />
-                Hủy
+                {PROFILE_FORM.BUTTONS.CANCEL}
               </Button>
               <Button type="submit" disabled={isSubmitting} className="gap-2">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Đang lưu...
+                    {PROFILE_FORM.BUTTONS.SAVING}
                   </>
                 ) : (
                   <>
                     <Save className="h-4 w-4" />
-                    Lưu thay đổi
+                    {PROFILE_FORM.BUTTONS.SAVE}
                   </>
                 )}
               </Button>

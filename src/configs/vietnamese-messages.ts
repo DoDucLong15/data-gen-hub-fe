@@ -114,7 +114,8 @@ export const VIETNAMESE_MESSAGES = {
     },
     MISSION: {
       TITLE: 'Sứ Mệnh Của Chúng Tôi',
-      DESCRIPTION: 'Chúng tôi ra đời với sứ mệnh đơn giản hóa quy trình quản lý đồ án tốt nghiệp, giúp sinh viên tập trung vào nghiên cứu thay vì lo lắng về quy trình thủ công phức tạp, đồng thời hỗ trợ giảng viên theo dõi và đánh giá hiệu quả.',
+      DESCRIPTION:
+        'Chúng tôi ra đời với sứ mệnh đơn giản hóa quy trình quản lý đồ án tốt nghiệp, giúp sinh viên tập trung vào nghiên cứu thay vì lo lắng về quy trình thủ công phức tạp, đồng thời hỗ trợ giảng viên theo dõi và đánh giá hiệu quả.',
       FEATURES: {
         TIME_SAVING: {
           TITLE: 'Tiết Kiệm Thời Gian',
@@ -132,7 +133,8 @@ export const VIETNAMESE_MESSAGES = {
     },
     TEAM: {
       TITLE: 'Đội Ngũ Chúng Tôi',
-      DESCRIPTION: 'Chúng tôi là những chuyên gia trong lĩnh vực công nghệ và giáo dục, luôn đặt trải nghiệm người dùng và hiệu quả làm trọng tâm phát triển.',
+      DESCRIPTION:
+        'Chúng tôi là những chuyên gia trong lĩnh vực công nghệ và giáo dục, luôn đặt trải nghiệm người dùng và hiệu quả làm trọng tâm phát triển.',
       MEMBERS: {
         CEO: {
           NAME: 'Nguyễn Văn A',
@@ -158,7 +160,8 @@ export const VIETNAMESE_MESSAGES = {
   CONTACT_US: {
     HERO: {
       TITLE: 'Liên Hệ Với Chúng Tôi',
-      DESCRIPTION: 'Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn về mọi vấn đề liên quan đến nền tảng quản lý đồ án tốt nghiệp của chúng tôi.',
+      DESCRIPTION:
+        'Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn về mọi vấn đề liên quan đến nền tảng quản lý đồ án tốt nghiệp của chúng tôi.',
     },
     CONTACT_INFO: {
       TITLE: 'Thông Tin Liên Hệ',
@@ -206,23 +209,28 @@ export const VIETNAMESE_MESSAGES = {
     },
     FAQ: {
       TITLE: 'Câu Hỏi Thường Gặp',
-      DESCRIPTION: 'Dưới đây là những câu hỏi mà chúng tôi thường xuyên nhận được. Nếu bạn không tìm thấy câu trả lời, hãy liên hệ với chúng tôi.',
+      DESCRIPTION:
+        'Dưới đây là những câu hỏi mà chúng tôi thường xuyên nhận được. Nếu bạn không tìm thấy câu trả lời, hãy liên hệ với chúng tôi.',
       ITEMS: [
         {
           QUESTION: 'Hệ thống có hỗ trợ tích hợp với phần mềm quản lý đào tạo hiện có của trường không?',
-          ANSWER: 'Có, nền tảng của chúng tôi được thiết kế để tích hợp linh hoạt với các hệ thống quản lý đào tạo hiện có thông qua API và các giải pháp đồng bộ dữ liệu.',
+          ANSWER:
+            'Có, nền tảng của chúng tôi được thiết kế để tích hợp linh hoạt với các hệ thống quản lý đào tạo hiện có thông qua API và các giải pháp đồng bộ dữ liệu.',
         },
         {
           QUESTION: 'Làm thế nào để giảng viên theo dõi tiến độ của sinh viên?',
-          ANSWER: 'Giảng viên có thể theo dõi tiến độ của sinh viên thông qua bảng điều khiển trực quan, nhận thông báo về các mốc quan trọng và tạo báo cáo tùy chỉnh về tiến độ của từng sinh viên hoặc nhóm sinh viên.',
+          ANSWER:
+            'Giảng viên có thể theo dõi tiến độ của sinh viên thông qua bảng điều khiển trực quan, nhận thông báo về các mốc quan trọng và tạo báo cáo tùy chỉnh về tiến độ của từng sinh viên hoặc nhóm sinh viên.',
         },
         {
           QUESTION: 'Hệ thống có hỗ trợ quản lý phiên bản cho tài liệu đồ án không?',
-          ANSWER: 'Có, hệ thống của chúng tôi cung cấp tính năng quản lý phiên bản toàn diện, cho phép sinh viên và giảng viên theo dõi lịch sử thay đổi, so sánh các phiên bản và khôi phục phiên bản trước đó khi cần thiết.',
+          ANSWER:
+            'Có, hệ thống của chúng tôi cung cấp tính năng quản lý phiên bản toàn diện, cho phép sinh viên và giảng viên theo dõi lịch sử thay đổi, so sánh các phiên bản và khôi phục phiên bản trước đó khi cần thiết.',
         },
         {
           QUESTION: 'Nền tảng có cung cấp tính năng kiểm tra đạo văn không?',
-          ANSWER: 'Có, chúng tôi tích hợp công cụ kiểm tra đạo văn để đảm bảo tính nguyên bản của đồ án và hỗ trợ sinh viên tuân thủ các tiêu chuẩn học thuật.',
+          ANSWER:
+            'Có, chúng tôi tích hợp công cụ kiểm tra đạo văn để đảm bảo tính nguyên bản của đồ án và hỗ trợ sinh viên tuân thủ các tiêu chuẩn học thuật.',
         },
       ],
     },
@@ -293,12 +301,561 @@ export const VIETNAMESE_MESSAGES = {
       DEFAULT: 'Đã xảy ra lỗi khi gửi yêu cầu đăng ký',
     },
     SUCCESS: {
-      MESSAGE: 'Yêu cầu đăng ký đã được gửi thành công! Quản trị viên sẽ xem xét và phê duyệt tài khoản của bạn. Bạn sẽ được chuyển hướng đến trang đăng nhập trong vài giây...',
+      MESSAGE:
+        'Yêu cầu đăng ký đã được gửi thành công! Quản trị viên sẽ xem xét và phê duyệt tài khoản của bạn. Bạn sẽ được chuyển hướng đến trang đăng nhập trong vài giây...',
     },
     TERMS: 'Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng và chính sách bảo mật của chúng tôi.',
   },
   METADATA: {
     TITLE: 'Data Gen Hub',
     DESCRIPTION: 'Nền tảng toàn diện để quản lý đồ án tốt nghiệp, tự động hóa sinh dữ liệu và hợp tác.',
+  },
+  PERMISSION_FORM: {
+    TITLE: {
+      ADD: 'Thêm quyền mới',
+      EDIT: 'Chỉnh sửa quyền',
+    },
+    DESCRIPTION: {
+      ADD: 'Nhập thông tin để tạo quyền mới.',
+      EDIT: 'Cập nhật thông tin quyền.',
+    },
+    FORM: {
+      ACTION: {
+        LABEL: 'Hành động',
+        PLACEHOLDER: 'Chọn hoặc nhập hành động',
+        VALIDATION: 'Hành động phải có ít nhất 2 ký tự',
+      },
+      SUBJECT: {
+        LABEL: 'Đối tượng',
+        PLACEHOLDER: 'Chọn hoặc nhập đối tượng',
+        VALIDATION: 'Đối tượng phải có ít nhất 2 ký tự',
+      },
+      DESCRIPTION: {
+        LABEL: 'Mô tả',
+        PLACEHOLDER: 'Nhập mô tả cho quyền này',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Hủy',
+      ADD: 'Thêm quyền',
+      SAVE: 'Lưu thay đổi',
+    },
+    TOAST: {
+      SUCCESS: {
+        ADD: 'Thêm quyền thành công',
+        UPDATE: 'Cập nhật quyền thành công',
+      },
+      ERROR: {
+        ADD: 'Không thể thêm quyền. Vui lòng thử lại.',
+        UPDATE: 'Không thể cập nhật quyền. Vui lòng thử lại.',
+      },
+    },
+  },
+  PERMISSION_LIST: {
+    TITLE: 'Danh sách quyền',
+    ADD_BUTTON: 'Thêm quyền mới',
+    REFRESH_BUTTON: 'Làm mới',
+    SEARCH: {
+      PLACEHOLDER: 'Tìm kiếm quyền...',
+    },
+    FILTER: {
+      PLACEHOLDER: 'Lọc theo đối tượng',
+      ALL_SUBJECTS: 'Tất cả đối tượng',
+    },
+    TABLE: {
+      NO: 'STT',
+      ACTION: 'Hành động',
+      SUBJECT: 'Đối tượng',
+      DESCRIPTION: 'Mô tả',
+      OPERATIONS: 'Thao tác',
+      NO_DESCRIPTION: 'Không có mô tả',
+      EMPTY: {
+        MESSAGE: 'Không tìm thấy quyền nào phù hợp.',
+        CLEAR_FILTER: 'Xóa bộ lọc',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Thao tác',
+      EDIT: 'Chỉnh sửa',
+      DELETE: 'Xóa',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Xác nhận xóa quyền',
+      DESCRIPTION:
+        'Bạn có chắc chắn muốn xóa quyền này? Hành động này không thể hoàn tác và có thể ảnh hưởng đến vai trò đang sử dụng quyền này.',
+      CANCEL: 'Hủy',
+      CONFIRM: 'Xóa',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'Đã cập nhật danh sách quyền',
+      REFRESH_ERROR: 'Không thể làm mới dữ liệu',
+      DELETE_SUCCESS: 'Quyền đã được xóa thành công.',
+      DELETE_ERROR: 'Có lỗi xảy ra khi xóa quyền.',
+    },
+  },
+  ROLE_FORM: {
+    TITLE: {
+      ADD: 'Thêm vai trò mới',
+      EDIT: 'Chỉnh sửa vai trò',
+    },
+    DESCRIPTION: {
+      ADD: 'Nhập thông tin để tạo vai trò mới.',
+      EDIT: 'Cập nhật thông tin vai trò.',
+    },
+    FORM: {
+      NAME: {
+        LABEL: 'Tên',
+        PLACEHOLDER: 'Nhập tên vai trò',
+        VALIDATION: 'Tên phải có ít nhất 2 ký tự',
+      },
+      DESCRIPTION: {
+        LABEL: 'Mô tả',
+        PLACEHOLDER: 'Nhập mô tả vai trò',
+        VALIDATION: 'Mô tả phải có ít nhất 2 ký tự',
+      },
+      PERMISSIONS: {
+        LABEL: 'Quyền',
+        SELECT_ALL: 'Chọn tất cả',
+        DESELECT_ALL: 'Bỏ chọn tất cả',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Hủy',
+      ADD: 'Thêm vai trò',
+      SAVE: 'Lưu thay đổi',
+    },
+    LOADING: 'Đang tải dữ liệu...',
+    TOAST: {
+      SUCCESS: {
+        ADD: 'Thêm vai trò thành công',
+        UPDATE: 'Cập nhật vai trò thành công',
+      },
+      ERROR: {
+        ADD: 'Không thể thêm vai trò. Vui lòng thử lại.',
+        UPDATE: 'Không thể cập nhật vai trò. Vui lòng thử lại.',
+      },
+    },
+  },
+  ROLE_LIST: {
+    TABLE: {
+      HEADER: {
+        ROLE: 'Vai trò',
+        DESCRIPTION: 'Mô tả',
+        USER_COUNT: 'Số người dùng',
+        PERMISSION_COUNT: 'Số quyền',
+        LAST_UPDATED: 'Cập nhật lần cuối',
+        STATUS: 'Trạng thái',
+        ACTIONS: 'Thao tác',
+      },
+      NO_DESCRIPTION: 'Không có mô tả',
+      EMPTY: {
+        MESSAGE: 'Chưa có vai trò nào trong hệ thống.',
+        ADD_BUTTON: 'Thêm vai trò mới',
+      },
+      STATUS: {
+        ACTIVE: 'Đang hoạt động',
+        INACTIVE: 'Không hoạt động',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Thao tác',
+      EDIT: 'Chỉnh sửa',
+      DELETE: 'Xóa',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Xác nhận xóa vai trò',
+      DESCRIPTION: 'Bạn có chắc chắn muốn xóa vai trò này? Hành động này không thể hoàn tác.',
+      CANCEL: 'Hủy',
+      CONFIRM: 'Xóa',
+    },
+    TOAST: {
+      DELETE_SUCCESS: 'Vai trò đã được xóa thành công.',
+      DELETE_ERROR: 'Có lỗi xảy ra khi xóa vai trò.',
+    },
+  },
+  ROLES_PAGE: {
+    TABS: {
+      ROLES: 'Danh sách vai trò',
+      PERMISSIONS: 'Quản lý quyền hạn',
+    },
+    ACTIONS: {
+      ADD_ROLE: 'Thêm vai trò',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'Đã cập nhật danh sách vai trò',
+      REFRESH_ERROR: 'Không thể làm mới dữ liệu',
+      LOAD_ERROR: 'Có lỗi xảy ra khi tải dữ liệu vai trò.',
+    },
+    LOADING: 'Đang tải...',
+  },
+  SYSTEM_CONFIG_PAGE: {
+    TITLE: 'Cấu hình hệ thống',
+    ACTIONS: {
+      ADD: 'Thêm mới',
+      REFRESH: 'Làm mới',
+    },
+    LIST: {
+      HEADERS: {
+        KEY: 'Khóa',
+        TYPE: 'Kiểu dữ liệu',
+        VALUE: 'Giá trị',
+        ACTIONS: 'Thao tác',
+      },
+      EMPTY: {
+        LOADING: 'Đang tải...',
+        NO_DATA: 'Không tìm thấy cấu hình nào',
+      },
+      DROPDOWN: {
+        EDIT: 'Chỉnh sửa',
+        DELETE: 'Xóa',
+      },
+      VALUE_TYPES: {
+        STRING: 'Văn bản',
+        NUMBER: 'Số',
+        BOOLEAN: 'Logic',
+        JSON: 'JSON',
+        EMPTY: 'trống',
+        NOT_SET: 'Chưa đặt',
+        TRUE: 'Đúng',
+        FALSE: 'Sai',
+      },
+    },
+    FORM: {
+      TITLE: {
+        ADD: 'Thêm cấu hình mới',
+        EDIT: 'Chỉnh sửa cấu hình',
+      },
+      DESCRIPTION: {
+        ADD: 'Thêm một cấu hình hệ thống mới.',
+        EDIT: 'Đang chỉnh sửa cấu hình có khóa: {key}',
+      },
+      FIELDS: {
+        KEY: {
+          LABEL: 'Khóa',
+          PLACEHOLDER: 'Nhập khóa cấu hình',
+        },
+        TYPE: {
+          LABEL: 'Kiểu dữ liệu',
+          PLACEHOLDER: 'Chọn kiểu dữ liệu',
+        },
+        VALUE: {
+          LABEL: 'Giá trị',
+        },
+      },
+      BUTTONS: {
+        SAVE: 'Lưu',
+        SAVING: 'Đang lưu...',
+      },
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Bạn có chắc chắn?',
+      DESCRIPTION: 'Hành động này sẽ xóa vĩnh viễn cấu hình có khóa: {key}. Không thể hoàn tác sau khi xóa.',
+      CANCEL: 'Hủy',
+      CONFIRM: 'Xóa',
+      DELETING: 'Đang xóa...',
+    },
+  },
+  USER_DETAIL: {
+    TITLE: 'Thông tin người dùng',
+    DESCRIPTION: 'Chi tiết về người dùng này.',
+    ROLES: {
+      ADMIN: 'Quản trị viên',
+      TEACHER: 'Giảng viên',
+    },
+    NO_DATA: 'Không có dữ liệu',
+    INFO_ITEMS: {
+      EMAIL: 'Email',
+      PHONE: 'Số điện thoại',
+      SCHOOL: 'Trường học',
+      DEPARTMENT: 'Khoa',
+      POSITION: 'Chức vụ',
+      CREATED_AT: 'Ngày tạo',
+      UPDATED_AT: 'Cập nhật',
+    },
+    ACCOUNT_STATUS: {
+      TITLE: 'Trạng thái tài khoản',
+      ACTIVE: 'Đang hoạt động',
+    },
+    ERROR: {
+      TITLE: 'Không thể tải thông tin người dùng',
+      MESSAGE: 'Vui lòng thử lại sau',
+    },
+    CLOSE_BUTTON: 'Đóng',
+  },
+  USER_FORM: {
+    TITLE: {
+      ADD: 'Thêm người dùng mới',
+      EDIT: 'Chỉnh sửa người dùng',
+    },
+    DESCRIPTION: {
+      ADD: 'Nhập thông tin để tạo người dùng mới.',
+      EDIT: 'Cập nhật thông tin người dùng.',
+    },
+    LOADING: 'Đang tải dữ liệu người dùng...',
+    FORM: {
+      NAME: {
+        LABEL: 'Tên',
+        PLACEHOLDER: 'Nhập tên người dùng',
+        VALIDATION: 'Tên phải có ít nhất 2 ký tự',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+        PLACEHOLDER: 'email@example.com',
+        VALIDATION: 'Email không hợp lệ',
+      },
+      ROLE: {
+        LABEL: 'Vai trò',
+        PLACEHOLDER: 'Chọn vai trò',
+      },
+      PHONE: {
+        LABEL: 'Số điện thoại',
+        PLACEHOLDER: 'Nhập số điện thoại',
+        VALIDATION: 'Số điện thoại không hợp lệ',
+      },
+      SCHOOL: {
+        LABEL: 'Trường',
+        PLACEHOLDER: 'Nhập tên trường',
+        VALIDATION: 'Tên trường không hợp lệ',
+      },
+      DEPARTMENT: {
+        LABEL: 'Khoa',
+        PLACEHOLDER: 'Nhập tên khoa',
+        VALIDATION: 'Tên khoa không hợp lệ',
+      },
+      POSITION: {
+        LABEL: 'Chức vụ',
+        PLACEHOLDER: 'Nhập chức vụ',
+        VALIDATION: 'Chức vụ không hợp lệ',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Hủy',
+      ADD: 'Thêm người dùng',
+      SAVE: 'Lưu thay đổi',
+    },
+    TOAST: {
+      SUCCESS: {
+        ADD: 'Thêm người dùng thành công',
+        UPDATE: 'Cập nhật người dùng thành công',
+      },
+      ERROR: {
+        ADD: 'Không thể thêm người dùng. Vui lòng thử lại.',
+        UPDATE: 'Không thể cập nhật người dùng. Vui lòng thử lại.',
+      },
+    },
+  },
+  USERS_LIST: {
+    LOADING: 'Đang tải...',
+    TABLE: {
+      HEADERS: {
+        ID: 'ID',
+        NAME: 'Tên',
+        EMAIL: 'Email',
+        ROLE: 'Vai trò',
+        CREATED_AT: 'Ngày tạo',
+        STATUS: 'Trạng thái',
+        ACTIONS: 'Thao tác',
+      },
+      EMPTY: 'Không tìm thấy người dùng nào.',
+      STATUS: {
+        ACTIVE: 'Đang hoạt động',
+        DELETED: 'Đã xóa',
+      },
+      ROLES: {
+        ADMIN: 'Quản trị viên',
+        TEACHER: 'Giảng viên',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Thao tác',
+      VIEW: 'Xem',
+      EDIT: 'Chỉnh sửa',
+      DELETE: 'Xóa',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Xác nhận xóa người dùng',
+      DESCRIPTION: 'Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.',
+      CANCEL: 'Hủy',
+      CONFIRM: 'Xóa',
+    },
+    TOAST: {
+      DELETE_SUCCESS: 'Người dùng đã được xóa thành công.',
+      DELETE_ERROR: 'Có lỗi xảy ra khi xóa người dùng.',
+    },
+  },
+  USERS_PAGE: {
+    TABS: {
+      USERS: 'Danh sách người dùng',
+      REGISTERS: 'Đăng ký chờ duyệt',
+    },
+    ACTIONS: {
+      ADD_USER: 'Thêm người dùng',
+      REFRESH: 'Làm mới',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'Đã cập nhật danh sách người dùng',
+      REFRESH_ERROR: 'Không thể làm mới dữ liệu',
+      LOAD_ERROR: 'Có lỗi xảy ra khi tải dữ liệu người dùng.',
+    },
+    LOADING: 'Đang tải...',
+  },
+  REGISTER_APPROVE_DIALOG: {
+    TITLE: 'Phê duyệt đăng ký',
+    DESCRIPTION: 'Phê duyệt đăng ký của {name} và gán vai trò.',
+    FORM: {
+      ROLE: {
+        LABEL: 'Vai trò',
+        PLACEHOLDER: 'Chọn vai trò',
+      },
+    },
+    BUTTONS: {
+      CANCEL: 'Hủy',
+      APPROVE: 'Phê duyệt',
+      APPROVING: 'Đang phê duyệt...',
+    },
+  },
+  REGISTER_LIST: {
+    TABLE: {
+      HEADERS: {
+        NO: 'STT',
+        NAME: 'Họ và tên',
+        EMAIL: 'Email',
+        PHONE: 'Số điện thoại',
+        SCHOOL: 'Trường học',
+        DEPARTMENT: 'Khoa/Phòng ban',
+        POSITION: 'Chức vụ',
+        REGISTERED: 'Ngày đăng ký',
+        ACTIONS: 'Thao tác',
+      },
+      NO_DATA: 'Không có',
+    },
+  },
+  REGISTER_ACTIONS: {
+    BUTTONS: {
+      APPROVE: {
+        LABEL: 'Phê duyệt',
+        TOOLTIP: 'Phê duyệt đăng ký',
+      },
+      REJECT: {
+        LABEL: 'Từ chối',
+        TOOLTIP: 'Từ chối đăng ký',
+      },
+    },
+  },
+  REGISTER_REJECT_DIALOG: {
+    TITLE: 'Bạn có chắc chắn?',
+    DESCRIPTION: 'Hành động này sẽ từ chối yêu cầu đăng ký của {name}. Hành động này không thể hoàn tác.',
+    BUTTONS: {
+      CANCEL: 'Hủy',
+      REJECT: 'Từ chối',
+      REJECTING: 'Đang từ chối...',
+    },
+  },
+  PROFILE_FORM: {
+    TITLE: 'Chỉnh sửa thông tin',
+    DESCRIPTION: 'Cập nhật thông tin cá nhân của bạn',
+    FORM: {
+      NAME: {
+        LABEL: 'Họ và tên',
+        PLACEHOLDER: 'Nguyễn Văn A',
+        VALIDATION: 'Tên phải có ít nhất 2 ký tự.',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+        PLACEHOLDER: 'example@email.com',
+        VALIDATION: 'Vui lòng nhập địa chỉ email hợp lệ.',
+      },
+      PHONE: {
+        LABEL: 'Số điện thoại',
+        PLACEHOLDER: '0123456789',
+        VALIDATION: 'Số điện thoại phải có ít nhất 10 chữ số.',
+      },
+      SCHOOL: {
+        LABEL: 'Trường học',
+        PLACEHOLDER: 'Trường của bạn',
+      },
+      DEPARTMENT: {
+        LABEL: 'Khoa/Phòng ban',
+        PLACEHOLDER: 'Khoa/Phòng ban của bạn',
+      },
+      POSITION: {
+        LABEL: 'Chức vụ',
+        PLACEHOLDER: 'Chức vụ của bạn',
+      },
+    },
+    BUTTONS: {
+      CANCEL: 'Hủy',
+      SAVE: 'Lưu thay đổi',
+      SAVING: 'Đang lưu...',
+    },
+    TOAST: {
+      SUCCESS: {
+        TITLE: 'Cập nhật thông tin thành công!',
+        DESCRIPTION: 'Thông tin cá nhân của bạn đã được cập nhật.',
+      },
+      ERROR: {
+        TITLE: 'Cập nhật thông tin thất bại!',
+        DESCRIPTION: 'Đã xảy ra lỗi. Vui lòng thử lại sau.',
+      },
+    },
+  },
+  PROFILE_VIEW: {
+    TITLE: 'Thông tin cá nhân',
+    DESCRIPTION: 'Quản lý thông tin cá nhân của bạn',
+    EDIT_BUTTON: 'Chỉnh sửa hồ sơ',
+    FIELDS: {
+      NAME: {
+        LABEL: 'Họ và tên',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+      },
+      PHONE: {
+        LABEL: 'Số điện thoại',
+      },
+      SCHOOL: {
+        LABEL: 'Trường học',
+      },
+      DEPARTMENT: {
+        LABEL: 'Khoa/Phòng ban',
+      },
+      POSITION: {
+        LABEL: 'Chức vụ',
+      },
+    },
+    NO_DATA: '-',
+  },
+  USER_SIDEBAR: {
+    NAME_NOT_SET: 'Chưa cập nhật',
+    AVATAR: {
+      ALT: 'Người dùng',
+      FALLBACK: 'U',
+      UPLOAD_BUTTON: 'Tải lên ảnh đại diện',
+    },
+    INFO: {
+      ID: {
+        LABEL: 'ID',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+      },
+      ROLE: {
+        LABEL: 'Vai trò',
+      },
+    },
+  },
+  ACCOUNT_PAGE: {
+    TITLE: 'Tài khoản của tôi',
+    LOADING: {
+      MESSAGE: 'Đang tải thông tin...',
+    },
+    NOT_FOUND: {
+      TITLE: 'Không tìm thấy thông tin người dùng',
+      DESCRIPTION: 'Vui lòng đăng nhập để xem thông tin tài khoản của bạn.',
+      LOGIN_BUTTON: 'Đăng nhập',
+    },
+    TABS: {
+      PROFILE: 'Hồ sơ',
+    },
   },
 };

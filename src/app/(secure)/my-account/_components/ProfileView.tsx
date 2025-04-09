@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Pencil, School, Phone, Building, Award, Mail, User as UserIcon } from 'lucide-react';
+import { PROFILE_VIEW } from '@/configs/messages.config';
 
 interface ProfileViewProps {
   user: User;
@@ -12,33 +13,33 @@ interface ProfileViewProps {
 export default function ProfileView({ user, onEdit }: ProfileViewProps) {
   const profileItems = [
     {
-      label: 'Họ và tên',
-      value: user.name || '-',
+      label: PROFILE_VIEW.FIELDS.NAME.LABEL,
+      value: user.name || PROFILE_VIEW.NO_DATA,
       icon: <UserIcon className="text-primary/60 h-5 w-5" />,
     },
     {
-      label: 'Email',
+      label: PROFILE_VIEW.FIELDS.EMAIL.LABEL,
       value: user.email,
       icon: <Mail className="text-primary/60 h-5 w-5" />,
     },
     {
-      label: 'Số điện thoại',
-      value: user.phone || '-',
+      label: PROFILE_VIEW.FIELDS.PHONE.LABEL,
+      value: user.phone || PROFILE_VIEW.NO_DATA,
       icon: <Phone className="text-primary/60 h-5 w-5" />,
     },
     {
-      label: 'Trường học',
-      value: user.school || '-',
+      label: PROFILE_VIEW.FIELDS.SCHOOL.LABEL,
+      value: user.school || PROFILE_VIEW.NO_DATA,
       icon: <School className="text-primary/60 h-5 w-5" />,
     },
     {
-      label: 'Khoa/Phòng ban',
-      value: user.department || '-',
+      label: PROFILE_VIEW.FIELDS.DEPARTMENT.LABEL,
+      value: user.department || PROFILE_VIEW.NO_DATA,
       icon: <Building className="text-primary/60 h-5 w-5" />,
     },
     {
-      label: 'Chức vụ',
-      value: user.position || '-',
+      label: PROFILE_VIEW.FIELDS.POSITION.LABEL,
+      value: user.position || PROFILE_VIEW.NO_DATA,
       icon: <Award className="text-primary/60 h-5 w-5" />,
     },
   ];
@@ -48,12 +49,12 @@ export default function ProfileView({ user, onEdit }: ProfileViewProps) {
       <CardHeader className="bg-muted/30 border-b pb-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-2xl">Thông tin cá nhân</CardTitle>
-            <CardDescription>Quản lý thông tin cá nhân của bạn</CardDescription>
+            <CardTitle className="text-2xl">{PROFILE_VIEW.TITLE}</CardTitle>
+            <CardDescription>{PROFILE_VIEW.DESCRIPTION}</CardDescription>
           </div>
           <Button onClick={onEdit} className="gap-2">
             <Pencil className="h-4 w-4" />
-            Chỉnh sửa hồ sơ
+            {PROFILE_VIEW.EDIT_BUTTON}
           </Button>
         </div>
       </CardHeader>

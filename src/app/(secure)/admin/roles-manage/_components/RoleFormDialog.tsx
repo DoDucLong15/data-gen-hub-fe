@@ -25,11 +25,12 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePermissions } from '@/hooks/usePermissions';
 import { TPermission } from '@/utils/types/permission.type';
 import { Loader2 } from 'lucide-react';
+import { ROLE_FORM } from '@/configs/messages.config';
 
 // Zod schema for form validation
 const roleFormSchema = z.object({
-  name: z.string().min(2, { message: 'Tên phải có ít nhất 2 ký tự' }),
-  description: z.string().min(2, { message: 'Mô tả phải có ít nhất 2 ký tự' }).optional(),
+  name: z.string().min(2, { message: ROLE_FORM.FORM.NAME.VALIDATION }),
+  description: z.string().min(2, { message: ROLE_FORM.FORM.DESCRIPTION.VALIDATION }).optional(),
   permissionIds: z.array(z.string()).optional(),
 });
 
@@ -117,17 +118,15 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
 
       if (mode === 'add') {
         await addRole(formData);
-        toast('Thêm vai trò thành công');
+        toast(ROLE_FORM.TOAST.SUCCESS.ADD);
       } else if (mode === 'edit' && roleId) {
         await updateRole(roleId, formData);
-        toast('Cập nhật vai trò thành công');
+        toast(ROLE_FORM.TOAST.SUCCESS.UPDATE);
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(
-        mode === 'add' ? 'Không thể thêm vai trò. Vui lòng thử lại.' : 'Không thể cập nhật vai trò. Vui lòng thử lại.',
-      );
+      toast.error(mode === 'add' ? ROLE_FORM.TOAST.ERROR.ADD : ROLE_FORM.TOAST.ERROR.UPDATE);
     }
   };
 
@@ -145,16 +144,16 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden sm:max-w-[625px]">
         <DialogHeader className="mb-4">
-          <DialogTitle>{mode === 'add' ? 'Thêm vai trò mới' : 'Chỉnh sửa vai trò'}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? ROLE_FORM.TITLE.ADD : ROLE_FORM.TITLE.EDIT}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? 'Nhập thông tin để tạo vai trò mới.' : 'Cập nhật thông tin vai trò.'}
+            {mode === 'add' ? ROLE_FORM.DESCRIPTION.ADD : ROLE_FORM.DESCRIPTION.EDIT}
           </DialogDescription>
         </DialogHeader>
 
         {(isLoading && mode === 'edit') || isLoadingPermissions ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="text-muted-foreground h-6 w-6 animate-spin" />
-            <span className="ml-2">Đang tải dữ liệu...</span>
+            <span className="ml-2">{ROLE_FORM.LOADING}</span>
           </div>
         ) : (
           <Form {...form}>
@@ -165,9 +164,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tên</FormLabel>
+                      <FormLabel>{ROLE_FORM.FORM.NAME.LABEL}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nhập tên vai trò" {...field} />
+                        <Input placeholder={ROLE_FORM.FORM.NAME.PLACEHOLDER} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -179,9 +178,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mô tả</FormLabel>
+                      <FormLabel>{ROLE_FORM.FORM.DESCRIPTION.LABEL}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Nhập mô tả vai trò" {...field} rows={3} />
+                        <Textarea placeholder={ROLE_FORM.FORM.DESCRIPTION.PLACEHOLDER} {...field} rows={3} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -195,13 +194,13 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                 render={() => (
                   <FormItem className="flex flex-1 flex-col overflow-hidden">
                     <div className="flex items-center justify-between">
-                      <FormLabel>Quyền</FormLabel>
+                      <FormLabel>{ROLE_FORM.FORM.PERMISSIONS.LABEL}</FormLabel>
                       <div className="space-x-2">
                         <Button type="button" variant="outline" size="sm" onClick={deselectAllPermissions}>
-                          Bỏ chọn tất cả
+                          {ROLE_FORM.FORM.PERMISSIONS.DESELECT_ALL}
                         </Button>
                         <Button type="button" variant="outline" size="sm" onClick={selectAllPermissions}>
-                          Chọn tất cả
+                          {ROLE_FORM.FORM.PERMISSIONS.SELECT_ALL}
                         </Button>
                       </div>
                     </div>
@@ -245,9 +244,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
 
               <DialogFooter className="pt-4">
                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                  Hủy
+                  {ROLE_FORM.BUTTON.CANCEL}
                 </Button>
-                <Button type="submit">{mode === 'add' ? 'Thêm vai trò' : 'Lưu thay đổi'}</Button>
+                <Button type="submit">{mode === 'add' ? ROLE_FORM.BUTTON.ADD : ROLE_FORM.BUTTON.SAVE}</Button>
               </DialogFooter>
             </form>
           </Form>

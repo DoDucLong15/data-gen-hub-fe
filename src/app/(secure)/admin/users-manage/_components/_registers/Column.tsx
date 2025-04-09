@@ -2,50 +2,52 @@ import { formatDistanceToNow } from 'date-fns';
 import { Register } from '@/utils/types/register.type';
 import { RegisterActions } from './RegisterAction';
 import { ColumnDef } from '@tanstack/react-table';
+import { REGISTER_LIST } from '@/configs/messages.config';
 
 export const columns: ColumnDef<Register>[] = [
   {
     accessorKey: 'stt',
-    header: 'STT',
+    header: REGISTER_LIST.TABLE.HEADERS.NO,
     cell: ({ row }) => row.index + 1,
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: REGISTER_LIST.TABLE.HEADERS.NAME,
   },
   {
     accessorKey: 'email',
-    header: 'Email',
+    header: REGISTER_LIST.TABLE.HEADERS.EMAIL,
   },
   {
     accessorKey: 'phone',
-    header: 'Phone',
-    cell: ({ row }) => row.original.phone || 'N/A',
+    header: REGISTER_LIST.TABLE.HEADERS.PHONE,
+    cell: ({ row }) => row.original.phone || REGISTER_LIST.TABLE.NO_DATA,
   },
   {
     accessorKey: 'school',
-    header: 'School',
-    cell: ({ row }) => row.original.school || 'N/A',
+    header: REGISTER_LIST.TABLE.HEADERS.SCHOOL,
+    cell: ({ row }) => row.original.school || REGISTER_LIST.TABLE.NO_DATA,
   },
   {
     accessorKey: 'department',
-    header: 'Department',
-    cell: ({ row }) => row.original.department || 'N/A',
+    header: REGISTER_LIST.TABLE.HEADERS.DEPARTMENT,
+    cell: ({ row }) => row.original.department || REGISTER_LIST.TABLE.NO_DATA,
   },
   {
     accessorKey: 'position',
-    header: 'Position',
-    cell: ({ row }) => row.original.position || 'N/A',
+    header: REGISTER_LIST.TABLE.HEADERS.POSITION,
+    cell: ({ row }) => row.original.position || REGISTER_LIST.TABLE.NO_DATA,
   },
   {
     accessorKey: 'createdAt',
-    header: 'Registered',
+    header: REGISTER_LIST.TABLE.HEADERS.REGISTERED,
     cell: ({ row }) => {
       return formatDistanceToNow(new Date(row.original.createdAt), { addSuffix: true });
     },
   },
   {
     id: 'actions',
+    header: REGISTER_LIST.TABLE.HEADERS.ACTIONS,
     cell: ({ row }) => {
       return <RegisterActions register={row.original} />;
     },

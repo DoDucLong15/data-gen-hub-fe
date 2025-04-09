@@ -114,7 +114,8 @@ export const ENGLISH_MESSAGES = {
     },
     MISSION: {
       TITLE: 'Our Mission',
-      DESCRIPTION: 'We were born with the mission of simplifying the graduation thesis management process, helping students focus on research instead of worrying about complex manual processes, while supporting lecturers in monitoring and evaluating effectively.',
+      DESCRIPTION:
+        'We were born with the mission of simplifying the graduation thesis management process, helping students focus on research instead of worrying about complex manual processes, while supporting lecturers in monitoring and evaluating effectively.',
       FEATURES: {
         TIME_SAVING: {
           TITLE: 'Time Saving',
@@ -132,7 +133,8 @@ export const ENGLISH_MESSAGES = {
     },
     TEAM: {
       TITLE: 'Our Team',
-      DESCRIPTION: 'We are experts in technology and education, always putting user experience and efficiency at the center of development.',
+      DESCRIPTION:
+        'We are experts in technology and education, always putting user experience and efficiency at the center of development.',
       MEMBERS: {
         CEO: {
           NAME: 'Nguyen Van A',
@@ -158,7 +160,8 @@ export const ENGLISH_MESSAGES = {
   CONTACT_US: {
     HERO: {
       TITLE: 'Contact Us',
-      DESCRIPTION: 'We are always ready to listen and support you with any issues related to our graduation thesis management platform.',
+      DESCRIPTION:
+        'We are always ready to listen and support you with any issues related to our graduation thesis management platform.',
     },
     CONTACT_INFO: {
       TITLE: 'Contact Information',
@@ -210,19 +213,23 @@ export const ENGLISH_MESSAGES = {
       ITEMS: [
         {
           QUESTION: 'Does the system support integration with existing school training management software?',
-          ANSWER: 'Yes, our platform is designed to flexibly integrate with existing training management systems through APIs and data synchronization solutions.',
+          ANSWER:
+            'Yes, our platform is designed to flexibly integrate with existing training management systems through APIs and data synchronization solutions.',
         },
         {
           QUESTION: 'How can lecturers track student progress?',
-          ANSWER: 'Lecturers can track student progress through an intuitive dashboard, receive notifications about important milestones, and create custom reports on the progress of individual students or groups.',
+          ANSWER:
+            'Lecturers can track student progress through an intuitive dashboard, receive notifications about important milestones, and create custom reports on the progress of individual students or groups.',
         },
         {
           QUESTION: 'Does the system support version control for project documents?',
-          ANSWER: 'Yes, our system provides comprehensive version control features, allowing students and lecturers to track change history, compare versions, and restore previous versions when needed.',
+          ANSWER:
+            'Yes, our system provides comprehensive version control features, allowing students and lecturers to track change history, compare versions, and restore previous versions when needed.',
         },
         {
           QUESTION: 'Does the platform provide plagiarism checking features?',
-          ANSWER: 'Yes, we integrate plagiarism checking tools to ensure the originality of theses and help students comply with academic standards.',
+          ANSWER:
+            'Yes, we integrate plagiarism checking tools to ensure the originality of theses and help students comply with academic standards.',
         },
       ],
     },
@@ -293,12 +300,562 @@ export const ENGLISH_MESSAGES = {
       DEFAULT: 'An error occurred while sending the registration request',
     },
     SUCCESS: {
-      MESSAGE: 'Registration request has been sent successfully! The administrator will review and approve your account. You will be redirected to the login page in a few seconds...',
+      MESSAGE:
+        'Registration request has been sent successfully! The administrator will review and approve your account. You will be redirected to the login page in a few seconds...',
     },
     TERMS: 'By registering, you agree to our Terms of Service and Privacy Policy.',
   },
   METADATA: {
     TITLE: 'Data Gen Hub',
-    DESCRIPTION: 'A comprehensive platform for managing graduation theses, automating data generation and collaboration.',
+    DESCRIPTION:
+      'A comprehensive platform for managing graduation theses, automating data generation and collaboration.',
+  },
+  PERMISSION_FORM: {
+    TITLE: {
+      ADD: 'Add New Permission',
+      EDIT: 'Edit Permission',
+    },
+    DESCRIPTION: {
+      ADD: 'Enter information to create a new permission.',
+      EDIT: 'Update permission information.',
+    },
+    FORM: {
+      ACTION: {
+        LABEL: 'Action',
+        PLACEHOLDER: 'Select or enter an action',
+        VALIDATION: 'Action must be at least 2 characters',
+      },
+      SUBJECT: {
+        LABEL: 'Subject',
+        PLACEHOLDER: 'Select or enter a subject',
+        VALIDATION: 'Subject must be at least 2 characters',
+      },
+      DESCRIPTION: {
+        LABEL: 'Description',
+        PLACEHOLDER: 'Enter description for this permission',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Cancel',
+      ADD: 'Add Permission',
+      SAVE: 'Save Changes',
+    },
+    TOAST: {
+      SUCCESS: {
+        ADD: 'Permission added successfully',
+        UPDATE: 'Permission updated successfully',
+      },
+      ERROR: {
+        ADD: 'Could not add permission. Please try again.',
+        UPDATE: 'Could not update permission. Please try again.',
+      },
+    },
+  },
+  PERMISSION_LIST: {
+    TITLE: 'Permissions List',
+    ADD_BUTTON: 'Add New Permission',
+    REFRESH_BUTTON: 'Refresh',
+    SEARCH: {
+      PLACEHOLDER: 'Search permissions...',
+    },
+    FILTER: {
+      PLACEHOLDER: 'Filter by subject',
+      ALL_SUBJECTS: 'All subjects',
+    },
+    TABLE: {
+      NO: 'No.',
+      ACTION: 'Action',
+      SUBJECT: 'Subject',
+      DESCRIPTION: 'Description',
+      OPERATIONS: 'Operations',
+      NO_DESCRIPTION: 'No description',
+      EMPTY: {
+        MESSAGE: 'No matching permissions found.',
+        CLEAR_FILTER: 'Clear filters',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Actions',
+      EDIT: 'Edit',
+      DELETE: 'Delete',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Confirm Delete Permission',
+      DESCRIPTION:
+        'Are you sure you want to delete this permission? This action cannot be undone and may affect roles using this permission.',
+      CANCEL: 'Cancel',
+      CONFIRM: 'Delete',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'Permissions list updated',
+      REFRESH_ERROR: 'Could not refresh data',
+      DELETE_SUCCESS: 'Permission deleted successfully.',
+      DELETE_ERROR: 'An error occurred while deleting the permission.',
+    },
+  },
+  ROLE_FORM: {
+    TITLE: {
+      ADD: 'Add New Role',
+      EDIT: 'Edit Role',
+    },
+    DESCRIPTION: {
+      ADD: 'Enter information to create a new role.',
+      EDIT: 'Update role information.',
+    },
+    FORM: {
+      NAME: {
+        LABEL: 'Name',
+        PLACEHOLDER: 'Enter role name',
+        VALIDATION: 'Name must be at least 2 characters',
+      },
+      DESCRIPTION: {
+        LABEL: 'Description',
+        PLACEHOLDER: 'Enter role description',
+        VALIDATION: 'Description must be at least 2 characters',
+      },
+      PERMISSIONS: {
+        LABEL: 'Permissions',
+        SELECT_ALL: 'Select All',
+        DESELECT_ALL: 'Deselect All',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Cancel',
+      ADD: 'Add Role',
+      SAVE: 'Save Changes',
+    },
+    LOADING: 'Loading data...',
+    TOAST: {
+      SUCCESS: {
+        ADD: 'Role added successfully',
+        UPDATE: 'Role updated successfully',
+      },
+      ERROR: {
+        ADD: 'Could not add role. Please try again.',
+        UPDATE: 'Could not update role. Please try again.',
+      },
+    },
+  },
+  ROLE_LIST: {
+    TABLE: {
+      HEADER: {
+        ROLE: 'Role',
+        DESCRIPTION: 'Description',
+        USER_COUNT: 'Users',
+        PERMISSION_COUNT: 'Permissions',
+        LAST_UPDATED: 'Last Updated',
+        STATUS: 'Status',
+        ACTIONS: 'Actions',
+      },
+      NO_DESCRIPTION: 'No description',
+      EMPTY: {
+        MESSAGE: 'No roles in the system yet.',
+        ADD_BUTTON: 'Add New Role',
+      },
+      STATUS: {
+        ACTIVE: 'Active',
+        INACTIVE: 'Inactive',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Actions',
+      EDIT: 'Edit',
+      DELETE: 'Delete',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Confirm Delete Role',
+      DESCRIPTION: 'Are you sure you want to delete this role? This action cannot be undone.',
+      CANCEL: 'Cancel',
+      CONFIRM: 'Delete',
+    },
+    TOAST: {
+      DELETE_SUCCESS: 'Role deleted successfully.',
+      DELETE_ERROR: 'An error occurred while deleting the role.',
+    },
+  },
+  ROLES_PAGE: {
+    TABS: {
+      ROLES: 'Role List',
+      PERMISSIONS: 'Permission Management',
+    },
+    ACTIONS: {
+      ADD_ROLE: 'Add Role',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'Role list updated',
+      REFRESH_ERROR: 'Could not refresh data',
+      LOAD_ERROR: 'An error occurred while loading role data.',
+    },
+    LOADING: 'Loading...',
+  },
+  SYSTEM_CONFIG_PAGE: {
+    TITLE: 'System Configuration',
+    ACTIONS: {
+      ADD: 'Add New',
+      REFRESH: 'Refresh',
+    },
+    LIST: {
+      HEADERS: {
+        KEY: 'Key',
+        TYPE: 'Type',
+        VALUE: 'Value',
+        ACTIONS: 'Actions',
+      },
+      EMPTY: {
+        LOADING: 'Loading...',
+        NO_DATA: 'No configurations found',
+      },
+      DROPDOWN: {
+        EDIT: 'Edit',
+        DELETE: 'Delete',
+      },
+      VALUE_TYPES: {
+        STRING: 'String',
+        NUMBER: 'Number',
+        BOOLEAN: 'Boolean',
+        JSON: 'JSON',
+        EMPTY: 'empty',
+        NOT_SET: 'Not set',
+        TRUE: 'True',
+        FALSE: 'False',
+      },
+    },
+    FORM: {
+      TITLE: {
+        ADD: 'Add New Configuration',
+        EDIT: 'Edit Configuration',
+      },
+      DESCRIPTION: {
+        ADD: 'Add a new system configuration.',
+        EDIT: 'Editing configuration with key: {key}',
+      },
+      FIELDS: {
+        KEY: {
+          LABEL: 'Key',
+          PLACEHOLDER: 'Enter configuration key',
+        },
+        TYPE: {
+          LABEL: 'Value Type',
+          PLACEHOLDER: 'Select a value type',
+        },
+        VALUE: {
+          LABEL: 'Value',
+        },
+      },
+      BUTTONS: {
+        SAVE: 'Save',
+        SAVING: 'Saving...',
+      },
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Are you sure?',
+      DESCRIPTION: 'This will permanently delete the configuration with key: {key}. This action cannot be undone.',
+      CANCEL: 'Cancel',
+      CONFIRM: 'Delete',
+      DELETING: 'Deleting...',
+    },
+  },
+  USER_DETAIL: {
+    TITLE: 'User Information',
+    DESCRIPTION: 'Details about this user.',
+    ROLES: {
+      ADMIN: 'Admin',
+      TEACHER: 'Teacher',
+    },
+    NO_DATA: 'No data',
+    INFO_ITEMS: {
+      EMAIL: 'Email',
+      PHONE: 'Phone',
+      SCHOOL: 'School',
+      DEPARTMENT: 'Department',
+      POSITION: 'Position',
+      CREATED_AT: 'Created Date',
+      UPDATED_AT: 'Last Updated',
+    },
+    ACCOUNT_STATUS: {
+      TITLE: 'Account Status',
+      ACTIVE: 'Active',
+    },
+    ERROR: {
+      TITLE: 'Could not load user information',
+      MESSAGE: 'Please try again later',
+    },
+    CLOSE_BUTTON: 'Close',
+  },
+  USER_FORM: {
+    TITLE: {
+      ADD: 'Add New User',
+      EDIT: 'Edit User',
+    },
+    DESCRIPTION: {
+      ADD: 'Enter information to create a new user.',
+      EDIT: 'Update user information.',
+    },
+    LOADING: 'Loading user data...',
+    FORM: {
+      NAME: {
+        LABEL: 'Name',
+        PLACEHOLDER: 'Enter user name',
+        VALIDATION: 'Name must be at least 2 characters',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+        PLACEHOLDER: 'email@example.com',
+        VALIDATION: 'Invalid email',
+      },
+      ROLE: {
+        LABEL: 'Role',
+        PLACEHOLDER: 'Select role',
+      },
+      PHONE: {
+        LABEL: 'Phone Number',
+        PLACEHOLDER: 'Enter phone number',
+        VALIDATION: 'Invalid phone number',
+      },
+      SCHOOL: {
+        LABEL: 'School',
+        PLACEHOLDER: 'Enter school name',
+        VALIDATION: 'Invalid school name',
+      },
+      DEPARTMENT: {
+        LABEL: 'Department',
+        PLACEHOLDER: 'Enter department name',
+        VALIDATION: 'Invalid department name',
+      },
+      POSITION: {
+        LABEL: 'Position',
+        PLACEHOLDER: 'Enter position',
+        VALIDATION: 'Invalid position',
+      },
+    },
+    BUTTON: {
+      CANCEL: 'Cancel',
+      ADD: 'Add User',
+      SAVE: 'Save Changes',
+    },
+    TOAST: {
+      SUCCESS: {
+        ADD: 'User added successfully',
+        UPDATE: 'User updated successfully',
+      },
+      ERROR: {
+        ADD: 'Could not add user. Please try again.',
+        UPDATE: 'Could not update user. Please try again.',
+      },
+    },
+  },
+  USERS_LIST: {
+    LOADING: 'Loading...',
+    TABLE: {
+      HEADERS: {
+        ID: 'ID',
+        NAME: 'Name',
+        EMAIL: 'Email',
+        ROLE: 'Role',
+        CREATED_AT: 'Created At',
+        STATUS: 'Status',
+        ACTIONS: 'Actions',
+      },
+      EMPTY: 'No users found.',
+      STATUS: {
+        ACTIVE: 'Active',
+        DELETED: 'Deleted',
+      },
+      ROLES: {
+        ADMIN: 'Admin',
+        TEACHER: 'Teacher',
+      },
+    },
+    DROPDOWN: {
+      LABEL: 'Actions',
+      VIEW: 'View',
+      EDIT: 'Edit',
+      DELETE: 'Delete',
+    },
+    DELETE_DIALOG: {
+      TITLE: 'Confirm Delete User',
+      DESCRIPTION: 'Are you sure you want to delete this user? This action cannot be undone.',
+      CANCEL: 'Cancel',
+      CONFIRM: 'Delete',
+    },
+    TOAST: {
+      DELETE_SUCCESS: 'User deleted successfully.',
+      DELETE_ERROR: 'An error occurred while deleting the user.',
+    },
+  },
+  USERS_PAGE: {
+    TABS: {
+      USERS: 'User List',
+      REGISTERS: 'Pending Registrations',
+    },
+    ACTIONS: {
+      ADD_USER: 'Add User',
+      REFRESH: 'Refresh',
+    },
+    TOAST: {
+      REFRESH_SUCCESS: 'User list updated',
+      REFRESH_ERROR: 'Could not refresh data',
+      LOAD_ERROR: 'An error occurred while loading user data.',
+    },
+    LOADING: 'Loading...',
+  },
+  REGISTER_APPROVE_DIALOG: {
+    TITLE: 'Approve Registration',
+    DESCRIPTION: "Approve {name}'s registration and assign a role.",
+    FORM: {
+      ROLE: {
+        LABEL: 'Role',
+        PLACEHOLDER: 'Select a role',
+      },
+    },
+    BUTTONS: {
+      CANCEL: 'Cancel',
+      APPROVE: 'Approve',
+      APPROVING: 'Approving...',
+    },
+  },
+  REGISTER_LIST: {
+    TABLE: {
+      HEADERS: {
+        NO: 'No.',
+        NAME: 'Name',
+        EMAIL: 'Email',
+        PHONE: 'Phone',
+        SCHOOL: 'School',
+        DEPARTMENT: 'Department',
+        POSITION: 'Position',
+        REGISTERED: 'Registered',
+        ACTIONS: 'Actions',
+      },
+      NO_DATA: 'N/A',
+    },
+  },
+  REGISTER_ACTIONS: {
+    BUTTONS: {
+      APPROVE: {
+        LABEL: 'Approve',
+        TOOLTIP: 'Approve registration',
+      },
+      REJECT: {
+        LABEL: 'Reject',
+        TOOLTIP: 'Reject registration',
+      },
+    },
+  },
+  REGISTER_REJECT_DIALOG: {
+    TITLE: 'Are you sure?',
+    DESCRIPTION: "This will reject {name}'s registration request. This action cannot be undone.",
+    BUTTONS: {
+      CANCEL: 'Cancel',
+      REJECT: 'Reject',
+      REJECTING: 'Rejecting...',
+    },
+  },
+  PROFILE_FORM: {
+    TITLE: 'Edit Profile',
+    DESCRIPTION: 'Update your personal information',
+    FORM: {
+      NAME: {
+        LABEL: 'Full Name',
+        PLACEHOLDER: 'John Doe',
+        VALIDATION: 'Name must be at least 2 characters.',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+        PLACEHOLDER: 'example@email.com',
+        VALIDATION: 'Please enter a valid email address.',
+      },
+      PHONE: {
+        LABEL: 'Phone Number',
+        PLACEHOLDER: '0123456789',
+        VALIDATION: 'Phone number must be at least 10 digits.',
+      },
+      SCHOOL: {
+        LABEL: 'School',
+        PLACEHOLDER: 'Your school',
+      },
+      DEPARTMENT: {
+        LABEL: 'Department',
+        PLACEHOLDER: 'Your department',
+      },
+      POSITION: {
+        LABEL: 'Position',
+        PLACEHOLDER: 'Your position',
+      },
+    },
+    BUTTONS: {
+      CANCEL: 'Cancel',
+      SAVE: 'Save Changes',
+      SAVING: 'Saving...',
+    },
+    TOAST: {
+      SUCCESS: {
+        TITLE: 'Profile updated successfully!',
+        DESCRIPTION: 'Your personal information has been updated.',
+      },
+      ERROR: {
+        TITLE: 'Failed to update profile!',
+        DESCRIPTION: 'An error occurred. Please try again later.',
+      },
+    },
+  },
+  PROFILE_VIEW: {
+    TITLE: 'Personal Information',
+    DESCRIPTION: 'Manage your personal information',
+    EDIT_BUTTON: 'Edit Profile',
+    FIELDS: {
+      NAME: {
+        LABEL: 'Full Name',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+      },
+      PHONE: {
+        LABEL: 'Phone Number',
+      },
+      SCHOOL: {
+        LABEL: 'School',
+      },
+      DEPARTMENT: {
+        LABEL: 'Department',
+      },
+      POSITION: {
+        LABEL: 'Position',
+      },
+    },
+    NO_DATA: '-',
+  },
+  USER_SIDEBAR: {
+    NAME_NOT_SET: 'Not updated',
+    AVATAR: {
+      ALT: 'User',
+      FALLBACK: 'U',
+      UPLOAD_BUTTON: 'Upload avatar',
+    },
+    INFO: {
+      ID: {
+        LABEL: 'ID',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+      },
+      ROLE: {
+        LABEL: 'Role',
+      },
+    },
+  },
+  ACCOUNT_PAGE: {
+    TITLE: 'My Account',
+    LOADING: {
+      MESSAGE: 'Loading information...',
+    },
+    NOT_FOUND: {
+      TITLE: 'User information not found',
+      DESCRIPTION: 'Please login to view your account information.',
+      LOGIN_BUTTON: 'Login',
+    },
+    TABS: {
+      PROFILE: 'Profile',
+    },
   },
 };

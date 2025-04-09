@@ -32,6 +32,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { ROLE_LIST } from '@/configs/messages.config';
 
 export function RolesList() {
   const { roles, isLoading, deleteRole } = useRoles();
@@ -43,9 +44,9 @@ export function RolesList() {
 
     try {
       await deleteRole(roleToDelete);
-      toast('Vai trò đã được xóa thành công.');
+      toast(ROLE_LIST.TOAST.DELETE_SUCCESS);
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi xóa vai trò.');
+      toast.error(ROLE_LIST.TOAST.DELETE_ERROR);
     } finally {
       setRoleToDelete(null);
     }
@@ -100,13 +101,13 @@ export function RolesList() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Vai trò</TableHead>
-              <TableHead>Mô tả</TableHead>
-              <TableHead>Số người dùng</TableHead>
-              <TableHead>Số quyền</TableHead>
-              <TableHead>Cập nhật lần cuối</TableHead>
-              <TableHead>Trạng thái</TableHead>
-              <TableHead className="text-right">Thao tác</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.ROLE}</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.DESCRIPTION}</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.USER_COUNT}</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.PERMISSION_COUNT}</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.LAST_UPDATED}</TableHead>
+              <TableHead>{ROLE_LIST.TABLE.HEADER.STATUS}</TableHead>
+              <TableHead className="text-right">{ROLE_LIST.TABLE.HEADER.ACTIONS}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -147,7 +148,7 @@ export function RolesList() {
                           </Tooltip>
                         </TooltipProvider>
                       ) : (
-                        <span className="text-muted-foreground italic">Không có mô tả</span>
+                        <span className="text-muted-foreground italic">{ROLE_LIST.TABLE.NO_DESCRIPTION}</span>
                       )}
                     </div>
                   </TableCell>
@@ -174,7 +175,9 @@ export function RolesList() {
                       variant={role.id.charCodeAt(0) % 2 === 0 ? 'default' : 'outline'}
                       className={role.id.charCodeAt(0) % 2 === 0 ? 'bg-green-500 hover:bg-green-600' : ''}
                     >
-                      {role.id.charCodeAt(0) % 2 === 0 ? 'Đang hoạt động' : 'Không hoạt động'}
+                      {role.id.charCodeAt(0) % 2 === 0
+                        ? ROLE_LIST.TABLE.STATUS.ACTIVE
+                        : ROLE_LIST.TABLE.STATUS.INACTIVE}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -187,14 +190,14 @@ export function RolesList() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                          <DropdownMenuLabel>{ROLE_LIST.DROPDOWN.LABEL}</DropdownMenuLabel>
                           <DropdownMenuItem onClick={() => setRoleToEdit(role.id)}>
                             <Edit className="mr-2 h-4 w-4" />
-                            Chỉnh sửa
+                            {ROLE_LIST.DROPDOWN.EDIT}
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => setRoleToDelete(role.id)} className="text-red-600">
                             <Trash2 className="mr-2 h-4 w-4" />
-                            Xóa
+                            {ROLE_LIST.DROPDOWN.DELETE}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -207,9 +210,9 @@ export function RolesList() {
                 <TableCell colSpan={6} className="h-24 text-center">
                   <div className="text-muted-foreground flex flex-col items-center justify-center">
                     <Shield className="mb-2 h-10 w-10 opacity-20" />
-                    <p>Chưa có vai trò nào trong hệ thống.</p>
+                    <p>{ROLE_LIST.TABLE.EMPTY.MESSAGE}</p>
                     <Button variant="outline" className="mt-4" onClick={() => setRoleToEdit('')}>
-                      <Plus className="mr-2 h-4 w-4" /> Thêm vai trò mới
+                      <Plus className="mr-2 h-4 w-4" /> {ROLE_LIST.TABLE.EMPTY.ADD_BUTTON}
                     </Button>
                   </div>
                 </TableCell>
@@ -223,15 +226,13 @@ export function RolesList() {
       <AlertDialog open={!!roleToDelete} onOpenChange={(open) => !open && setRoleToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận xóa vai trò</AlertDialogTitle>
-            <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa vai trò này? Hành động này không thể hoàn tác.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{ROLE_LIST.DELETE_DIALOG.TITLE}</AlertDialogTitle>
+            <AlertDialogDescription>{ROLE_LIST.DELETE_DIALOG.DESCRIPTION}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogCancel>{ROLE_LIST.DELETE_DIALOG.CANCEL}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteRole} className="bg-red-500 hover:bg-red-600">
-              Xóa
+              {ROLE_LIST.DELETE_DIALOG.CONFIRM}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -39,9 +39,7 @@ export default function ContactPage() {
       <section className="bg-gradient-to-r from-slate-600 to-slate-700 py-16 text-white">
         <div className="container mx-auto px-4 text-center">
           <h1 className="mb-6 text-4xl font-bold md:text-5xl">{CONTACT_US.HERO.TITLE}</h1>
-          <p className="mx-auto max-w-2xl text-xl text-blue-100">
-            {CONTACT_US.HERO.DESCRIPTION}
-          </p>
+          <p className="mx-auto max-w-2xl text-xl text-blue-100">{CONTACT_US.HERO.DESCRIPTION}</p>
         </div>
       </section>
 
@@ -61,7 +59,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{CONTACT_US.CONTACT_INFO.EMAIL.LABEL}</h3>
-                      <Link href={`mailto:${CONTACT_US.CONTACT_INFO.EMAIL.VALUE}`} className="text-slate-600 hover:underline">
+                      <Link
+                        href={`mailto:${CONTACT_US.CONTACT_INFO.EMAIL.VALUE}`}
+                        className="text-slate-600 hover:underline"
+                      >
                         {CONTACT_US.CONTACT_INFO.EMAIL.VALUE}
                       </Link>
                     </div>
@@ -73,7 +74,10 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{CONTACT_US.CONTACT_INFO.PHONE.LABEL}</h3>
-                      <Link href={`tel:${CONTACT_US.CONTACT_INFO.PHONE.VALUE}`} className="text-slate-600 hover:underline">
+                      <Link
+                        href={`tel:${CONTACT_US.CONTACT_INFO.PHONE.VALUE}`}
+                        className="text-slate-600 hover:underline"
+                      >
                         {CONTACT_US.CONTACT_INFO.PHONE.VALUE}
                       </Link>
                     </div>
@@ -92,7 +96,7 @@ export default function ContactPage() {
 
                 <div className="mt-10">
                   <h3 className="mb-3 font-semibold text-gray-900">{CONTACT_US.CONTACT_INFO.WORKING_HOURS.TITLE}</h3>
-                  <p className="text-gray-600 whitespace-pre-line">{CONTACT_US.CONTACT_INFO.WORKING_HOURS.SCHEDULE}</p>
+                  <p className="whitespace-pre-line text-gray-600">{CONTACT_US.CONTACT_INFO.WORKING_HOURS.SCHEDULE}</p>
                 </div>
               </div>
             </div>

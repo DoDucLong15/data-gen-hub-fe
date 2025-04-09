@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Register } from '@/utils/types/register.type';
 import { ApproveDialog } from './ApproveDialog';
 import { RejectDialog } from './RejectDialog';
+import { REGISTER_ACTIONS } from '@/configs/messages.config';
 
 interface RegisterActionsProps {
   register: Register;
@@ -22,7 +23,7 @@ export function RegisterActions({ register }: RegisterActionsProps) {
         onClick={() => setApproveDialogOpen(true)}
       >
         <Check className="h-4 w-4" />
-        <span className="sr-only">Approve</span>
+        <span className="sr-only">{REGISTER_ACTIONS.BUTTONS.APPROVE.TOOLTIP}</span>
       </Button>
 
       <Button
@@ -32,7 +33,7 @@ export function RegisterActions({ register }: RegisterActionsProps) {
         onClick={() => setRejectDialogOpen(true)}
       >
         <X className="h-4 w-4" />
-        <span className="sr-only">Reject</span>
+        <span className="sr-only">{REGISTER_ACTIONS.BUTTONS.REJECT.TOOLTIP}</span>
       </Button>
 
       <ApproveDialog register={register} open={approveDialogOpen} onOpenChange={setApproveDialogOpen} />

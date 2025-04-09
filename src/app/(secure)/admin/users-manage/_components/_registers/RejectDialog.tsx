@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Register } from '@/utils/types/register.type';
 import { useRegisters } from '@/hooks/useRegisters';
+import { REGISTER_REJECT_DIALOG } from '@/configs/messages.config';
 
 interface RejectDialogProps {
   register: Register;
@@ -30,19 +31,19 @@ export function RejectDialog({ register, open, onOpenChange }: RejectDialogProps
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>{REGISTER_REJECT_DIALOG.TITLE}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will reject {register.name}'s registration request. This action cannot be undone.
+            {REGISTER_REJECT_DIALOG.DESCRIPTION.replace('{name}', register.name)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{REGISTER_REJECT_DIALOG.BUTTONS.CANCEL}</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleReject}
             disabled={isRejectRegisterLoading}
             className="bg-red-500 hover:bg-red-600"
           >
-            {isRejectRegisterLoading ? 'Rejecting...' : 'Reject'}
+            {isRejectRegisterLoading ? REGISTER_REJECT_DIALOG.BUTTONS.REJECTING : REGISTER_REJECT_DIALOG.BUTTONS.REJECT}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

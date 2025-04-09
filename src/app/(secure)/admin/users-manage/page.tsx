@@ -14,6 +14,7 @@ import { useRegisters } from '@/hooks/useRegisters';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { USERS_PAGE } from '@/configs/messages.config';
 
 export default function UsersPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -26,19 +27,19 @@ export default function UsersPage() {
     setRefreshing(true);
     try {
       await fetchUsers(); // force refresh từ server
-      toast('Đã cập nhật danh sách người dùng');
+      toast(USERS_PAGE.TOAST.REFRESH_SUCCESS);
     } catch (error) {
-      toast.error('Không thể làm mới dữ liệu');
+      toast.error(USERS_PAGE.TOAST.REFRESH_ERROR);
     } finally {
       setRefreshing(false);
     }
   };
 
   if (error) {
-    toast.error('Có lỗi xảy ra khi tải dữ liệu người dùng.');
+    toast.error(USERS_PAGE.TOAST.LOAD_ERROR);
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>{USERS_PAGE.LOADING}</div>;
 
   return (
     <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Users }]}>
@@ -46,11 +47,11 @@ export default function UsersPage() {
         <Tabs defaultValue="users" className="w-full space-y-6">
           <TabsList className="w-full justify-start border-b">
             <TabsTrigger value="users" className="px-8 py-3 text-base">
-              Danh sách người dùng
+              {USERS_PAGE.TABS.USERS}
             </TabsTrigger>
             <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
               <TabsTrigger value="registers" className="px-8 py-3 text-base">
-                Đăng ký chờ duyệt
+                {USERS_PAGE.TABS.REGISTERS}
               </TabsTrigger>
             </ProtectedComponent>
           </TabsList>
@@ -61,7 +62,7 @@ export default function UsersPage() {
                 <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
                   <Button onClick={() => setIsAddDialogOpen(true)}>
                     <Plus className="mr-2 h-4 w-4" />
-                    Thêm người dùng
+                    {USERS_PAGE.ACTIONS.ADD_USER}
                   </Button>
                 </ProtectedComponent>
                 <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading}>
