@@ -1,4 +1,5 @@
 import { AdminApi } from '@/apis/admin.api';
+import { SYSTEM_CONFIG } from '@/configs/messages.config';
 import { TSystemConfig } from '@/utils/types/system-config.type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -17,7 +18,7 @@ export const useSystemConfig = () => {
     mutationFn: (config: TSystemConfig) => AdminApi.createSystemConfig(config),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SYSTEM_CONFIG_QUERY_KEY });
-      toast.success('System config created successfully');
+      toast.success(SYSTEM_CONFIG.CREATE_SUCCESS);
     },
   });
 
@@ -25,7 +26,7 @@ export const useSystemConfig = () => {
     mutationFn: (config: TSystemConfig) => AdminApi.updateSystemConfig(config.key, config),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SYSTEM_CONFIG_QUERY_KEY });
-      toast.success('System config updated successfully');
+      toast.success(SYSTEM_CONFIG.UPDATE_SUCCESS);
     },
   });
 
@@ -33,7 +34,7 @@ export const useSystemConfig = () => {
     mutationFn: (key: string) => AdminApi.deleteSystemConfig(key),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SYSTEM_CONFIG_QUERY_KEY });
-      toast.success('System config deleted successfully');
+      toast.success(SYSTEM_CONFIG.DELETE_SUCCESS);
     },
   });
 

@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Checkbox } from '@/components/ui/checkbox';
+import { LOGIN } from '@/configs/messages.config';
 
 export default function Login() {
   const { login } = useAuth();
@@ -32,7 +33,7 @@ export default function Login() {
         router.push('/classes');
       }
     } catch (err: any) {
-      setError(err?.message || 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.');
+      setError(err?.message || LOGIN.ERROR.DEFAULT);
     } finally {
       setLoading(false);
     }
@@ -42,8 +43,8 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">Đăng nhập</CardTitle>
-          <CardDescription className="text-center">Nhập thông tin đăng nhập của bạn để tiếp tục</CardDescription>
+          <CardTitle className="text-center text-2xl font-bold">{LOGIN.TITLE}</CardTitle>
+          <CardDescription className="text-center">{LOGIN.DESCRIPTION}</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -57,14 +58,14 @@ export default function Login() {
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
-                Email
+                {LOGIN.FORM.EMAIL.LABEL}
               </Label>
               <div className="relative">
                 <Mail className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={LOGIN.FORM.EMAIL.PLACEHOLDER}
                   className="pl-10"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -76,7 +77,7 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="text-sm font-medium">
-                  Mật khẩu
+                  {LOGIN.FORM.PASSWORD.LABEL}
                 </Label>
               </div>
               <div className="relative">
@@ -84,7 +85,7 @@ export default function Login() {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
+                  placeholder={LOGIN.FORM.PASSWORD.PLACEHOLDER}
                   className="pl-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -106,7 +107,7 @@ export default function Login() {
                 htmlFor="remember"
                 className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Ghi nhớ đăng nhập
+                {LOGIN.FORM.REMEMBER_ME}
               </Label>
             </div>
 
@@ -133,10 +134,10 @@ export default function Login() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Đang xử lý...
+                  {LOGIN.FORM.PROCESSING}
                 </>
               ) : (
-                'Đăng nhập'
+                LOGIN.FORM.SUBMIT
               )}
             </Button>
           </form>
@@ -144,9 +145,9 @@ export default function Login() {
 
         <CardFooter className="flex justify-center border-t p-4">
           <p className="text-sm text-gray-600">
-            Chưa có tài khoản?{' '}
+            {LOGIN.REGISTER_PROMPT.TEXT}{' '}
             <Link href="/account/register" className="text-primary font-medium hover:underline">
-              Đăng ký ngay
+              {LOGIN.REGISTER_PROMPT.LINK}
             </Link>
           </p>
         </CardFooter>

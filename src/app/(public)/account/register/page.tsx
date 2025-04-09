@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import axios from 'axios';
+import { REGISTER } from '@/configs/messages.config';
 
 type UserRegistration = {
   email: string;
@@ -51,7 +52,7 @@ export default function Register() {
     try {
       // Validate email (required field)
       if (!formData.email || !formData.email.includes('@')) {
-        throw new Error('Email hợp lệ là bắt buộc');
+        throw new Error(REGISTER.FORM.EMAIL.REQUIRED);
       }
 
       // Call API to request admin to add the user
@@ -59,7 +60,7 @@ export default function Register() {
 
       if (response.status !== 201) {
         const errorData = response.data;
-        throw new Error(errorData.message || 'Đăng ký không thành công');
+        throw new Error(errorData.message || REGISTER.ERROR.DEFAULT);
       }
 
       // Registration request successful
@@ -80,7 +81,7 @@ export default function Register() {
         router.push('/account/login');
       }, 3000);
     } catch (err: any) {
-      setError(err?.response?.data?.message ?? err?.message ?? 'Đã xảy ra lỗi khi gửi yêu cầu đăng ký');
+      setError(err?.response?.data?.message ?? err?.message ?? REGISTER.ERROR.DEFAULT);
     } finally {
       setLoading(false);
     }
@@ -96,13 +97,11 @@ export default function Register() {
               className="text-primary mr-auto inline-flex items-center text-sm font-medium hover:underline"
             >
               <ArrowLeft className="mr-1 h-4 w-4" />
-              Quay lại đăng nhập
+              {REGISTER.BACK_TO_LOGIN}
             </Link>
           </div>
-          <CardTitle className="mt-4 text-center text-2xl font-bold">Đăng ký tài khoản</CardTitle>
-          <CardDescription className="text-center">
-            Điền thông tin của bạn để gửi yêu cầu tới quản trị viên
-          </CardDescription>
+          <CardTitle className="mt-4 text-center text-2xl font-bold">{REGISTER.TITLE}</CardTitle>
+          <CardDescription className="text-center">{REGISTER.DESCRIPTION}</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -115,10 +114,7 @@ export default function Register() {
 
           {success && (
             <Alert className="border-green-300 bg-green-50 text-green-800">
-              <AlertDescription>
-                Yêu cầu đăng ký đã được gửi thành công! Quản trị viên sẽ xem xét và phê duyệt tài khoản của bạn. Bạn sẽ
-                được chuyển hướng đến trang đăng nhập trong vài giây...
-              </AlertDescription>
+              <AlertDescription>{REGISTER.SUCCESS.MESSAGE}</AlertDescription>
             </Alert>
           )}
 
@@ -126,7 +122,7 @@ export default function Register() {
             {/* Email - Required */}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
-                Email <span className="text-red-500">*</span>
+                {REGISTER.FORM.EMAIL.LABEL} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Mail className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -134,7 +130,7 @@ export default function Register() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={REGISTER.FORM.EMAIL.PLACEHOLDER}
                   className="pl-10"
                   value={formData.email}
                   onChange={handleChange}
@@ -146,7 +142,7 @@ export default function Register() {
             {/* Name */}
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
-                Họ và tên
+                {REGISTER.FORM.NAME.LABEL} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <User className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -154,10 +150,11 @@ export default function Register() {
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="Nguyễn Văn A"
+                  placeholder={REGISTER.FORM.NAME.PLACEHOLDER}
                   className="pl-10"
                   value={formData.name}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -165,7 +162,7 @@ export default function Register() {
             {/* Phone */}
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-sm font-medium">
-                Số điện thoại
+                {REGISTER.FORM.PHONE.LABEL} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Phone className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -173,10 +170,11 @@ export default function Register() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  placeholder="0912345678"
+                  placeholder={REGISTER.FORM.PHONE.PLACEHOLDER}
                   className="pl-10"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -184,7 +182,7 @@ export default function Register() {
             {/* School */}
             <div className="space-y-2">
               <Label htmlFor="school" className="text-sm font-medium">
-                Trường học
+                {REGISTER.FORM.SCHOOL.LABEL} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <BookOpen className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -192,10 +190,11 @@ export default function Register() {
                   id="school"
                   name="school"
                   type="text"
-                  placeholder="Đại học ABC"
+                  placeholder={REGISTER.FORM.SCHOOL.PLACEHOLDER}
                   className="pl-10"
                   value={formData.school}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -203,7 +202,7 @@ export default function Register() {
             {/* Department */}
             <div className="space-y-2">
               <Label htmlFor="department" className="text-sm font-medium">
-                Khoa/Phòng ban
+                {REGISTER.FORM.DEPARTMENT.LABEL}
               </Label>
               <div className="relative">
                 <Building className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -211,7 +210,7 @@ export default function Register() {
                   id="department"
                   name="department"
                   type="text"
-                  placeholder="Khoa Công nghệ thông tin"
+                  placeholder={REGISTER.FORM.DEPARTMENT.PLACEHOLDER}
                   className="pl-10"
                   value={formData.department}
                   onChange={handleChange}
@@ -222,7 +221,7 @@ export default function Register() {
             {/* Position */}
             <div className="space-y-2">
               <Label htmlFor="position" className="text-sm font-medium">
-                Chức vụ
+                {REGISTER.FORM.POSITION.LABEL}
               </Label>
               <div className="relative">
                 <Briefcase className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -230,7 +229,7 @@ export default function Register() {
                   id="position"
                   name="position"
                   type="text"
-                  placeholder="Giảng viên/Sinh viên/..."
+                  placeholder={REGISTER.FORM.POSITION.PLACEHOLDER}
                   className="pl-10"
                   value={formData.position}
                   onChange={handleChange}
@@ -261,17 +260,15 @@ export default function Register() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Đang xử lý...
+                  {REGISTER.FORM.PROCESSING}
                 </>
               ) : (
-                'Gửi yêu cầu đăng ký'
+                REGISTER.FORM.SUBMIT
               )}
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-gray-500">
-            Bằng việc đăng ký, bạn đồng ý với các điều khoản sử dụng và chính sách bảo mật của chúng tôi.
-          </p>
+          <p className="mt-4 text-center text-xs text-gray-500">{REGISTER.TERMS}</p>
         </CardContent>
       </Card>
     </div>

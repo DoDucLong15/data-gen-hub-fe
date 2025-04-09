@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, Clock, BarChart, Layers, ChevronRight } from 'lucide-react';
+import { ABOUT_US } from '@/configs/messages.config';
 
 export default function AboutPage() {
   return (
@@ -12,13 +13,11 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-12 md:flex-row">
             <div className="space-y-6 md:w-1/2">
-              <h1 className="text-4xl font-bold md:text-5xl">Về Chúng Tôi</h1>
-              <p className="text-xl text-blue-100 md:text-2xl">
-                Chúng tôi đam mê giúp sinh viên và giảng viên quản lý đồ án tốt nghiệp một cách hiệu quả
-              </p>
+              <h1 className="text-4xl font-bold md:text-5xl">{ABOUT_US.HERO.TITLE}</h1>
+              <p className="text-xl text-blue-100 md:text-2xl">{ABOUT_US.HERO.DESCRIPTION}</p>
               <Button asChild size="lg" className="bg-white text-blue-700 hover:bg-blue-50">
                 <Link href="/contact">
-                  Liên hệ ngay <ChevronRight className="ml-2 h-4 w-4" />
+                  {ABOUT_US.HERO.CONTACT_NOW} <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -39,12 +38,8 @@ export default function AboutPage() {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold">Sứ Mệnh Của Chúng Tôi</h2>
-            <p className="text-lg text-gray-600">
-              Chúng tôi ra đời với sứ mệnh đơn giản hóa quy trình quản lý đồ án tốt nghiệp, giúp sinh viên tập trung vào
-              nghiên cứu thay vì lo lắng về quy trình thủ công phức tạp, đồng thời hỗ trợ giảng viên theo dõi và đánh
-              giá hiệu quả.
-            </p>
+            <h2 className="mb-6 text-3xl font-bold">{ABOUT_US.MISSION.TITLE}</h2>
+            <p className="text-lg text-gray-600">{ABOUT_US.MISSION.DESCRIPTION}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -52,30 +47,24 @@ export default function AboutPage() {
               <div className="mb-4 inline-flex rounded-full bg-blue-100 p-3 text-blue-700">
                 <Clock className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold">Tiết Kiệm Thời Gian</h3>
-              <p className="text-gray-600">
-                Tự động hóa các quy trình thủ công, giảm thời gian xử lý và quản lý tài liệu.
-              </p>
+              <h3 className="mb-3 text-xl font-semibold">{ABOUT_US.MISSION.FEATURES.TIME_SAVING.TITLE}</h3>
+              <p className="text-gray-600">{ABOUT_US.MISSION.FEATURES.TIME_SAVING.DESCRIPTION}</p>
             </div>
 
             <div className="rounded-lg bg-gray-50 p-8">
               <div className="mb-4 inline-flex rounded-full bg-blue-100 p-3 text-blue-700">
                 <BarChart className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold">Hiệu Quả Cao</h3>
-              <p className="text-gray-600">
-                Tổng hợp và phân tích dữ liệu một cách toàn diện, giúp ra quyết định tốt hơn.
-              </p>
+              <h3 className="mb-3 text-xl font-semibold">{ABOUT_US.MISSION.FEATURES.HIGH_EFFICIENCY.TITLE}</h3>
+              <p className="text-gray-600">{ABOUT_US.MISSION.FEATURES.HIGH_EFFICIENCY.DESCRIPTION}</p>
             </div>
 
             <div className="rounded-lg bg-gray-50 p-8">
               <div className="mb-4 inline-flex rounded-full bg-blue-100 p-3 text-blue-700">
                 <Layers className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold">Tích Hợp Toàn Diện</h3>
-              <p className="text-gray-600">
-                Một nền tảng duy nhất cho mọi nhu cầu quản lý đồ án từ lưu trữ đến đánh giá.
-              </p>
+              <h3 className="mb-3 text-xl font-semibold">{ABOUT_US.MISSION.FEATURES.COMPREHENSIVE.TITLE}</h3>
+              <p className="text-gray-600">{ABOUT_US.MISSION.FEATURES.COMPREHENSIVE.DESCRIPTION}</p>
             </div>
           </div>
         </div>
@@ -85,28 +74,25 @@ export default function AboutPage() {
       <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold">Đội Ngũ Chúng Tôi</h2>
-            <p className="text-lg text-gray-600">
-              Chúng tôi là những chuyên gia trong lĩnh vực công nghệ và giáo dục, luôn đặt trải nghiệm người dùng và
-              hiệu quả làm trọng tâm phát triển.
-            </p>
+            <h2 className="mb-6 text-3xl font-bold">{ABOUT_US.TEAM.TITLE}</h2>
+            <p className="text-lg text-gray-600">{ABOUT_US.TEAM.DESCRIPTION}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: 'Nguyễn Văn A',
-                role: 'Giám đốc điều hành',
+                name: ABOUT_US.TEAM.MEMBERS.CEO.NAME,
+                role: ABOUT_US.TEAM.MEMBERS.CEO.ROLE,
                 image: '/api/placeholder/300/300',
               },
               {
-                name: 'Trần Thị B',
-                role: 'Giám đốc công nghệ',
+                name: ABOUT_US.TEAM.MEMBERS.CTO.NAME,
+                role: ABOUT_US.TEAM.MEMBERS.CTO.ROLE,
                 image: '/api/placeholder/300/300',
               },
               {
-                name: 'Lê Văn C',
-                role: 'Trưởng phòng phát triển',
+                name: ABOUT_US.TEAM.MEMBERS.HEAD_DEV.NAME,
+                role: ABOUT_US.TEAM.MEMBERS.HEAD_DEV.ROLE,
                 image: '/api/placeholder/300/300',
               },
             ].map((member, index) => (
@@ -125,16 +111,14 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="bg-slate-700 py-20 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-6 text-3xl font-bold">Sẵn sàng tối ưu hóa quy trình đồ án?</h2>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-blue-100">
-            Hãy để chúng tôi giúp bạn quản lý đồ án tốt nghiệp hiệu quả hơn, tiết kiệm thời gian và công sức.
-          </p>
+          <h2 className="mb-6 text-3xl font-bold">{ABOUT_US.CTA.TITLE}</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-blue-100">{ABOUT_US.CTA.DESCRIPTION}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-white text-slate-700 hover:bg-blue-50">
-              <Link href="/contact">Liên hệ ngay</Link>
+              <Link href="/contact">{ABOUT_US.CTA.CONTACT_NOW}</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-slate-700 hover:bg-blue-50">
-              <Link href="/features">Tìm hiểu thêm</Link>
+              <Link href="/features">{ABOUT_US.CTA.LEARN_MORE}</Link>
             </Button>
           </div>
         </div>

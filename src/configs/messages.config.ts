@@ -14,4 +14,19 @@ export const getCurrentMessages = () => {
 
 export const CURRENT_MESSAGES = getCurrentMessages();
 
-export const { FOOTER, HEADER, HERO, NAVBAR } = CURRENT_MESSAGES;
+export const {
+  FOOTER,
+  HEADER,
+  HERO,
+  NAVBAR,
+  CLASSES,
+  GENERATE_THESIS,
+  IMPORT_THESIS,
+  REGISTERS,
+  SYSTEM_CONFIG,
+  ABOUT_US,
+  CONTACT_US,
+  LOGIN,
+  REGISTER,
+  METADATA,
+} = CURRENT_MESSAGES;

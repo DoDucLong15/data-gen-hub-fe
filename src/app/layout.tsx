@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/context/query.context';
 import Header from './_components/Header';
 import { ThemeProvider } from '@/context/theme.context';
+import { DEFAULT_LANGUAGE } from '@/configs/messages.config';
 
 export const metadata: Metadata = {
   title: 'Data gen hub',
@@ -18,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={DEFAULT_LANGUAGE} suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
