@@ -22,6 +22,7 @@ import { ClassDialog } from './ClassDialog';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
 interface ClassCardProps {
   classItem: TClass;
@@ -31,6 +32,7 @@ export function ClassCard({ classItem }: ClassCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const router = useRouter();
   const { update, delete: deleteClass, isUpdating, isDeleting } = useClasses();
+  const { CLASSES } = CURRENT_MESSAGES;
 
   const handleEditSubmit = (data: Omit<TClass, 'id'>) => {
     if (classItem.id) {
@@ -67,19 +69,19 @@ export function ClassCard({ classItem }: ClassCardProps) {
           <div className="flex items-center text-sm">
             <BookOpen className="mr-2 h-4 w-4 text-gray-500" />
             <span className="text-gray-700">
-              Course: <span className="font-medium">{classItem.courseCode}</span>
+              {CLASSES.CARD.COURSE}: <span className="font-medium">{classItem.courseCode}</span>
             </span>
           </div>
           <div className="flex items-center text-sm">
             <File className="mr-2 h-4 w-4 text-gray-500" />
             <span className="text-gray-700">
-              Input files: <span className="font-medium">{classItem.studentPaths?.length || 0}</span>
+              {CLASSES.CARD.INPUT_FILES}: <span className="font-medium">{classItem.studentPaths?.length || 0}</span>
             </span>
           </div>
           <div className="flex items-center text-sm">
             <Calendar className="mr-2 h-4 w-4 text-gray-500" />
             <span className="text-gray-700">
-              Semester: <span className="font-medium">{classItem.semester}</span>
+              {CLASSES.CARD.SEMESTER}: <span className="font-medium">{classItem.semester}</span>
             </span>
           </div>
         </div>
@@ -88,33 +90,32 @@ export function ClassCard({ classItem }: ClassCardProps) {
         <div className="flex w-full justify-between">
           <Button variant="ghost" size="sm" onClick={handleViewDetails}>
             <Eye className="mr-2 h-4 w-4" />
-            View
+            {CLASSES.CARD.VIEW}
           </Button>
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Classes }]}>
             <div className="flex gap-2">
               <Button variant="ghost" size="sm" onClick={() => setIsEditDialogOpen(true)}>
                 <Edit className="mr-2 h-4 w-4" />
-                Edit
+                {CLASSES.CARD.EDIT}
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50 hover:text-red-600">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
+                    {CLASSES.CARD.DELETE}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogTitle>{CLASSES.CARD.DELETE_CONFIRM_TITLE}</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the class
-                      <span className="font-semibold"> {classItem.name}</span> and all associated data.
+                      {CLASSES.CARD.DELETE_CONFIRM_DESC.replace('{name}', classItem.name)}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{CLASSES.CARD.DELETE_CONFIRM_CANCEL}</AlertDialogCancel>
                     <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600">
-                      Delete
+                      {CLASSES.CARD.DELETE_CONFIRM_ACTION}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

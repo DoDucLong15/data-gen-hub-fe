@@ -8,6 +8,7 @@ import { ClassCard } from './ClassCard';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
 interface ClassListProps {
   classes: TClass[];
@@ -18,6 +19,8 @@ interface ClassListProps {
 }
 
 export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }: ClassListProps) {
+  const { CLASSES } = CURRENT_MESSAGES;
+
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -30,9 +33,9 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
     if (searchQuery) {
       return (
         <EmptyState
-          title="No classes found"
-          description={`No classes matching "${searchQuery}" were found.`}
-          actionLabel="Clear Search"
+          title={CLASSES.LIST.EMPTY.NO_RESULTS.TITLE}
+          description={CLASSES.LIST.EMPTY.NO_RESULTS.DESCRIPTION.replace('{query}', searchQuery)}
+          actionLabel={CLASSES.LIST.EMPTY.NO_RESULTS.ACTION}
           onAction={onRefresh}
         />
       );
@@ -41,9 +44,9 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
     return (
       <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Classes }]}>
         <EmptyState
-          title="No classes yet"
-          description="Create your first class to get started."
-          actionLabel="Add Class"
+          title={CLASSES.LIST.EMPTY.NO_CLASSES.TITLE}
+          description={CLASSES.LIST.EMPTY.NO_CLASSES.DESCRIPTION}
+          actionLabel={CLASSES.LIST.EMPTY.NO_CLASSES.ACTION}
           onAction={onAdd}
         />
       </ProtectedComponent>

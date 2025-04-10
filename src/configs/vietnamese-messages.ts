@@ -72,6 +72,76 @@ export const VIETNAMESE_MESSAGES = {
     ERROR_CREATE: 'Không thể tạo lớp học',
     ERROR_UPDATE: 'Không thể cập nhật lớp học',
     ERROR_DELETE: 'Không thể xóa lớp học',
+    CARD: {
+      COURSE: 'Khóa học',
+      INPUT_FILES: 'Tệp đầu vào',
+      SEMESTER: 'Học kỳ',
+      VIEW: 'Xem',
+      EDIT: 'Chỉnh sửa',
+      DELETE: 'Xóa',
+      DELETE_CONFIRM_TITLE: 'Bạn có chắc chắn?',
+      DELETE_CONFIRM_DESC:
+        'Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn lớp học {name} và tất cả dữ liệu liên quan.',
+      DELETE_CONFIRM_CANCEL: 'Hủy',
+      DELETE_CONFIRM_ACTION: 'Xóa',
+    },
+    DIALOG: {
+      CREATE_TITLE: 'Thêm lớp học mới',
+      EDIT_TITLE: 'Chỉnh sửa lớp học',
+    },
+    FORM: {
+      NAME: {
+        LABEL: 'Tên lớp học',
+        PLACEHOLDER: 'Nhập tên lớp học',
+      },
+      CLASS_CODE: {
+        LABEL: 'Mã lớp',
+        PLACEHOLDER: 'VD: CS101-A',
+      },
+      COURSE_CODE: {
+        LABEL: 'Mã học phần',
+        PLACEHOLDER: 'VD: CS101',
+      },
+      SEMESTER: {
+        LABEL: 'Học kỳ',
+        PLACEHOLDER: 'VD: HK1 2025',
+      },
+      DRIVE_ID: {
+        LABEL: 'ID Drive',
+        PLACEHOLDER: 'VD: 1A2B3C4D5E6F7G8H9I0J',
+        DESCRIPTION: 'Nhập ID thư mục Google Drive để lưu trữ tài liệu lớp học. Trường này là tùy chọn.',
+        IMPORTANT: 'Quan trọng',
+        ACCESS_NOTE:
+          'Trước khi sử dụng tính năng này, vui lòng chia sẻ quyền chỉnh sửa thư mục của bạn với tài khoản dịch vụ của chúng tôi:',
+        SERVICE_ACCOUNT: 'data-gen-hub@oauth2-402816.iam.gserviceaccount.com',
+      },
+      BUTTONS: {
+        CANCEL: 'Hủy',
+        CREATE: 'Tạo lớp học',
+        SAVE: 'Lưu thay đổi',
+      },
+    },
+    LIST: {
+      LOADING: 'Đang tải lớp học...',
+      EMPTY: {
+        NO_RESULTS: {
+          TITLE: 'Không tìm thấy lớp học',
+          DESCRIPTION: 'Không tìm thấy lớp học nào khớp với "{query}".',
+          ACTION: 'Xóa tìm kiếm',
+        },
+        NO_CLASSES: {
+          TITLE: 'Chưa có lớp học nào',
+          DESCRIPTION: 'Tạo lớp học đầu tiên của bạn để bắt đầu.',
+          ACTION: 'Thêm lớp học',
+        },
+      },
+    },
+    PAGE: {
+      TITLE: 'Quản lý lớp học',
+      DESCRIPTION: 'Quản lý tất cả lớp học của bạn tại một nơi.',
+      ADD_BUTTON: 'Thêm lớp học',
+      SEARCH_PLACEHOLDER: 'Tìm kiếm lớp học theo tên hoặc mã...',
+    },
   },
   GENERATE_THESIS: {
     TEMPLATE_UPLOADED: 'Đã tải lên mẫu thành công',

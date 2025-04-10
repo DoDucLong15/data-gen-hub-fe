@@ -72,6 +72,75 @@ export const ENGLISH_MESSAGES = {
     ERROR_CREATE: 'Failed to create class',
     ERROR_UPDATE: 'Failed to update class',
     ERROR_DELETE: 'Failed to delete class',
+    CARD: {
+      COURSE: 'Course',
+      INPUT_FILES: 'Input files',
+      SEMESTER: 'Semester',
+      VIEW: 'View',
+      EDIT: 'Edit',
+      DELETE: 'Delete',
+      DELETE_CONFIRM_TITLE: 'Are you sure?',
+      DELETE_CONFIRM_DESC:
+        'This action cannot be undone. This will permanently delete the class {name} and all associated data.',
+      DELETE_CONFIRM_CANCEL: 'Cancel',
+      DELETE_CONFIRM_ACTION: 'Delete',
+    },
+    DIALOG: {
+      CREATE_TITLE: 'Add New Class',
+      EDIT_TITLE: 'Edit Class',
+    },
+    FORM: {
+      NAME: {
+        LABEL: 'Class Name',
+        PLACEHOLDER: 'Enter class name',
+      },
+      CLASS_CODE: {
+        LABEL: 'Class Code',
+        PLACEHOLDER: 'e.g. CS101-A',
+      },
+      COURSE_CODE: {
+        LABEL: 'Course Code',
+        PLACEHOLDER: 'e.g. CS101',
+      },
+      SEMESTER: {
+        LABEL: 'Semester',
+        PLACEHOLDER: 'e.g. Fall 2025',
+      },
+      DRIVE_ID: {
+        LABEL: 'Drive ID',
+        PLACEHOLDER: 'e.g. 1A2B3C4D5E6F7G8H9I0J',
+        DESCRIPTION: 'Enter the Google Drive folder ID to store class materials. This field is optional.',
+        IMPORTANT: 'Important',
+        ACCESS_NOTE: 'Before using this feature, please share editing access to your folder with our service account:',
+        SERVICE_ACCOUNT: 'data-gen-hub@oauth2-402816.iam.gserviceaccount.com',
+      },
+      BUTTONS: {
+        CANCEL: 'Cancel',
+        CREATE: 'Create Class',
+        SAVE: 'Save Changes',
+      },
+    },
+    LIST: {
+      LOADING: 'Loading classes...',
+      EMPTY: {
+        NO_RESULTS: {
+          TITLE: 'No classes found',
+          DESCRIPTION: 'No classes matching "{query}" were found.',
+          ACTION: 'Clear Search',
+        },
+        NO_CLASSES: {
+          TITLE: 'No classes yet',
+          DESCRIPTION: 'Create your first class to get started.',
+          ACTION: 'Add Class',
+        },
+      },
+    },
+    PAGE: {
+      TITLE: 'Classes Management',
+      DESCRIPTION: 'Manage all your classes in one place.',
+      ADD_BUTTON: 'Add Class',
+      SEARCH_PLACEHOLDER: 'Search classes by name or code...',
+    },
   },
   GENERATE_THESIS: {
     TEMPLATE_UPLOADED: 'Template uploaded successfully',

@@ -2,6 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { TClass } from '@/utils/types/classes.type';
 import { ClassForm } from './ClassForm';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
 interface ClassDialogProps {
   open: boolean;
@@ -20,11 +21,15 @@ export function ClassDialog({
   mode = 'create',
   isSubmitting = false,
 }: ClassDialogProps) {
+  const { CLASSES } = CURRENT_MESSAGES;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="text-xl">{mode === 'create' ? 'Add New Class' : 'Edit Class'}</DialogTitle>
+          <DialogTitle className="text-xl">
+            {mode === 'create' ? CLASSES.DIALOG.CREATE_TITLE : CLASSES.DIALOG.EDIT_TITLE}
+          </DialogTitle>
         </DialogHeader>
         <ClassForm
           initialData={initialData}

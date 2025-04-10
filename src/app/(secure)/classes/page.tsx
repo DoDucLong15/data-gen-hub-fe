@@ -11,10 +11,12 @@ import { ClassPageHeader } from './_components/ClassPageHeader';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
 export default function ClassesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const { CLASSES } = CURRENT_MESSAGES;
 
   const { classes, isLoading, refetch, search, create, isCreating } = useClasses();
 
@@ -50,9 +52,9 @@ export default function ClassesPage() {
     <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Classes }]}>
       <div className="container mx-auto px-6 py-8">
         <ClassPageHeader
-          title="Classes Management"
-          description="Manage all your classes in one place."
-          actionLabel="Add Class"
+          title={CLASSES.PAGE.TITLE}
+          description={CLASSES.PAGE.DESCRIPTION}
+          actionLabel={CLASSES.PAGE.ADD_BUTTON}
           onAction={() => setIsAddDialogOpen(true)}
           onRefresh={handleRefresh}
         />
@@ -63,7 +65,7 @@ export default function ClassesPage() {
             onChange={setSearchQuery}
             onSubmit={handleSearch}
             isLoading={isSearching}
-            placeholder="Search classes by name or code..."
+            placeholder={CLASSES.PAGE.SEARCH_PLACEHOLDER}
           />
         </div>
 
