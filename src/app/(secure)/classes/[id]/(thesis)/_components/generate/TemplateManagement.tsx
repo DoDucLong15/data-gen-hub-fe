@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGenerateThesis } from '@/hooks/useGenerateThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { Card, CardContent } from '@/components/ui/card';
+import { GENERATE_THESIS } from '@/configs/messages.config';
 
 export default function TemplateManagement({
   classId,
@@ -38,8 +39,8 @@ export default function TemplateManagement({
   return (
     <Tabs defaultValue="excel">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="excel">Excel Template</TabsTrigger>
-        <TabsTrigger value="json">JSON Mapping</TabsTrigger>
+        <TabsTrigger value="excel">{GENERATE_THESIS.TEMPLATE.TABS.EXCEL}</TabsTrigger>
+        <TabsTrigger value="json">{GENERATE_THESIS.TEMPLATE.TABS.JSON}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="excel" className="space-y-4">
@@ -53,7 +54,7 @@ export default function TemplateManagement({
                   className="flex items-center gap-2"
                 >
                   <Download className="h-4 w-4" />
-                  Tải template mặc định
+                  {GENERATE_THESIS.TEMPLATE.EXCEL.DOWNLOAD_DEFAULT}
                 </Button>
               </div>
 
@@ -66,7 +67,7 @@ export default function TemplateManagement({
                   className="whitespace-nowrap"
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  Upload
+                  {GENERATE_THESIS.TEMPLATE.EXCEL.UPLOAD_BUTTON}
                 </Button>
               </div>
 
@@ -86,7 +87,7 @@ export default function TemplateManagement({
 
               {!template?.templateFile && (
                 <div className="text-muted-foreground mt-4 rounded-md border p-3 text-center">
-                  Chưa có template Excel
+                  {GENERATE_THESIS.TEMPLATE.EXCEL.NO_TEMPLATE}
                 </div>
               )}
             </div>
@@ -105,7 +106,7 @@ export default function TemplateManagement({
                   className="flex items-center gap-2"
                 >
                   <Download className="h-4 w-4" />
-                  Tải mapping mặc định
+                  {GENERATE_THESIS.TEMPLATE.JSON.DOWNLOAD_DEFAULT}
                 </Button>
               </div>
 
@@ -118,7 +119,7 @@ export default function TemplateManagement({
                   className="whitespace-nowrap"
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  Upload
+                  {GENERATE_THESIS.TEMPLATE.JSON.UPLOAD_BUTTON}
                 </Button>
               </div>
 
@@ -137,7 +138,9 @@ export default function TemplateManagement({
               )}
 
               {!template?.jsonFile && (
-                <div className="text-muted-foreground mt-4 rounded-md border p-3 text-center">Chưa có mapping JSON</div>
+                <div className="text-muted-foreground mt-4 rounded-md border p-3 text-center">
+                  {GENERATE_THESIS.TEMPLATE.JSON.NO_MAPPING}
+                </div>
               )}
             </div>
           </CardContent>

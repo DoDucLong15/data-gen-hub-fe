@@ -9,10 +9,13 @@ import { SyncHistory } from './_components/SyncHistory';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
 import { ESubject } from '@/utils/types/authorization.type';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
 export default function FileManagerPage() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('files');
+  const { DRIVE_INFO } = CURRENT_MESSAGES.THESIS_PAGE;
+  const { TABS } = DRIVE_INFO;
 
   return (
     <div className="container mx-auto space-y-6 py-3">
@@ -22,12 +25,12 @@ export default function FileManagerPage() {
             <TabsList className="mb-4 w-full">
               <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_Drive }]}>
                 <TabsTrigger value="files" className="flex-1">
-                  Drives
+                  {TABS.FILES.LABEL}
                 </TabsTrigger>
               </ProtectedComponent>
               <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
                 <TabsTrigger value="history" className="flex-1">
-                  History Sync Data
+                  {TABS.HISTORY.LABEL}
                 </TabsTrigger>
               </ProtectedComponent>
             </TabsList>

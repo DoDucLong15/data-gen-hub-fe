@@ -1,5 +1,6 @@
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { z } from 'zod';
+import { THESIS_CONFIG } from '@/configs/messages.config';
 
 export type ColumnConfig = {
   header: string;
@@ -24,30 +25,57 @@ export type EntityConfig = {
 export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
   [EThesisDocumentType.ASSIGNMENT_SHEET]: {
     fileListName: 'assignment-sheet.zip',
-    title: 'Phiếu giao nhiệm vụ',
+    title: THESIS_CONFIG.ASSIGNMENT_SHEET.TITLE,
     formSchema: z.object({
-      mssv: z.string().min(1, { message: 'MSSV là bắt buộc' }),
-      fullName: z.string().min(1, { message: 'Họ tên là bắt buộc' }),
-      studentClassName: z.string().min(1, { message: 'Lớp học sinh viên là không bắt buộc' }).optional(),
-      projectTitle: z.string().min(1, { message: 'Tên đề tài là không bắt buộc' }).optional(),
-      supervisor: z.string().min(1, { message: 'Giảng viên hướng dẫn là không bắt buộc' }).optional(),
-      phone: z.string().min(1, { message: 'Số điện thoại là không bắt buộc' }).optional(),
-      email: z.string().email({ message: 'Email không hợp lệ' }).optional(),
-      classCode: z.string().min(1, { message: 'Mã lớp là không bắt buộc' }).optional(),
-      semester: z.string().min(1, { message: 'Học kỳ là không bắt buộc' }).optional(),
-      school: z.string().min(1, { message: 'Trường là không bắt buộc' }).optional(),
-      thesisStartDate: z.string().min(1, { message: 'Ngày bắt đầu là không bắt buộc' }).optional(),
-      thesisEndDate: z.string().min(1, { message: 'Ngày kết thúc là không bắt buộc' }).optional(),
+      mssv: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.MSSV.ERROR }),
+      fullName: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.FULL_NAME.ERROR }),
+      studentClassName: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_CLASS_NAME.ERROR })
+        .optional(),
+      projectTitle: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PROJECT_TITLE.ERROR }).optional(),
+      supervisor: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SUPERVISOR.ERROR }).optional(),
+      phone: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PHONE.ERROR }).optional(),
+      email: z.string().email({ message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.EMAIL.ERROR }).optional(),
+      classCode: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.CLASS_CODE.ERROR }).optional(),
+      semester: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SEMESTER.ERROR }).optional(),
+      school: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SCHOOL.ERROR }).optional(),
+      thesisStartDate: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_START_DATE.ERROR })
+        .optional(),
+      thesisEndDate: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_END_DATE.ERROR })
+        .optional(),
       studentKnowledgeGained: z
         .string()
-        .min(1, { message: 'Kiến thức học sinh viên đạt được là không bắt buộc' })
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_KNOWLEDGE_GAINED.ERROR })
         .optional(),
-      technologyGained: z.string().min(1, { message: 'Công nghệ học sinh viên đạt được là không bắt buộc' }).optional(),
-      acquiredSkills: z.string().min(1, { message: 'Kỹ năng học sinh viên đạt được là không bắt buộc' }).optional(),
-      expectedProducts: z.string().min(1, { message: 'Sản phẩm dự kiến là không bắt buộc' }).optional(),
-      realWorldProblemSolved: z.string().min(1, { message: 'Vấn đề thực tế giải quyết là không bắt buộc' }).optional(),
-      student_sign_date: z.string().min(1, { message: 'Ngày ký của sinh viên là không bắt buộc' }).optional(),
-      supervisor_sign_date: z.string().min(1, { message: 'Ngày ký của giảng viên là không bắt buộc' }).optional(),
+      technologyGained: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.TECHNOLOGY_GAINED.ERROR })
+        .optional(),
+      acquiredSkills: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.ACQUIRED_SKILLS.ERROR })
+        .optional(),
+      expectedProducts: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.EXPECTED_PRODUCTS.ERROR })
+        .optional(),
+      realWorldProblemSolved: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.REAL_WORLD_PROBLEM_SOLVED.ERROR })
+        .optional(),
+      student_sign_date: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_SIGN_DATE.ERROR })
+        .optional(),
+      supervisor_sign_date: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SUPERVISOR_SIGN_DATE.ERROR })
+        .optional(),
     }),
     defaultValues: {
       mssv: '',
@@ -71,61 +99,138 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       // supervisor_sign_date: '',
     },
     columns: [
-      { header: 'MSSV', accessorKey: 'mssv' },
-      { header: 'Họ tên', accessorKey: 'fullName' },
-      { header: 'Lớp', accessorKey: 'studentClassName', hidden: true },
-      { header: 'Tên đề tài', accessorKey: 'projectTitle', hidden: true },
-      { header: 'Giảng viên hướng dẫn', accessorKey: 'supervisor' },
-      { header: 'Số điện thoại', accessorKey: 'phone', hidden: true },
-      { header: 'Email', accessorKey: 'email' },
-      { header: 'Mã lớp', accessorKey: 'classCode', hidden: true },
-      { header: 'Học kỳ', accessorKey: 'semester', hidden: true },
-      { header: 'Trường', accessorKey: 'school', hidden: true },
-      { header: 'Ngày bắt đầu', accessorKey: 'thesisStartDate', type: 'date', hidden: true },
-      { header: 'Ngày kết thúc', accessorKey: 'thesisEndDate', type: 'date', hidden: true },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.MSSV.LABEL, accessorKey: 'mssv' },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
       {
-        header: 'Kiến thức học sinh viên đạt được',
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_CLASS_NAME.LABEL,
+        accessorKey: 'studentClassName',
+        hidden: true,
+      },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle', hidden: true },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PHONE.LABEL, accessorKey: 'phone', hidden: true },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.EMAIL.LABEL, accessorKey: 'email' },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.CLASS_CODE.LABEL, accessorKey: 'classCode', hidden: true },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SEMESTER.LABEL, accessorKey: 'semester', hidden: true },
+      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SCHOOL.LABEL, accessorKey: 'school', hidden: true },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_START_DATE.LABEL,
+        accessorKey: 'thesisStartDate',
+        type: 'date',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_END_DATE.LABEL,
+        accessorKey: 'thesisEndDate',
+        type: 'date',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_KNOWLEDGE_GAINED.LABEL,
         accessorKey: 'studentKnowledgeGained',
         type: 'textarea',
         hidden: true,
       },
-      { header: 'Công nghệ học sinh viên đạt được', accessorKey: 'technologyGained', type: 'textarea', hidden: true },
-      { header: 'Kỹ năng học sinh viên đạt được', accessorKey: 'acquiredSkills', type: 'textarea', hidden: true },
-      { header: 'Sản phẩm dự kiến', accessorKey: 'expectedProducts', type: 'textarea', hidden: true },
-      { header: 'Vấn đề thực tế giải quyết', accessorKey: 'realWorldProblemSolved', type: 'textarea', hidden: true },
-      { header: 'Ngày ký của sinh viên', accessorKey: 'student_sign_date', type: 'date', hidden: true },
-      { header: 'Ngày ký của giảng viên', accessorKey: 'supervisor_sign_date', type: 'date', hidden: true },
-      { header: 'Thời gian tạo', accessorKey: 'createdAt' },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.TECHNOLOGY_GAINED.LABEL,
+        accessorKey: 'technologyGained',
+        type: 'textarea',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.ACQUIRED_SKILLS.LABEL,
+        accessorKey: 'acquiredSkills',
+        type: 'textarea',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.EXPECTED_PRODUCTS.LABEL,
+        accessorKey: 'expectedProducts',
+        type: 'textarea',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.REAL_WORLD_PROBLEM_SOLVED.LABEL,
+        accessorKey: 'realWorldProblemSolved',
+        type: 'textarea',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_SIGN_DATE.LABEL,
+        accessorKey: 'student_sign_date',
+        type: 'date',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SUPERVISOR_SIGN_DATE.LABEL,
+        accessorKey: 'supervisor_sign_date',
+        type: 'date',
+        hidden: true,
+      },
+      { header: THESIS_CONFIG.COMMON.CREATED_AT, accessorKey: 'createdAt' },
     ],
     downloadEnabled: true,
   },
   [EThesisDocumentType.GUIDANCE_REVIEW]: {
     fileListName: 'guidance-review.zip',
-    title: 'Phiếu nhận xét hướng dẫn',
+    title: THESIS_CONFIG.GUIDANCE_REVIEW.TITLE,
     formSchema: z.object({
-      mssv: z.string().min(1, { message: 'MSSV là bắt buộc' }),
-      fullName: z.string().min(1, { message: 'Họ tên là bắt buộc' }),
-      supervisor: z.string().min(1, { message: 'Giảng viên hướng dẫn là không bắt buộc' }).optional(),
-      projectTitle: z.string().min(1, { message: 'Tên đề tài là không bắt buộc' }).optional(),
-      typeOfThesis: z.string().min(1, { message: 'Loại đề tài là không bắt buộc' }).optional(),
-      topicUniquenessPoint: z.number().min(1, { message: 'Điểm đề tài là không bắt buộc' }).optional(),
-      workloadPoint: z.number().min(1, { message: 'Điểm công việc là không bắt buộc' }).optional(),
-      problemDifficultyPoint: z.number().min(1, { message: 'Điểm khó khăn là không bắt buộc' }).optional(),
-      solutionImpactPoint: z.number().min(1, { message: 'Điểm ảnh hưởng là không bắt buộc' }).optional(),
-      productFinalizationPoint: z.number().min(1, { message: 'Điểm hoàn thành sản phẩm là không bắt buộc' }).optional(),
-      layoutCoherencePoint: z.number().min(1, { message: 'Điểm trật tự là không bắt buộc' }).optional(),
-      contentValidityPoint: z.number().min(1, { message: 'Điểm nội dung là không bắt buộc' }).optional(),
-      presentationQualityPoint: z.number().min(1, { message: 'Điểm trình bày là không bắt buộc' }).optional(),
+      mssv: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.MSSV.ERROR }),
+      fullName: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.ERROR }),
+      supervisor: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.ERROR }).optional(),
+      projectTitle: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.ERROR }).optional(),
+      typeOfThesis: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.ERROR }).optional(),
+      topicUniquenessPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.ERROR })
+        .optional(),
+      workloadPoint: z.number().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.WORKLOAD_POINT.ERROR }).optional(),
+      problemDifficultyPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROBLEM_DIFFICULTY_POINT.ERROR })
+        .optional(),
+      solutionImpactPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SOLUTION_IMPACT_POINT.ERROR })
+        .optional(),
+      productFinalizationPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRODUCT_FINALIZATION_POINT.ERROR })
+        .optional(),
+      layoutCoherencePoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.LAYOUT_COHERENCE_POINT.ERROR })
+        .optional(),
+      contentValidityPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONTENT_VALIDITY_POINT.ERROR })
+        .optional(),
+      presentationQualityPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_QUALITY_POINT.ERROR })
+        .optional(),
       reliabilityAndReferencesPoint: z
         .number()
-        .min(1, { message: 'Điểm đáng tin cậy và tài liệu tham khảo là không bắt buộc' })
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RELIABILITY_AND_REFERENCES_POINT.ERROR })
         .optional(),
-      responseAccuracyPoint: z.number().min(1, { message: 'Điểm độ chính xác là không bắt buộc' }).optional(),
-      presentationSkillsPoint: z.number().min(1, { message: 'Điểm kỹ năng trình bày là không bắt buộc' }).optional(),
-      rewardPoint: z.number().min(1, { message: 'Điểm thưởng là không bắt buộc' }).optional(),
-      generalFeedback: z.string().min(1, { message: 'Phản hồi chung là không bắt buộc' }).optional(),
-      conclusion: z.string().min(1, { message: 'Kết luận là không bắt buộc' }).optional(),
-      teacherSignDate: z.string().min(1, { message: 'Ngày ký của giảng viên là không bắt buộc' }).optional(),
+      responseAccuracyPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.ERROR })
+        .optional(),
+      presentationSkillsPoint: z
+        .number()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.ERROR })
+        .optional(),
+      rewardPoint: z.number().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.REWARD_POINT.ERROR }).optional(),
+      generalFeedback: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.GENERAL_FEEDBACK.ERROR })
+        .optional(),
+      conclusion: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONCLUSION.ERROR }).optional(),
+      teacherSignDate: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TEACHER_SIGN_DATE.ERROR })
+        .optional(),
     }),
     defaultValues: {
       mssv: '',
@@ -150,43 +255,116 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       // teacherSignDate: '',
     },
     columns: [
-      { header: 'MSSV', accessorKey: 'mssv' },
-      { header: 'Họ tên', accessorKey: 'fullName' },
-      { header: 'Giảng viên hướng dẫn', accessorKey: 'supervisor' },
-      { header: 'Tên đề tài', accessorKey: 'projectTitle' },
-      { header: 'Loại đề tài', accessorKey: 'typeOfThesis', hidden: true },
-      { header: 'Điểm đề tài', accessorKey: 'topicUniquenessPoint', hidden: true, type: 'number' },
-      { header: 'Điểm công việc', accessorKey: 'workloadPoint', hidden: true, type: 'number' },
-      { header: 'Điểm khó khăn', accessorKey: 'problemDifficultyPoint', hidden: true, type: 'number' },
-      { header: 'Điểm ảnh hưởng', accessorKey: 'solutionImpactPoint', hidden: true, type: 'number' },
-      { header: 'Điểm hoàn thành sản phẩm', accessorKey: 'productFinalizationPoint', hidden: true, type: 'number' },
-      { header: 'Điểm trật tự', accessorKey: 'layoutCoherencePoint', hidden: true, type: 'number' },
-      { header: 'Điểm nội dung', accessorKey: 'contentValidityPoint', hidden: true, type: 'number' },
-      { header: 'Điểm trình bày', accessorKey: 'presentationQualityPoint', hidden: true, type: 'number' },
+      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.MSSV.LABEL, accessorKey: 'mssv' },
+      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
+      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
+      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
+      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.LABEL, accessorKey: 'typeOfThesis', hidden: true },
       {
-        header: 'Điểm đáng tin cậy và tài liệu tham khảo',
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.LABEL,
+        accessorKey: 'topicUniquenessPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.WORKLOAD_POINT.LABEL,
+        accessorKey: 'workloadPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROBLEM_DIFFICULTY_POINT.LABEL,
+        accessorKey: 'problemDifficultyPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SOLUTION_IMPACT_POINT.LABEL,
+        accessorKey: 'solutionImpactPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRODUCT_FINALIZATION_POINT.LABEL,
+        accessorKey: 'productFinalizationPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.LAYOUT_COHERENCE_POINT.LABEL,
+        accessorKey: 'layoutCoherencePoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONTENT_VALIDITY_POINT.LABEL,
+        accessorKey: 'contentValidityPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_QUALITY_POINT.LABEL,
+        accessorKey: 'presentationQualityPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RELIABILITY_AND_REFERENCES_POINT.LABEL,
         accessorKey: 'reliabilityAndReferencesPoint',
         hidden: true,
         type: 'number',
       },
-      { header: 'Điểm độ chính xác', accessorKey: 'responseAccuracyPoint', hidden: true, type: 'number' },
-      { header: 'Điểm kỹ năng trình bày', accessorKey: 'presentationSkillsPoint', hidden: true, type: 'number' },
-      { header: 'Điểm thưởng', accessorKey: 'rewardPoint', hidden: true, type: 'number' },
-      { header: 'Phản hồi chung', accessorKey: 'generalFeedback', hidden: true, type: 'textarea' },
-      { header: 'Kết luận', accessorKey: 'conclusion', hidden: true, type: 'textarea' },
-      { header: 'Ngày ký của giảng viên', accessorKey: 'teacherSignDate', type: 'date', hidden: true },
-      { header: 'Thời gian tạo', accessorKey: 'createdAt' },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.LABEL,
+        accessorKey: 'responseAccuracyPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.LABEL,
+        accessorKey: 'presentationSkillsPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.REWARD_POINT.LABEL,
+        accessorKey: 'rewardPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.GENERAL_FEEDBACK.LABEL,
+        accessorKey: 'generalFeedback',
+        hidden: true,
+        type: 'textarea',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONCLUSION.LABEL,
+        accessorKey: 'conclusion',
+        hidden: true,
+        type: 'textarea',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TEACHER_SIGN_DATE.LABEL,
+        accessorKey: 'teacherSignDate',
+        type: 'date',
+        hidden: true,
+      },
+      { header: THESIS_CONFIG.COMMON.CREATED_AT, accessorKey: 'createdAt' },
     ],
     downloadEnabled: true,
   },
   [EThesisDocumentType.SUPERVISORY_COMMENTS]: {
     fileListName: 'supervisory-comments.zip',
-    title: 'Phiếu nhận xét phản biện',
+    title: THESIS_CONFIG.SUPERVISORY_COMMENTS.TITLE,
     formSchema: z.object({
-      supervisor: z.string().min(1, { message: 'Giảng viên hướng dẫn là không bắt buộc' }).optional(),
-      mssv: z.string().min(1, { message: 'MSSV là bắt buộc' }),
-      fullName: z.string().min(1, { message: 'Họ tên là bắt buộc' }),
-      projectTitle: z.string().min(1, { message: 'Tên đề tài là không bắt buộc' }).optional(),
+      supervisor: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SUPERVISOR.ERROR }).optional(),
+      mssv: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.MSSV.ERROR }),
+      fullName: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.FULL_NAME.ERROR }),
+      projectTitle: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.ERROR })
+        .optional(),
     }),
     defaultValues: {
       fullName: '',
@@ -195,11 +373,11 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       supervisor: '',
     },
     columns: [
-      { header: 'MSSV', accessorKey: 'mssv' },
-      { header: 'Họ tên', accessorKey: 'fullName' },
-      { header: 'Tên đề tài', accessorKey: 'projectTitle' },
-      { header: 'Giảng viên hướng dẫn', accessorKey: 'supervisor' },
-      { header: 'Thời gian tạo', accessorKey: 'createdAt' },
+      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.MSSV.LABEL, accessorKey: 'mssv' },
+      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
+      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
+      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
+      { header: THESIS_CONFIG.COMMON.CREATED_AT, accessorKey: 'createdAt' },
     ],
     downloadEnabled: true,
   },

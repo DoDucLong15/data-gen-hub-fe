@@ -9,12 +9,14 @@ import { useClasses } from '@/hooks/useClasses';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { THESIS_PAGE } from '@/configs/messages.config';
 
 export default function Dashboard() {
   // Sử dụng TanStack Query để lấy dữ liệu
   const { id } = useParams();
   const { getById } = useClasses();
   const { data: classDetail, isLoading } = getById(id as string);
+  const { DASHBOARD } = THESIS_PAGE;
 
   const inputPaths = classDetail?.studentPaths || [];
   const outputPath = classDetail?.outputPath || '';
@@ -22,7 +24,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="text-lg">Đang tải dữ liệu...</p>
+        <p className="text-lg">{DASHBOARD.LOADING}</p>
       </div>
     );
   }
@@ -36,7 +38,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Tổng số file nhập</CardTitle>
+                  <CardTitle className="text-sm font-medium">{DASHBOARD.STATS.TOTAL_INPUT_FILES}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center">
@@ -48,7 +50,7 @@ export default function Dashboard() {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">File xuất</CardTitle>
+                  <CardTitle className="text-sm font-medium">{DASHBOARD.STATS.OUTPUT_FILES}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center">
@@ -60,13 +62,13 @@ export default function Dashboard() {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Trạng thái</CardTitle>
+                  <CardTitle className="text-sm font-medium">{DASHBOARD.STATS.STATUS}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center">
                     <FileText className="mr-2 h-4 w-4 text-purple-500" />
                     <span className="text-2xl font-bold">
-                      {inputPaths.length > 0 && outputPath ? 'Đã xử lý' : 'Chưa xử lý'}
+                      {inputPaths.length > 0 && outputPath ? DASHBOARD.STATS.PROCESSED : DASHBOARD.STATS.NOT_PROCESSED}
                     </span>
                   </div>
                 </CardContent>
@@ -76,8 +78,8 @@ export default function Dashboard() {
             {/* Danh sách Input Paths */}
             <Card>
               <CardHeader>
-                <CardTitle>Input Paths</CardTitle>
-                <CardDescription>Danh sách các file nguồn đã được import vào hệ thống</CardDescription>
+                <CardTitle>{DASHBOARD.INPUT_PATHS.TITLE}</CardTitle>
+                <CardDescription>{DASHBOARD.INPUT_PATHS.DESCRIPTION}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -92,7 +94,7 @@ export default function Dashboard() {
                         </div>
                       ))
                     ) : (
-                      <div className="py-4 text-center text-gray-500">Chưa có file nguồn nào</div>
+                      <div className="py-4 text-center text-gray-500">{DASHBOARD.INPUT_PATHS.NO_FILES}</div>
                     )}
                   </div>
                 </div>
@@ -102,8 +104,8 @@ export default function Dashboard() {
             {/* Output Path */}
             <Card>
               <CardHeader>
-                <CardTitle>Output Path</CardTitle>
-                <CardDescription>Đường dẫn file dữ liệu đã được xuất</CardDescription>
+                <CardTitle>{DASHBOARD.OUTPUT_PATH.TITLE}</CardTitle>
+                <CardDescription>{DASHBOARD.OUTPUT_PATH.DESCRIPTION}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -115,7 +117,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="py-4 text-center text-gray-500">Chưa có file xuất</div>
+                    <div className="py-4 text-center text-gray-500">{DASHBOARD.OUTPUT_PATH.NO_OUTPUT}</div>
                   )}
                 </div>
               </CardContent>

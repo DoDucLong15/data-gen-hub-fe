@@ -37,6 +37,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { THESIS_PAGE } from '@/configs/messages.config';
 
 interface StudentListProps {
   classId: string;
@@ -50,6 +51,7 @@ export function StudentList({ classId }: StudentListProps) {
   const [studentToDelete, setStudentToDelete] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
+  const { STUDENT_LIST } = THESIS_PAGE;
 
   const {
     students,
@@ -148,7 +150,7 @@ export function StudentList({ classId }: StudentListProps) {
           <div className="relative w-full sm:w-64">
             <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
             <Input
-              placeholder="Search MSSV"
+              placeholder={STUDENT_LIST.SEARCH_PLACEHOLDER}
               className="w-full pl-8"
               value={filters.mssv || ''}
               onChange={(e) => {
@@ -170,7 +172,7 @@ export function StudentList({ classId }: StudentListProps) {
         <div className="flex gap-2">
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Students }]}>
             <Button onClick={handleCreate} className="sm:whitespace-nowrap">
-              Add Student
+              {STUDENT_LIST.ADD_STUDENT}
             </Button>
           </ProtectedComponent>
           <Button
@@ -180,7 +182,7 @@ export function StudentList({ classId }: StudentListProps) {
             className="sm:whitespace-nowrap"
           >
             <Download className="mr-2 h-4 w-4" />
-            <span className="hidden sm:inline">Export</span>
+            <span className="hidden sm:inline">{STUDENT_LIST.EXPORT}</span>
             {selectedStudents.length > 0 && <span className="ml-1">({selectedStudents.length})</span>}
             {isExporting && <Spinner />}
           </Button>
@@ -193,7 +195,7 @@ export function StudentList({ classId }: StudentListProps) {
       <Card className="w-full">
         <CardContent className="p-0">
           {studentsIsLoading ? (
-            <div className="flex justify-center p-4">Loading...</div>
+            <div className="flex justify-center p-4">{STUDENT_LIST.LOADING}</div>
           ) : (
             <>
               <div className="overflow-x-auto pr-5">
@@ -208,15 +210,15 @@ export function StudentList({ classId }: StudentListProps) {
                           onCheckedChange={toggleSelectAll}
                         />
                       </TableHead>
-                      <TableHead className="w-22">MSSV</TableHead>
-                      <TableHead className="w-40">Full Name</TableHead>
-                      <TableHead className="hidden w-20 md:table-cell">Email</TableHead>
-                      <TableHead className="hidden w-20 lg:table-cell">Phone</TableHead>
-                      <TableHead className="hidden w-24 md:table-cell">Class</TableHead>
-                      <TableHead className="hidden w-40 lg:table-cell">Project Title</TableHead>
-                      <TableHead className="hidden w-32 xl:table-cell">Supervisor</TableHead>
-                      <TableHead className="hidden w-32 xl:table-cell">Reviewer</TableHead>
-                      <TableHead className="w-16">Actions</TableHead>
+                      <TableHead className="w-22">{STUDENT_LIST.HEADERS.MSSV}</TableHead>
+                      <TableHead className="w-40">{STUDENT_LIST.HEADERS.FULL_NAME}</TableHead>
+                      <TableHead className="hidden w-20 md:table-cell">{STUDENT_LIST.HEADERS.EMAIL}</TableHead>
+                      <TableHead className="hidden w-20 lg:table-cell">{STUDENT_LIST.HEADERS.PHONE}</TableHead>
+                      <TableHead className="hidden w-24 md:table-cell">{STUDENT_LIST.HEADERS.CLASS}</TableHead>
+                      <TableHead className="hidden w-40 lg:table-cell">{STUDENT_LIST.HEADERS.PROJECT_TITLE}</TableHead>
+                      <TableHead className="hidden w-32 xl:table-cell">{STUDENT_LIST.HEADERS.SUPERVISOR}</TableHead>
+                      <TableHead className="hidden w-32 xl:table-cell">{STUDENT_LIST.HEADERS.REVIEWER}</TableHead>
+                      <TableHead className="w-16">{STUDENT_LIST.HEADERS.ACTIONS}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -256,15 +258,16 @@ export function StudentList({ classId }: StudentListProps) {
                                   </AlertDialogTrigger>
                                   <AlertDialogContent>
                                     <AlertDialogHeader>
-                                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                      <AlertDialogTitle>{STUDENT_LIST.DELETE_DIALOG.TITLE}</AlertDialogTitle>
                                       <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete the student record
-                                        from the database.
+                                        {STUDENT_LIST.DELETE_DIALOG.DESCRIPTION}
                                       </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                                      <AlertDialogCancel>{STUDENT_LIST.DELETE_DIALOG.CANCEL}</AlertDialogCancel>
+                                      <AlertDialogAction onClick={handleDelete}>
+                                        {STUDENT_LIST.DELETE_DIALOG.DELETE}
+                                      </AlertDialogAction>
                                     </AlertDialogFooter>
                                   </AlertDialogContent>
                                 </AlertDialog>
@@ -279,7 +282,7 @@ export function StudentList({ classId }: StudentListProps) {
                                   </DropdownMenuTrigger>
                                   <DropdownMenuContent align="end">
                                     <DropdownMenuItem onClick={() => handleEdit(student)}>
-                                      View Details
+                                      {STUDENT_LIST.ACTIONS.VIEW_DETAILS}
                                     </DropdownMenuItem>
                                   </DropdownMenuContent>
                                 </DropdownMenu>
@@ -291,7 +294,7 @@ export function StudentList({ classId }: StudentListProps) {
                     ) : (
                       <TableRow>
                         <TableCell colSpan={10} className="py-6 text-center">
-                          No students found
+                          {STUDENT_LIST.NO_STUDENTS}
                         </TableCell>
                       </TableRow>
                     )}

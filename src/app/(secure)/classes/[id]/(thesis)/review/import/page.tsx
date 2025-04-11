@@ -8,6 +8,7 @@ import ProcessTable from '../../_components/import/ProcessTable';
 import { ThesisTable } from '../../_components/import/ThesisTable';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction, ESubject } from '@/utils/types/authorization.type';
+import { THESIS_PAGE } from '@/configs/messages.config';
 
 export default function GuidanceReviewImportPage() {
   const { id } = useParams();
@@ -21,7 +22,7 @@ export default function GuidanceReviewImportPage() {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Execute Import</CardTitle>
+            <CardTitle>{THESIS_PAGE.GUIDANCE.IMPORT.IMPORT_MANAGEMENT}</CardTitle>
           </CardHeader>
           <CardContent>
             <ImportManagement classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
@@ -32,7 +33,7 @@ export default function GuidanceReviewImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_GuidanceReviews }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Phiếu đã import</CardTitle>
+            <CardTitle>{THESIS_PAGE.GUIDANCE.IMPORT.IMPORTED_SHEETS}</CardTitle>
           </CardHeader>
           <CardContent>
             <ThesisTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
@@ -43,7 +44,7 @@ export default function GuidanceReviewImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Tiến trình xử lý</CardTitle>
+            <CardTitle>{THESIS_PAGE.GUIDANCE.IMPORT.PROCESS_TABLE}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />

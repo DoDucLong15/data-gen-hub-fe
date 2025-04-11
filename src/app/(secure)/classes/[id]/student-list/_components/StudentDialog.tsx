@@ -15,6 +15,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TStudent } from '@/utils/types/student.type';
 import { User, Phone, Mail, BookOpen, UserCheck, FileText } from 'lucide-react';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
+
+const { THESIS_PAGE } = CURRENT_MESSAGES;
+const { DIALOG } = THESIS_PAGE.STUDENT_LIST;
 
 interface StudentDialogProps {
   isOpen: boolean;
@@ -67,9 +71,8 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
   };
 
   const handleSubmit = () => {
-    // Basic validation
     if (!form.mssv.trim()) {
-      alert('Student ID is required');
+      alert(DIALOG.VALIDATION.MSSV_REQUIRED);
       return;
     }
     onSave(form);
@@ -83,17 +86,17 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
             {student ? (
               <>
                 <User className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-                Edit Student Details
+                {DIALOG.TITLE.EDIT}
               </>
             ) : (
               <>
                 <User className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-                Add New Student
+                {DIALOG.TITLE.ADD}
               </>
             )}
           </DialogTitle>
           <DialogDescription className="text-gray-500 dark:text-gray-400">
-            {student ? 'Update student information' : 'Fill in the student details below'}
+            {student ? DIALOG.DESCRIPTION.EDIT : DIALOG.DESCRIPTION.ADD}
           </DialogDescription>
         </DialogHeader>
 
@@ -103,11 +106,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="personal" className="rounded-md">
                   <User className="mr-2 h-4 w-4" />
-                  Personal Info
+                  {DIALOG.TABS.PERSONAL.LABEL}
                 </TabsTrigger>
                 <TabsTrigger value="academic" className="rounded-md">
                   <BookOpen className="mr-2 h-4 w-4" />
-                  Academic Details
+                  {DIALOG.TABS.ACADEMIC.LABEL}
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -119,11 +122,12 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="mssv" className="flex items-center text-sm font-medium">
                         <FileText className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        MSSV (Student ID) <span className="ml-1 text-red-500">*</span>
+                        {DIALOG.TABS.PERSONAL.FIELDS.MSSV.LABEL}
+                        {DIALOG.TABS.PERSONAL.FIELDS.MSSV.REQUIRED && <span className="ml-1 text-red-500">*</span>}
                       </Label>
                       <Input
                         id="mssv"
-                        placeholder="Enter student ID"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.MSSV.PLACEHOLDER}
                         value={form.mssv}
                         onChange={(e) => handleChange('mssv', e.target.value)}
                         className="border-gray-300 focus:border-slate-500 focus:ring-2 focus:ring-slate-500 dark:border-gray-700"
@@ -134,11 +138,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="studentClassName" className="flex items-center text-sm font-medium">
                         <BookOpen className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Student Class Name
+                        {DIALOG.TABS.PERSONAL.FIELDS.CLASS_NAME.LABEL}
                       </Label>
                       <Input
                         id="studentClassName"
-                        placeholder="Enter class name"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.CLASS_NAME.PLACEHOLDER}
                         value={form.studentClassName || ''}
                         onChange={(e) => handleChange('studentClassName', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -148,11 +152,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="lastName" className="flex items-center text-sm font-medium">
                         <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Last Name
+                        {DIALOG.TABS.PERSONAL.FIELDS.LAST_NAME.LABEL}
                       </Label>
                       <Input
                         id="lastName"
-                        placeholder="Enter last name"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.LAST_NAME.PLACEHOLDER}
                         value={form.lastName || ''}
                         onChange={(e) => handleChange('lastName', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -162,11 +166,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="middleName" className="flex items-center text-sm font-medium">
                         <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Middle Name
+                        {DIALOG.TABS.PERSONAL.FIELDS.MIDDLE_NAME.LABEL}
                       </Label>
                       <Input
                         id="middleName"
-                        placeholder="Enter middle name"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.MIDDLE_NAME.PLACEHOLDER}
                         value={form.middleName || ''}
                         onChange={(e) => handleChange('middleName', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -176,11 +180,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="firstName" className="flex items-center text-sm font-medium">
                         <User className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        First Name
+                        {DIALOG.TABS.PERSONAL.FIELDS.FIRST_NAME.LABEL}
                       </Label>
                       <Input
                         id="firstName"
-                        placeholder="Enter first name"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.FIRST_NAME.PLACEHOLDER}
                         value={form.firstName || ''}
                         onChange={(e) => handleChange('firstName', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -190,12 +194,12 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="email" className="flex items-center text-sm font-medium">
                         <Mail className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Email
+                        {DIALOG.TABS.PERSONAL.FIELDS.EMAIL.LABEL}
                       </Label>
                       <Input
                         id="email"
                         type="email"
-                        placeholder="Enter email address"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.EMAIL.PLACEHOLDER}
                         value={form.email || ''}
                         onChange={(e) => handleChange('email', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -205,11 +209,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="phone" className="flex items-center text-sm font-medium">
                         <Phone className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Phone
+                        {DIALOG.TABS.PERSONAL.FIELDS.PHONE.LABEL}
                       </Label>
                       <Input
                         id="phone"
-                        placeholder="Enter phone number"
+                        placeholder={DIALOG.TABS.PERSONAL.FIELDS.PHONE.PLACEHOLDER}
                         value={form.phone || ''}
                         onChange={(e) => handleChange('phone', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -227,11 +231,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                     <div className="space-y-2">
                       <Label htmlFor="projectTitle" className="flex items-center text-sm font-medium">
                         <FileText className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                        Project Title
+                        {DIALOG.TABS.ACADEMIC.FIELDS.PROJECT_TITLE.LABEL}
                       </Label>
                       <Input
                         id="projectTitle"
-                        placeholder="Enter project title"
+                        placeholder={DIALOG.TABS.ACADEMIC.FIELDS.PROJECT_TITLE.PLACEHOLDER}
                         value={form.projectTitle || ''}
                         onChange={(e) => handleChange('projectTitle', e.target.value)}
                         className="border-gray-300 dark:border-gray-700"
@@ -242,11 +246,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                       <div className="space-y-2">
                         <Label htmlFor="supervisor" className="flex items-center text-sm font-medium">
                           <UserCheck className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                          Supervisor
+                          {DIALOG.TABS.ACADEMIC.FIELDS.SUPERVISOR.LABEL}
                         </Label>
                         <Input
                           id="supervisor"
-                          placeholder="Enter supervisor name"
+                          placeholder={DIALOG.TABS.ACADEMIC.FIELDS.SUPERVISOR.PLACEHOLDER}
                           value={form.supervisor || ''}
                           onChange={(e) => handleChange('supervisor', e.target.value)}
                           className="border-gray-300 dark:border-gray-700"
@@ -256,11 +260,11 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
                       <div className="space-y-2">
                         <Label htmlFor="reviewer" className="flex items-center text-sm font-medium">
                           <UserCheck className="mr-1 h-4 w-4 text-slate-500 dark:text-slate-400" />
-                          Reviewer
+                          {DIALOG.TABS.ACADEMIC.FIELDS.REVIEWER.LABEL}
                         </Label>
                         <Input
                           id="reviewer"
-                          placeholder="Enter reviewer name"
+                          placeholder={DIALOG.TABS.ACADEMIC.FIELDS.REVIEWER.PLACEHOLDER}
                           value={form.reviewer || ''}
                           onChange={(e) => handleChange('reviewer', e.target.value)}
                           className="border-gray-300 dark:border-gray-700"
@@ -280,13 +284,13 @@ export function StudentDialog({ isOpen, onClose, onSave, student, classId }: Stu
             onClick={onClose}
             className="border-gray-300 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
           >
-            Cancel
+            {DIALOG.BUTTONS.CANCEL}
           </Button>
           <Button
             onClick={handleSubmit}
             className="bg-slate-600 text-white hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-800"
           >
-            {student ? 'Update Student' : 'Save Student'}
+            {student ? DIALOG.BUTTONS.UPDATE : DIALOG.BUTTONS.SAVE}
           </Button>
         </DialogFooter>
       </DialogContent>

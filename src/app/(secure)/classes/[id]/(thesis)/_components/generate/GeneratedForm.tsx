@@ -16,6 +16,7 @@ import { useGenerateThesis } from '@/hooks/useGenerateThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { useStudents } from '@/hooks/useStudents';
 import { entityConfigs } from '../../_config/thesis.config';
+import { GENERATE_THESIS } from '@/configs/messages.config';
 
 export default function GenerateForm({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const config = entityConfigs[thesisType];
@@ -45,7 +46,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
 
   const onSubmit = (data: TGenerateThesisDocFormData) => {
     if (data.studentIds.length === 0) {
-      toast.error('Vui lòng chọn ít nhất một sinh viên');
+      toast.error(GENERATE_THESIS.FORM.ERROR.NO_STUDENT);
       return;
     }
 
@@ -63,7 +64,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormItem>
-            <FormLabel>Sinh viên</FormLabel>
+            <FormLabel>{GENERATE_THESIS.FORM.STUDENT.LABEL}</FormLabel>
             <div className="flex items-center gap-2">
               <Button
                 type="button"
@@ -73,7 +74,9 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 className="w-full justify-start text-left font-normal"
               >
                 <UsersIcon className="mr-2 h-4 w-4" />
-                {selectedStudentIds.length > 0 ? `Đã chọn ${selectedStudentIds.length} sinh viên` : 'Chọn sinh viên'}
+                {selectedStudentIds.length > 0
+                  ? GENERATE_THESIS.FORM.STUDENT.SELECTED.replace('{count}', selectedStudentIds.length.toString())
+                  : GENERATE_THESIS.FORM.STUDENT.PLACEHOLDER}
               </Button>
             </div>
           </FormItem>
@@ -85,7 +88,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="thesisStartDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Ngày bắt đầu</FormLabel>
+                    <FormLabel>{GENERATE_THESIS.FORM.DATE.START.LABEL}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -93,7 +96,11 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             variant={'outline'}
                             className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                           >
-                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            {field.value ? (
+                              format(field.value, 'dd/MM/yyyy')
+                            ) : (
+                              <span>{GENERATE_THESIS.FORM.DATE.START.PLACEHOLDER}</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
@@ -117,7 +124,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="thesisEndDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Ngày kết thúc</FormLabel>
+                    <FormLabel>{GENERATE_THESIS.FORM.DATE.END.LABEL}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -125,7 +132,11 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             variant={'outline'}
                             className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                           >
-                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            {field.value ? (
+                              format(field.value, 'dd/MM/yyyy')
+                            ) : (
+                              <span>{GENERATE_THESIS.FORM.DATE.END.PLACEHOLDER}</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
@@ -149,7 +160,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="teacherSignatureDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Ngày ký</FormLabel>
+                    <FormLabel>{GENERATE_THESIS.FORM.DATE.SIGNATURE.LABEL}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -157,7 +168,11 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             variant={'outline'}
                             className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                           >
-                            {field.value ? format(field.value, 'dd/MM/yyyy') : <span>Chọn ngày</span>}
+                            {field.value ? (
+                              format(field.value, 'dd/MM/yyyy')
+                            ) : (
+                              <span>{GENERATE_THESIS.FORM.DATE.SIGNATURE.PLACEHOLDER}</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
@@ -180,7 +195,9 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
 
           <div className="flex justify-end">
             <Button type="submit" disabled={isGenerating}>
-              {isGenerating ? 'Đang xử lý...' : `Tạo ${config.title.toLowerCase()}`}
+              {isGenerating
+                ? GENERATE_THESIS.FORM.SUBMIT.PROCESSING
+                : GENERATE_THESIS.FORM.SUBMIT.LABEL.replace('{type}', config.title.toLowerCase())}
             </Button>
           </div>
         </form>

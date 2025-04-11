@@ -6,6 +6,10 @@ import { useFileDownload } from '@/hooks/useDrive';
 import { formatDate, isFolder } from '../_helpers/file-helper.helper';
 import { FileIcon } from './FileIcon';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
+
+const { THESIS_PAGE } = CURRENT_MESSAGES;
+const { FILE_LIST } = THESIS_PAGE.DRIVE_INFO;
 
 interface FileListProps {
   classId: string;
@@ -68,9 +72,9 @@ export const FileList: React.FC<FileListProps> = ({
         <TableRow>
           <TableHead className="w-12"></TableHead>
           <TableHead className="w-12"></TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Owner</TableHead>
-          <TableHead>Modified</TableHead>
+          <TableHead>{FILE_LIST.HEADERS.NAME}</TableHead>
+          <TableHead>{FILE_LIST.HEADERS.OWNER}</TableHead>
+          <TableHead>{FILE_LIST.HEADERS.MODIFIED}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { XCircle, Upload } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
+import { THESIS_PAGE } from '@/configs/messages.config';
 
 interface FileUploadProps {
   name: keyof GeneratorOtherDocumentFormValues | `${keyof GeneratorOtherDocumentFormValues & string}.${string}`;
@@ -57,7 +58,9 @@ export function FileUpload({ name, label, description, form, multiple = false, a
                 onClick={() => document.getElementById(`file-${name}`)?.click()}
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {multiple ? 'Upload Files' : 'Upload File'}
+                {multiple
+                  ? THESIS_PAGE.OTHER_DOCUMENTS.FILE_UPLOAD.UPLOAD_FILES
+                  : THESIS_PAGE.OTHER_DOCUMENTS.FILE_UPLOAD.UPLOAD_FILE}
               </Button>
             </div>
             <Input

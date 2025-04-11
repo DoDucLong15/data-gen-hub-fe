@@ -7,8 +7,8 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuButton,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
@@ -18,81 +18,82 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { EAction, ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { CLASSES } from '@/configs/messages.config';
 
 const data = {
   navMain: [
     {
-      title: 'Dashboard',
+      title: CLASSES.SIDEBAR.MENU.DASHBOARD,
       url: 'dashboard',
       action: EAction.READ,
       subject: ESubject.Classes,
     },
     {
-      title: 'Student List',
+      title: CLASSES.SIDEBAR.MENU.STUDENT_LIST,
       url: 'student-list',
       action: EAction.READ,
       subject: ESubject.Students,
     },
     {
-      title: 'Assignment',
+      title: CLASSES.SIDEBAR.MENU.ASSIGNMENT.TITLE,
       isActive: false,
       url: 'assignment/generate',
       action: EAction.READ,
       subject: ESubject.Thesis_AssignmentSheets,
       items: [
         {
-          title: 'Generate',
+          title: CLASSES.SIDEBAR.MENU.ASSIGNMENT.GENERATE,
           url: 'assignment/generate',
         },
         {
-          title: 'Import',
+          title: CLASSES.SIDEBAR.MENU.ASSIGNMENT.IMPORT,
           url: 'assignment/import',
         },
       ],
     },
     {
-      title: 'Review',
+      title: CLASSES.SIDEBAR.MENU.REVIEW.TITLE,
       isActive: false,
       url: 'review/generate',
       action: EAction.READ,
       subject: ESubject.Thesis_GuidanceReviews,
       items: [
         {
-          title: 'Generate',
+          title: CLASSES.SIDEBAR.MENU.REVIEW.GENERATE,
           url: 'review/generate',
         },
         {
-          title: 'Import',
+          title: CLASSES.SIDEBAR.MENU.REVIEW.IMPORT,
           url: 'review/import',
         },
       ],
     },
     {
-      title: 'Supervise',
+      title: CLASSES.SIDEBAR.MENU.SUPERVISE.TITLE,
       isActive: false,
       url: 'supervise/generate',
       action: EAction.READ,
       subject: ESubject.Thesis_SupervisoryComments,
       items: [
         {
-          title: 'Generate',
+          title: CLASSES.SIDEBAR.MENU.SUPERVISE.GENERATE,
           url: 'supervise/generate',
         },
         {
-          title: 'Import',
+          title: CLASSES.SIDEBAR.MENU.SUPERVISE.IMPORT,
           url: 'supervise/import',
         },
       ],
     },
     {
-      title: 'Other documents',
+      title: CLASSES.SIDEBAR.MENU.OTHER_DOCUMENTS,
       isActive: false,
       url: 'other-documents',
       action: EAction.MANAGE,
       subject: ESubject.Thesis_OtherDocuments,
     },
     {
-      title: 'Drive Info',
+      title: CLASSES.SIDEBAR.MENU.DRIVE_INFO,
       isActive: false,
       url: 'drive-info',
       action: EAction.READ,
@@ -105,7 +106,7 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
   const params = useParams();
   const id = params?.id as string;
   const getUrlWithId = (url: string) => {
-    return id ? `/classes/${id}/${url}` : `/${url}`; // Thêm id vào các URL khác nếu cần
+    return id ? `/classes/${id}/${url}` : `/${url}`;
   };
   return (
     <Sidebar {...props}>
@@ -118,8 +119,8 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
                   <GalleryVerticalEnd className="size-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Thesis</span>
-                  <span className="">Manage Document</span>
+                  <span className="font-semibold">{CLASSES.SIDEBAR.THESIS.TITLE}</span>
+                  <span className="">{CLASSES.SIDEBAR.THESIS.SUBTITLE}</span>
                 </div>
               </Link>
             </SidebarMenuButton>

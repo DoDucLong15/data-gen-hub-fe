@@ -13,6 +13,9 @@ import {
 } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TProcess } from '@/utils/types/progress.type';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
+
+const { PROCESS_TABLE } = CURRENT_MESSAGES;
 
 // Component chính cho bảng với phân trang
 export function ProcessTable({
@@ -82,7 +85,7 @@ export function ProcessTable({
     return (
       <div className="flex items-center justify-center py-8">
         <RefreshCw className="text-primary mr-2 h-6 w-6 animate-spin" />
-        <span>Loading processes...</span>
+        <span>{PROCESS_TABLE.LOADING}</span>
       </div>
     );
   }
@@ -91,7 +94,7 @@ export function ProcessTable({
     return (
       <div className="rounded-lg border py-12 text-center text-gray-500">
         <AlertCircle className="mx-auto mb-2 h-8 w-8 text-gray-400" />
-        <p>No import processes found</p>
+        <p>{PROCESS_TABLE.NO_PROCESSES}</p>
       </div>
     );
   }
@@ -101,13 +104,13 @@ export function ProcessTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">#</TableHead>
-            <TableHead>Action</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Error</TableHead>
-            <TableHead>Created By</TableHead>
-            <TableHead>Created At</TableHead>
+            <TableHead className="w-12">{PROCESS_TABLE.TABLE_HEADERS.NUMBER}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.ACTION}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.TYPE}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.STATUS}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.ERROR}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.CREATED_BY}</TableHead>
+            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.CREATED_AT}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -138,7 +141,7 @@ export function ProcessTable({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <span>Show</span>
+          <span>{PROCESS_TABLE.PAGINATION.SHOW}</span>
           <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
             <SelectTrigger className="w-16">
               <SelectValue placeholder={itemsPerPage} />
@@ -150,7 +153,7 @@ export function ProcessTable({
               <SelectItem value="50">50</SelectItem>
             </SelectContent>
           </Select>
-          <span>entries</span>
+          <span>{PROCESS_TABLE.PAGINATION.ENTRIES}</span>
         </div>
 
         <Pagination>

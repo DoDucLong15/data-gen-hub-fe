@@ -142,6 +142,33 @@ export const VIETNAMESE_MESSAGES = {
       ADD_BUTTON: 'Thêm lớp học',
       SEARCH_PLACEHOLDER: 'Tìm kiếm lớp học theo tên hoặc mã...',
     },
+    SIDEBAR: {
+      THESIS: {
+        TITLE: 'Đồ án',
+        SUBTITLE: 'Quản lý tài liệu',
+      },
+      MENU: {
+        DASHBOARD: 'Tổng quan',
+        STUDENT_LIST: 'Danh sách sinh viên',
+        ASSIGNMENT: {
+          TITLE: 'Phiếu giao',
+          GENERATE: 'Tạo phiếu',
+          IMPORT: 'Nhập phiếu',
+        },
+        REVIEW: {
+          TITLE: 'Phiếu nhận xét',
+          GENERATE: 'Tạo phiếu',
+          IMPORT: 'Nhập phiếu',
+        },
+        SUPERVISE: {
+          TITLE: 'Phiếu hướng dẫn',
+          GENERATE: 'Tạo phiếu',
+          IMPORT: 'Nhập phiếu',
+        },
+        OTHER_DOCUMENTS: 'Tài liệu khác',
+        DRIVE_INFO: 'Thông tin Drive',
+      },
+    },
   },
   GENERATE_THESIS: {
     TEMPLATE_UPLOADED: 'Đã tải lên mẫu thành công',
@@ -155,6 +182,129 @@ export const VIETNAMESE_MESSAGES = {
     ALL_SHEETS_DELETED: 'Đã xóa tất cả phiếu',
     ALL_SHEETS_DELETE_FAILED: 'Xóa phiếu thất bại: {message}',
     DOWNLOAD_FAILED: 'Tải xuống thất bại',
+    FORM: {
+      STUDENT: {
+        LABEL: 'Sinh viên',
+        PLACEHOLDER: 'Chọn sinh viên',
+        SELECTED: 'Đã chọn {count} sinh viên',
+      },
+      DATE: {
+        START: {
+          LABEL: 'Ngày bắt đầu',
+          PLACEHOLDER: 'Chọn ngày',
+        },
+        END: {
+          LABEL: 'Ngày kết thúc',
+          PLACEHOLDER: 'Chọn ngày',
+        },
+        SIGNATURE: {
+          LABEL: 'Ngày ký',
+          PLACEHOLDER: 'Chọn ngày',
+        },
+      },
+      SUBMIT: {
+        LABEL: 'Tạo {type}',
+        PROCESSING: 'Đang xử lý...',
+      },
+      ERROR: {
+        NO_STUDENT: 'Vui lòng chọn ít nhất một sinh viên',
+      },
+    },
+    TABLE: {
+      ACTIONS: {
+        REFRESH: 'Làm mới',
+        DOWNLOAD_ALL: 'Tải tất cả',
+        DELETE_ALL: 'Xóa tất cả',
+      },
+      SEARCH: {
+        PLACEHOLDER: 'Tìm kiếm theo MSSV hoặc họ tên...',
+      },
+      HEADER: {
+        NO: 'STT',
+        STUDENT_ID: 'MSSV',
+        FULL_NAME: 'Họ tên',
+        CREATED_AT: 'Thời gian tạo',
+        ACTIONS: 'Hành động',
+      },
+      EMPTY: {
+        LOADING: 'Đang tải...',
+        NO_RESULTS: 'Không tìm thấy kết quả phù hợp',
+        NO_SHEETS: 'Chưa có phiếu nào được tạo',
+      },
+      DELETE_DIALOG: {
+        TITLE: 'Xác nhận xóa tất cả',
+        DESCRIPTION: 'Bạn có chắc chắn muốn xóa tất cả phiếu giao nhiệm vụ? Hành động này không thể hoàn tác.',
+        CANCEL: 'Hủy',
+        CONFIRM: 'Xóa tất cả',
+      },
+      TOAST: {
+        DOWNLOAD_SUCCESS: 'Tải file thành công',
+        DOWNLOAD_ERROR: 'Có lỗi xảy ra khi tải file',
+      },
+    },
+    PROCESS: {
+      ACTIONS: {
+        REFRESH: 'Làm mới',
+      },
+      AUTO_UPDATE: 'Tự động cập nhật mỗi 10 giây',
+      HEADER: {
+        NO: '#',
+        ACTION: 'Hành động',
+        TYPE: 'Loại',
+        ERROR: 'Lỗi (nếu có)',
+        STATUS: 'Trạng thái',
+        TIME: 'Thời gian',
+        CREATOR: 'Người tạo',
+      },
+      STATUS: {
+        PROCESSING: 'Đang xử lý',
+        COMPLETED: 'Hoàn thành',
+        FAILED: 'Thất bại',
+      },
+      EMPTY: {
+        LOADING: 'Đang tải...',
+        NO_PROCESS: 'Không có tiến trình nào',
+      },
+    },
+    STUDENT_DIALOG: {
+      TITLE: 'Chọn sinh viên',
+      SEARCH: {
+        PLACEHOLDER: 'Tìm kiếm theo tên hoặc MSSV',
+      },
+      SELECT_ALL: {
+        SELECT: 'Chọn tất cả',
+        DESELECT: 'Bỏ chọn tất cả',
+      },
+      TABLE: {
+        HEADER: {
+          SELECT: 'Chọn',
+          STUDENT_ID: 'MSSV',
+          FULL_NAME: 'Họ tên',
+        },
+        EMPTY: 'Không tìm thấy sinh viên nào',
+      },
+      FOOTER: {
+        SELECTED_COUNT: 'Đã chọn {selected}/{total} sinh viên',
+        CANCEL: 'Hủy',
+        CONFIRM: 'Xác nhận',
+      },
+    },
+    TEMPLATE: {
+      TABS: {
+        EXCEL: 'Template Excel',
+        JSON: 'Mapping JSON',
+      },
+      EXCEL: {
+        DOWNLOAD_DEFAULT: 'Tải template mặc định',
+        UPLOAD_BUTTON: 'Tải lên',
+        NO_TEMPLATE: 'Chưa có template Excel',
+      },
+      JSON: {
+        DOWNLOAD_DEFAULT: 'Tải mapping mặc định',
+        UPLOAD_BUTTON: 'Tải lên',
+        NO_MAPPING: 'Chưa có mapping JSON',
+      },
+    },
   },
   IMPORT_THESIS: {
     IMPORT_FAILED: 'Nhập dữ liệu thất bại: {message}',
@@ -164,6 +314,70 @@ export const VIETNAMESE_MESSAGES = {
     THESIS_UPDATE_FAILED: 'Cập nhật luận văn thất bại: {message}',
     THESIS_DELETED: 'Đã xóa luận văn thành công',
     THESIS_DELETE_FAILED: 'Xóa luận văn thất bại: {message}',
+    TABS: {
+      IMPORT: 'Nhập dữ liệu',
+      TEMPLATES: 'Quản lý mẫu',
+    },
+    IMPORT_SECTION: {
+      TITLE: 'Tải lên dữ liệu luận văn',
+      DESCRIPTION: 'Kéo và thả file vào đây hoặc nhấp để chọn',
+      SELECT_FILES: 'Chọn file',
+      NO_FILES: 'Chưa chọn file nào',
+      FILES_SELECTED: 'Đã chọn {count} file',
+      SELECTED_FILES: 'File đã chọn:',
+      IMPORT_BUTTON: 'Nhập dữ liệu',
+      IMPORTING: 'Đang nhập...',
+      MAX_FILES_ERROR: 'Bạn chỉ có thể tải lên tối đa 10 file cùng lúc',
+      IMPORT_SUCCESS: 'Bắt đầu nhập dữ liệu thành công',
+      IMPORT_ERROR: 'Nhập dữ liệu thất bại. Vui lòng thử lại.',
+    },
+    TEMPLATE_SECTION: {
+      DOWNLOAD: {
+        TITLE: 'Tải xuống mẫu',
+        SUBTITLE: 'Lấy mẫu nhập liệu chuẩn',
+        DESCRIPTION:
+          'Tải xuống mẫu chuẩn để nhập dữ liệu luận văn. Sử dụng mẫu này để định dạng dữ liệu của bạn chính xác.',
+        BUTTON: 'Tải xuống mẫu',
+        ERROR: 'Không thể tải xuống mẫu. Vui lòng thử lại.',
+        NOT_FOUND: 'Không tìm thấy mẫu. Vui lòng tải lên mẫu',
+      },
+      UPLOAD: {
+        TITLE: 'Tải lên mẫu tùy chỉnh',
+        SUBTITLE: 'Sử dụng mẫu riêng của bạn',
+        DESCRIPTION: 'Tải lên mẫu tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Mẫu phải ở định dạng JSON.',
+        SELECT_BUTTON: 'Chọn mẫu',
+        UPLOAD_BUTTON: 'Tải lên mẫu',
+        NO_FILE: 'Chưa chọn file nào',
+        SUCCESS: 'Tải lên mẫu thành công',
+        ERROR: 'Tải lên mẫu thất bại. Vui lòng thử lại.',
+      },
+    },
+    PROCESS_TABLE: {
+      ACTIONS: {
+        REFRESH: 'Làm mới',
+      },
+      AUTO_UPDATE: 'Tự động cập nhật mỗi 10 giây',
+      TABLE: {
+        HEADER: {
+          NO: '#',
+          ACTION: 'Hành động',
+          TYPE: 'Loại',
+          ERROR: 'Lỗi (nếu có)',
+          STATUS: 'Trạng thái',
+          TIME: 'Thời gian',
+          CREATOR: 'Người tạo',
+        },
+        STATUS: {
+          PROCESSING: 'Đang xử lý',
+          COMPLETED: 'Hoàn thành',
+          FAILED: 'Thất bại',
+        },
+        EMPTY: {
+          LOADING: 'Đang tải...',
+          NO_PROCESS: 'Không có tiến trình nào',
+        },
+      },
+    },
   },
   REGISTERS: {
     APPROVE_SUCCESS: 'Đã phê duyệt đăng ký thành công',
@@ -926,6 +1140,734 @@ export const VIETNAMESE_MESSAGES = {
     },
     TABS: {
       PROFILE: 'Hồ sơ',
+    },
+  },
+  THESIS_DETAIL_DIALOG: {
+    CLOSE: 'Đóng',
+    NO_INFO: 'Chưa có thông tin',
+    SECTIONS: {
+      BASIC_INFO: {
+        TITLE: 'Thông tin cơ bản',
+      },
+      DETAILS: {
+        TITLE: 'Chi tiết',
+      },
+      CONTENT: {
+        TITLE: 'Nội dung',
+      },
+      ATTACHMENTS: {
+        TITLE: 'Tệp đính kèm',
+        FILE_LABEL: 'Tài liệu đính kèm',
+        DOWNLOAD_HINT: 'Tải xuống tệp',
+        DOWNLOAD_BUTTON: 'Tải xuống',
+      },
+    },
+  },
+  THESIS_FORM: {
+    DATE: {
+      FORMAT: 'Định dạng: DD/MM/YYYY',
+      PLACEHOLDER: 'DD/MM/YYYY',
+    },
+    INPUT: {
+      PLACEHOLDER: 'Nhập {field}...',
+    },
+    BUTTONS: {
+      CANCEL: 'Hủy',
+      CREATE: 'Tạo mới',
+      UPDATE: 'Cập nhật',
+    },
+  },
+  THESIS_TABLE: {
+    ACTIONS: {
+      REFRESH: 'Làm mới',
+      CREATE: 'Tạo mới',
+      DOWNLOAD_ALL: 'Tải tất cả',
+      SEARCH: 'Tìm kiếm {type}...',
+      CLEAR_SEARCH: 'Xóa tìm kiếm',
+    },
+    TABLE: {
+      HEADER: {
+        NO: 'STT',
+        ACTIONS: 'Hành động',
+      },
+      LOADING: 'Đang tải...',
+      NO_RESULTS: 'Không tìm thấy kết quả phù hợp',
+      NO_DATA: 'Chưa có {type} nào',
+    },
+    DIALOG: {
+      CREATE_TITLE: 'Tạo {type} mới',
+      UPDATE_TITLE: 'Cập nhật {type}',
+      DELETE: {
+        TITLE: 'Bạn có chắc chắn?',
+        DESCRIPTION: 'Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn luận văn có ID: {id}.',
+        CANCEL: 'Hủy',
+        CONFIRM: 'Xác nhận',
+      },
+    },
+    TOAST: {
+      DOWNLOAD_ERROR: 'Đã xảy ra lỗi khi tải tệp',
+    },
+  },
+  THESIS_CONFIG: {
+    ASSIGNMENT_SHEET: {
+      TITLE: 'Phiếu giao nhiệm vụ',
+      FORM: {
+        MSSV: {
+          LABEL: 'MSSV',
+          ERROR: 'MSSV là bắt buộc',
+        },
+        FULL_NAME: {
+          LABEL: 'Họ tên',
+          ERROR: 'Họ tên là bắt buộc',
+        },
+        STUDENT_CLASS_NAME: {
+          LABEL: 'Lớp học sinh viên',
+          ERROR: 'Lớp học sinh viên là không bắt buộc',
+        },
+        PROJECT_TITLE: {
+          LABEL: 'Tên đề tài',
+          ERROR: 'Tên đề tài là không bắt buộc',
+        },
+        SUPERVISOR: {
+          LABEL: 'Giảng viên hướng dẫn',
+          ERROR: 'Giảng viên hướng dẫn là không bắt buộc',
+        },
+        PHONE: {
+          LABEL: 'Số điện thoại',
+          ERROR: 'Số điện thoại là không bắt buộc',
+        },
+        EMAIL: {
+          LABEL: 'Email',
+          ERROR: 'Email không hợp lệ',
+        },
+        CLASS_CODE: {
+          LABEL: 'Mã lớp',
+          ERROR: 'Mã lớp là không bắt buộc',
+        },
+        SEMESTER: {
+          LABEL: 'Học kỳ',
+          ERROR: 'Học kỳ là không bắt buộc',
+        },
+        SCHOOL: {
+          LABEL: 'Trường',
+          ERROR: 'Trường là không bắt buộc',
+        },
+        THESIS_START_DATE: {
+          LABEL: 'Ngày bắt đầu',
+          ERROR: 'Ngày bắt đầu là không bắt buộc',
+        },
+        THESIS_END_DATE: {
+          LABEL: 'Ngày kết thúc',
+          ERROR: 'Ngày kết thúc là không bắt buộc',
+        },
+        STUDENT_KNOWLEDGE_GAINED: {
+          LABEL: 'Kiến thức học sinh viên đạt được',
+          ERROR: 'Kiến thức học sinh viên đạt được là không bắt buộc',
+        },
+        TECHNOLOGY_GAINED: {
+          LABEL: 'Công nghệ học sinh viên đạt được',
+          ERROR: 'Công nghệ học sinh viên đạt được là không bắt buộc',
+        },
+        ACQUIRED_SKILLS: {
+          LABEL: 'Kỹ năng học sinh viên đạt được',
+          ERROR: 'Kỹ năng học sinh viên đạt được là không bắt buộc',
+        },
+        EXPECTED_PRODUCTS: {
+          LABEL: 'Sản phẩm dự kiến',
+          ERROR: 'Sản phẩm dự kiến là không bắt buộc',
+        },
+        REAL_WORLD_PROBLEM_SOLVED: {
+          LABEL: 'Vấn đề thực tế giải quyết',
+          ERROR: 'Vấn đề thực tế giải quyết là không bắt buộc',
+        },
+        STUDENT_SIGN_DATE: {
+          LABEL: 'Ngày ký của sinh viên',
+          ERROR: 'Ngày ký của sinh viên là không bắt buộc',
+        },
+        SUPERVISOR_SIGN_DATE: {
+          LABEL: 'Ngày ký của giảng viên',
+          ERROR: 'Ngày ký của giảng viên là không bắt buộc',
+        },
+      },
+    },
+    GUIDANCE_REVIEW: {
+      TITLE: 'Phiếu nhận xét hướng dẫn',
+      FORM: {
+        MSSV: {
+          LABEL: 'MSSV',
+          ERROR: 'MSSV là bắt buộc',
+        },
+        FULL_NAME: {
+          LABEL: 'Họ tên',
+          ERROR: 'Họ tên là bắt buộc',
+        },
+        SUPERVISOR: {
+          LABEL: 'Giảng viên hướng dẫn',
+          ERROR: 'Giảng viên hướng dẫn là không bắt buộc',
+        },
+        PROJECT_TITLE: {
+          LABEL: 'Tên đề tài',
+          ERROR: 'Tên đề tài là không bắt buộc',
+        },
+        TYPE_OF_THESIS: {
+          LABEL: 'Loại đề tài',
+          ERROR: 'Loại đề tài là không bắt buộc',
+        },
+        TOPIC_UNIQUENESS_POINT: {
+          LABEL: 'Điểm đề tài',
+          ERROR: 'Điểm đề tài là không bắt buộc',
+        },
+        WORKLOAD_POINT: {
+          LABEL: 'Điểm công việc',
+          ERROR: 'Điểm công việc là không bắt buộc',
+        },
+        PROBLEM_DIFFICULTY_POINT: {
+          LABEL: 'Điểm khó khăn',
+          ERROR: 'Điểm khó khăn là không bắt buộc',
+        },
+        SOLUTION_IMPACT_POINT: {
+          LABEL: 'Điểm ảnh hưởng',
+          ERROR: 'Điểm ảnh hưởng là không bắt buộc',
+        },
+        PRODUCT_FINALIZATION_POINT: {
+          LABEL: 'Điểm hoàn thành sản phẩm',
+          ERROR: 'Điểm hoàn thành sản phẩm là không bắt buộc',
+        },
+        LAYOUT_COHERENCE_POINT: {
+          LABEL: 'Điểm trật tự',
+          ERROR: 'Điểm trật tự là không bắt buộc',
+        },
+        CONTENT_VALIDITY_POINT: {
+          LABEL: 'Điểm nội dung',
+          ERROR: 'Điểm nội dung là không bắt buộc',
+        },
+        PRESENTATION_QUALITY_POINT: {
+          LABEL: 'Điểm trình bày',
+          ERROR: 'Điểm trình bày là không bắt buộc',
+        },
+        RELIABILITY_AND_REFERENCES_POINT: {
+          LABEL: 'Điểm đáng tin cậy và tài liệu tham khảo',
+          ERROR: 'Điểm đáng tin cậy và tài liệu tham khảo là không bắt buộc',
+        },
+        RESPONSE_ACCURACY_POINT: {
+          LABEL: 'Điểm độ chính xác',
+          ERROR: 'Điểm độ chính xác là không bắt buộc',
+        },
+        PRESENTATION_SKILLS_POINT: {
+          LABEL: 'Điểm kỹ năng trình bày',
+          ERROR: 'Điểm kỹ năng trình bày là không bắt buộc',
+        },
+        REWARD_POINT: {
+          LABEL: 'Điểm thưởng',
+          ERROR: 'Điểm thưởng là không bắt buộc',
+        },
+        GENERAL_FEEDBACK: {
+          LABEL: 'Phản hồi chung',
+          ERROR: 'Phản hồi chung là không bắt buộc',
+        },
+        CONCLUSION: {
+          LABEL: 'Kết luận',
+          ERROR: 'Kết luận là không bắt buộc',
+        },
+        TEACHER_SIGN_DATE: {
+          LABEL: 'Ngày ký của giảng viên',
+          ERROR: 'Ngày ký của giảng viên là không bắt buộc',
+        },
+      },
+    },
+    SUPERVISORY_COMMENTS: {
+      TITLE: 'Phiếu nhận xét phản biện',
+      FORM: {
+        SUPERVISOR: {
+          LABEL: 'Giảng viên hướng dẫn',
+          ERROR: 'Giảng viên hướng dẫn là không bắt buộc',
+        },
+        MSSV: {
+          LABEL: 'MSSV',
+          ERROR: 'MSSV là bắt buộc',
+        },
+        FULL_NAME: {
+          LABEL: 'Họ tên',
+          ERROR: 'Họ tên là bắt buộc',
+        },
+        PROJECT_TITLE: {
+          LABEL: 'Tên đề tài',
+          ERROR: 'Tên đề tài là không bắt buộc',
+        },
+      },
+    },
+    COMMON: {
+      CREATED_AT: 'Thời gian tạo',
+    },
+  },
+  THESIS_PAGE: {
+    ASSIGNMENT: {
+      GENERATE: {
+        TEMPLATE_MANAGEMENT: 'Quản lý Template',
+        GENERATE_FORM: 'Tạo Phiếu Giao Nhiệm Vụ',
+        GENERATED_SHEETS: 'Phiếu đã tạo',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+      IMPORT: {
+        IMPORT_MANAGEMENT: 'Thực hiện Import',
+        IMPORTED_SHEETS: 'Phiếu đã import',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+    },
+    GUIDANCE: {
+      GENERATE: {
+        TEMPLATE_MANAGEMENT: 'Quản lý Template',
+        GENERATE_FORM: 'Tạo Phiếu Nhận Xét Hướng Dẫn',
+        GENERATED_SHEETS: 'Phiếu đã tạo',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+      IMPORT: {
+        IMPORT_MANAGEMENT: 'Thực hiện Import',
+        IMPORTED_SHEETS: 'Phiếu đã import',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+    },
+    SUPERVISORY: {
+      GENERATE: {
+        TEMPLATE_MANAGEMENT: 'Quản lý Template',
+        GENERATE_FORM: 'Tạo Phiếu Nhận Xét Phản Biện',
+        GENERATED_SHEETS: 'Phiếu đã tạo',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+      IMPORT: {
+        IMPORT_MANAGEMENT: 'Thực hiện Import',
+        IMPORTED_SHEETS: 'Phiếu đã import',
+        PROCESS_TABLE: 'Tiến trình xử lý',
+      },
+    },
+    OTHER_DOCUMENTS: {
+      TABS: {
+        GENERATOR: {
+          TITLE: 'Tạo tài liệu',
+          LABEL: 'Tạo tài liệu',
+        },
+        HISTORY: {
+          TITLE: 'Lịch sử tạo',
+          LABEL: 'Lịch sử tạo',
+        },
+      },
+      FILE_UPLOAD: {
+        UPLOAD_FILE: 'Tải lên tệp',
+        UPLOAD_FILES: 'Tải lên các tệp',
+      },
+      GENERATOR_FORM: {
+        INPUT_CONFIG: {
+          TITLE: 'Cấu hình đầu vào',
+          INPUT_FILES: {
+            LABEL: 'Tệp đầu vào',
+            DESCRIPTION: 'Tải lên tệp đầu vào của bạn',
+          },
+          SPECIFICATION: {
+            LABEL: 'Cấu hình đầu vào',
+            DESCRIPTION: 'Tải lên tệp JSON định nghĩa các trường cần trích xuất',
+          },
+          INPUT_TYPE: {
+            LABEL: 'Loại đầu vào',
+            OPTIONS: {
+              LIST: {
+                LABEL: 'Xử lý dạng danh sách',
+                DESCRIPTION: 'Xử lý tất cả file đầu vào như một danh sách',
+              },
+              SINGLE: {
+                LABEL: 'Xử lý từng file',
+                DESCRIPTION: 'Xử lý mỗi file đầu vào độc lập với nhau',
+              },
+            },
+          },
+        },
+        OUTPUT_CONFIG: {
+          TITLE: 'Cấu hình đầu ra',
+          SPECIFICATION: {
+            LABEL: 'Cấu hình đầu ra',
+            DESCRIPTION: 'Tải lên tệp JSON định nghĩa định dạng đầu ra',
+          },
+          TEMPLATE_FILE: {
+            LABEL: 'Tệp mẫu',
+            DESCRIPTION: 'Tải lên tệp mẫu cho dữ liệu đầu ra',
+          },
+          EXPORT_TYPE: {
+            LABEL: 'Loại xuất',
+            OPTIONS: {
+              LIST: {
+                LABEL: 'Xuất dạng danh sách',
+                DESCRIPTION: 'Xuất tất cả dữ liệu vào một file duy nhất',
+              },
+              SINGLE: {
+                LABEL: 'Xuất từng file',
+                DESCRIPTION: 'Xuất mỗi bản ghi thành một file riêng biệt',
+              },
+            },
+          },
+        },
+        NOTIFICATION: {
+          TITLE: 'Cài đặt thông báo',
+          SUBMIT: {
+            LABEL: 'Tạo dữ liệu',
+            SUBMITTING: 'Đang xử lý...',
+          },
+          EMAIL_LIST: {
+            LABEL: 'Thông báo qua Email',
+            PLACEHOLDER: 'email@example.com',
+            DESCRIPTION: 'Nhận thông báo khi quá trình tạo hoàn tất',
+            ADD_BUTTON: 'Thêm Email',
+          },
+        },
+      },
+      HISTORY: {
+        STATUS: {
+          COMPLETED: 'Hoàn thành',
+          FAILED: 'Thất bại',
+          PROCESSING: 'Đang xử lý',
+          PENDING: 'Đang chờ',
+        },
+      },
+      VALIDATIONS: {
+        EMAIL: {
+          INVALID: 'Phải là địa chỉ email hợp lệ',
+          REQUIRED: 'Email không được để trống',
+        },
+        FORM: {
+          INPUT_FILES: {
+            REQUIRED: 'Phải tải lên ít nhất một tệp',
+          },
+          SPECIFICATION_INPUT: {
+            INVALID_FORMAT: 'File phải có định dạng JSON',
+          },
+          SPECIFICATION_OUTPUT: {
+            INVALID_FORMAT: 'File phải có định dạng JSON',
+          },
+          SHARE_EMAILS: {
+            REQUIRED: 'Phải có ít nhất một email',
+          },
+        },
+      },
+    },
+    DASHBOARD: {
+      LOADING: 'Đang tải dữ liệu...',
+      STATS: {
+        TITLE: 'Thống kê tổng quan',
+        TOTAL_INPUT_FILES: 'Tổng số file nhập',
+        OUTPUT_FILES: 'File xuất',
+        STATUS: 'Trạng thái',
+        PROCESSED: 'Đã xử lý',
+        NOT_PROCESSED: 'Chưa xử lý',
+      },
+      INPUT_PATHS: {
+        TITLE: 'Input Paths',
+        DESCRIPTION: 'Danh sách các file nguồn đã được import vào hệ thống',
+        NO_FILES: 'Chưa có file nguồn nào',
+      },
+      OUTPUT_PATH: {
+        TITLE: 'Output Path',
+        DESCRIPTION: 'Đường dẫn file dữ liệu đã được xuất',
+        NO_OUTPUT: 'Chưa có file xuất',
+      },
+    },
+    STUDENT_LIST: {
+      SEARCH_PLACEHOLDER: 'Tìm kiếm MSSV',
+      ADD_STUDENT: 'Thêm sinh viên',
+      EXPORT: 'Xuất ra',
+      LOADING: 'Đang tải...',
+      NO_STUDENTS: 'Không tìm thấy sinh viên nào',
+      TABS: {
+        LIST: 'Danh sách sinh viên',
+        IMPORT_EXPORT: 'Nhập/Xuất',
+      },
+      HEADERS: {
+        MSSV: 'MSSV',
+        FULL_NAME: 'Họ và tên',
+        EMAIL: 'Email',
+        PHONE: 'Điện thoại',
+        CLASS: 'Lớp',
+        PROJECT_TITLE: 'Tên đề tài',
+        SUPERVISOR: 'Người hướng dẫn',
+        REVIEWER: 'Người phản biện',
+        ACTIONS: 'Thao tác',
+      },
+      DIALOG: {
+        TITLE: {
+          ADD: 'Thêm sinh viên mới',
+          EDIT: 'Chỉnh sửa thông tin sinh viên',
+        },
+        DESCRIPTION: {
+          ADD: 'Điền thông tin sinh viên bên dưới',
+          EDIT: 'Cập nhật thông tin sinh viên',
+        },
+        TABS: {
+          PERSONAL: {
+            LABEL: 'Thông tin cá nhân',
+            FIELDS: {
+              MSSV: {
+                LABEL: 'MSSV',
+                PLACEHOLDER: 'Nhập mã số sinh viên',
+                REQUIRED: true,
+              },
+              CLASS_NAME: {
+                LABEL: 'Lớp',
+                PLACEHOLDER: 'Nhập tên lớp',
+              },
+              LAST_NAME: {
+                LABEL: 'Họ',
+                PLACEHOLDER: 'Nhập họ',
+              },
+              MIDDLE_NAME: {
+                LABEL: 'Tên đệm',
+                PLACEHOLDER: 'Nhập tên đệm',
+              },
+              FIRST_NAME: {
+                LABEL: 'Tên',
+                PLACEHOLDER: 'Nhập tên',
+              },
+              EMAIL: {
+                LABEL: 'Email',
+                PLACEHOLDER: 'Nhập địa chỉ email',
+              },
+              PHONE: {
+                LABEL: 'Số điện thoại',
+                PLACEHOLDER: 'Nhập số điện thoại',
+              },
+            },
+          },
+          ACADEMIC: {
+            LABEL: 'Thông tin học tập',
+            FIELDS: {
+              PROJECT_TITLE: {
+                LABEL: 'Tên đề tài',
+                PLACEHOLDER: 'Nhập tên đề tài',
+              },
+              SUPERVISOR: {
+                LABEL: 'Giảng viên hướng dẫn',
+                PLACEHOLDER: 'Nhập tên giảng viên hướng dẫn',
+              },
+              REVIEWER: {
+                LABEL: 'Người phản biện',
+                PLACEHOLDER: 'Nhập tên người phản biện',
+              },
+            },
+          },
+        },
+        BUTTONS: {
+          CANCEL: 'Hủy',
+          UPDATE: 'Cập nhật',
+          SAVE: 'Lưu',
+        },
+        VALIDATION: {
+          MSSV_REQUIRED: 'Vui lòng nhập MSSV',
+        },
+      },
+      ACTIONS: {
+        VIEW_DETAILS: 'Xem chi tiết',
+      },
+      DELETE_DIALOG: {
+        TITLE: 'Bạn có chắc chắn?',
+        DESCRIPTION: 'Hành động này không thể hoàn tác. Dữ liệu sinh viên sẽ bị xóa vĩnh viễn khỏi cơ sở dữ liệu.',
+        CANCEL: 'Hủy',
+        DELETE: 'Xóa',
+      },
+      IMPORT_EXPORT: {
+        IMPORT: {
+          TITLE: 'Nhập danh sách sinh viên',
+          DESCRIPTION: 'Quản lý việc nhập dữ liệu sinh viên cho lớp của bạn',
+          TABS: {
+            IMPORT: 'Nhập sinh viên',
+            TEMPLATES: 'Quản lý mẫu',
+          },
+          UPLOAD_SECTION: {
+            TITLE: 'Tải lên dữ liệu sinh viên',
+            DESCRIPTION: 'Kéo và thả file vào đây hoặc nhấp để chọn',
+            SELECT_FILES: 'Chọn file',
+            NO_FILES: 'Chưa chọn file nào',
+            FILES_SELECTED: 'Đã chọn {count} file',
+            SELECTED_FILES: 'File đã chọn:',
+            IMPORT_BUTTON: 'Nhập dữ liệu',
+            IMPORTING: 'Đang nhập...',
+            MAX_FILES_ERROR: 'Bạn chỉ có thể tải lên tối đa 10 file cùng lúc',
+            IMPORT_SUCCESS: 'Bắt đầu nhập dữ liệu thành công',
+            IMPORT_ERROR: 'Nhập dữ liệu thất bại. Vui lòng thử lại.',
+          },
+          TEMPLATE: {
+            DOWNLOAD: {
+              TITLE: 'Tải mẫu',
+              SUBTITLE: 'Tải mẫu nhập liệu chuẩn',
+              DESCRIPTION:
+                'Tải mẫu chuẩn để nhập dữ liệu sinh viên. Sử dụng mẫu này để định dạng dữ liệu của bạn chính xác.',
+              BUTTON: 'Tải mẫu',
+              ERROR: 'Không thể tải mẫu. Vui lòng thử lại.',
+              NOT_FOUND: 'Không tìm thấy mẫu. Vui lòng tải lên một mẫu',
+            },
+            UPLOAD: {
+              TITLE: 'Tải lên mẫu tùy chỉnh',
+              SUBTITLE: 'Sử dụng mẫu của riêng bạn',
+              DESCRIPTION: 'Tải lên mẫu tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Mẫu phải ở định dạng JSON.',
+              SELECT_BUTTON: 'Chọn mẫu',
+              UPLOAD_BUTTON: 'Tải lên mẫu',
+              NO_FILE: 'Chưa chọn file nào',
+              SUCCESS: 'Tải lên mẫu thành công',
+              ERROR: 'Tải lên mẫu thất bại. Vui lòng thử lại.',
+            },
+          },
+          PROGRESS: {
+            TITLE: 'Tiến trình nhập',
+            DESCRIPTION: 'Theo dõi trạng thái của quá trình nhập dữ liệu',
+            STATUS: {
+              COMPLETED: 'Hoàn thành',
+              FAILED: 'Thất bại',
+              PROCESSING: 'Đang xử lý',
+              PENDING: 'Đang chờ',
+            },
+          },
+        },
+      },
+    },
+    DRIVE_INFO: {
+      TITLE: 'Thông tin Drive',
+      DESCRIPTION: 'Quản lý tệp và thư mục của lớp học trên Google Drive',
+      ERROR_LOADING_FILES: 'Lỗi khi tải tệp. Vui lòng thử lại sau.',
+      TABS: {
+        FILES: {
+          LABEL: 'Quản lý Drive',
+          TITLE: 'Quản lý tệp',
+        },
+        HISTORY: {
+          LABEL: 'Lịch sử đồng bộ',
+          TITLE: 'Lịch sử đồng bộ',
+        },
+      },
+      TOOLBAR: {
+        VIEWS: {
+          GRID: 'Xem dạng lưới',
+          LIST: 'Xem dạng danh sách',
+        },
+        SEARCH: {
+          PLACEHOLDER: 'Tìm kiếm tệp...',
+        },
+        BUTTONS: {
+          DELETE: 'Xóa',
+          DOWNLOAD: 'Tải xuống',
+          UPLOAD: 'Tải lên',
+          REFRESH: 'Làm mới',
+          SYNC_DRIVE: 'Đồng bộ Drive',
+        },
+        DELETE_DIALOG: {
+          TITLE: 'Bạn có chắc chắn?',
+          DESCRIPTION_SINGLE: 'Hành động này sẽ xóa 1 tệp và không thể hoàn tác.',
+          DESCRIPTION_MULTIPLE: 'Hành động này sẽ xóa {count} tệp và không thể hoàn tác.',
+          CANCEL: 'Hủy',
+          CONFIRM: 'Xóa',
+        },
+        TOAST: {
+          DELETE_SUCCESS_SINGLE: 'Đã xóa thành công 1 tệp',
+          DELETE_SUCCESS_MULTIPLE: 'Đã xóa thành công {count} tệp',
+          DELETE_ERROR: 'Không thể xóa các tệp đã chọn',
+          SYNC_SUCCESS: 'Đã đồng bộ dữ liệu Drive thành công',
+          SYNC_ERROR: 'Không thể đồng bộ dữ liệu Drive',
+        },
+      },
+      SYNC_HISTORY: {
+        STATUS: {
+          COMPLETED: 'Hoàn thành',
+          FAILED: 'Thất bại',
+          PROCESSING: 'Đang xử lý',
+          PENDING: 'Đang chờ',
+        },
+      },
+      FILE_PREVIEW: {
+        NO_FILE_SELECTED: 'Chưa chọn tệp',
+        PLEASE_SELECT_FILE: 'Vui lòng chọn một tệp để xem trước.',
+        BROWSER_NOT_SUPPORTED: 'Trình duyệt của bạn không hỗ trợ thẻ video.',
+        LOADING: 'Đang tải xem trước tệp...',
+        NO_PREVIEW: 'Không có xem trước',
+        DOWNLOAD: 'Tải xuống',
+        OPEN_IN_DRIVE: 'Mở trong Drive',
+        FILE_INFO: {
+          NAME: 'Tên tệp',
+          TYPE: 'Loại tệp',
+          SIZE: 'Kích thước',
+          CREATED: 'Ngày tạo',
+          MODIFIED: 'Sửa đổi lần cuối',
+          OWNER: 'Chủ sở hữu',
+        },
+        CLOSE: 'Đóng',
+      },
+      FILE_LIST: {
+        LOADING: 'Đang tải tệp...',
+        NO_FILES: 'Không tìm thấy tệp',
+        SEARCH: 'Tìm kiếm tệp...',
+        HEADERS: {
+          NAME: 'Tên',
+          TYPE: 'Loại',
+          SIZE: 'Kích thước',
+          MODIFIED: 'Đã sửa đổi',
+          ACTIONS: 'Thao tác',
+          OWNER: 'Chủ sở hữu',
+        },
+        ACTIONS: {
+          VIEW: 'Xem',
+          DOWNLOAD: 'Tải xuống',
+          DELETE: 'Xóa',
+        },
+      },
+      UPLOAD: {
+        BUTTON: 'Tải lên tệp',
+        PROCESSING: 'Đang tải lên...',
+        SUCCESS: 'Tải lên tệp thành công',
+        ERROR: 'Không thể tải lên tệp',
+        DIALOG: {
+          TITLE: 'Tải lên tệp',
+          DRAG_DROP: 'Kéo và thả tệp vào đây, hoặc nhấp để chọn tệp',
+          SELECTED_FILES: 'Tệp đã chọn ({count})',
+          UPLOAD_BUTTON: 'Tải lên',
+          CANCEL_BUTTON: 'Hủy',
+        },
+      },
+      FOLDER: {
+        CREATE: 'Tạo thư mục',
+        NAME_PLACEHOLDER: 'Nhập tên thư mục',
+        SUCCESS: 'Tạo thư mục thành công',
+        ERROR: 'Không thể tạo thư mục',
+      },
+      BREADCRUMB: {
+        ROOT: 'Gốc',
+        BACK: 'Quay lại',
+      },
+      DELETE: {
+        CONFIRM_TITLE: 'Xóa tệp',
+        CONFIRM_DESC: 'Bạn có chắc chắn muốn xóa tệp này? Hành động này không thể hoàn tác.',
+        CANCEL: 'Hủy',
+        CONFIRM: 'Xóa',
+        SUCCESS: 'Xóa tệp thành công',
+        ERROR: 'Không thể xóa tệp',
+      },
+      FILE_UPLOADER: {
+        TITLE: 'Tải lên tệp',
+        DRAG_DROP: 'Kéo và thả tệp vào đây, hoặc nhấp để chọn tệp',
+        FILES_TO_UPLOAD: 'Tệp cần tải lên ({count})',
+        UPLOADING: 'Đang tải lên...',
+        UPLOAD: 'Tải lên',
+        CANCEL: 'Hủy',
+      },
+    },
+  },
+  PROCESS_TABLE: {
+    TABLE_HEADERS: {
+      NUMBER: 'STT',
+      ACTION: 'Thao tác',
+      TYPE: 'Loại',
+      STATUS: 'Trạng thái',
+      ERROR: 'Lỗi',
+      CREATED_BY: 'Người tạo',
+      CREATED_AT: 'Thời gian tạo',
+    },
+    LOADING: 'Đang tải dữ liệu...',
+    NO_PROCESSES: 'Không tìm thấy quy trình xử lý nào',
+    PAGINATION: {
+      SHOW: 'Hiển thị',
+      ENTRIES: 'bản ghi',
     },
   },
 };

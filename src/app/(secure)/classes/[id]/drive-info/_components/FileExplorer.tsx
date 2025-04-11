@@ -10,7 +10,10 @@ import { FileViewMode, FileItem } from '@/utils/types/file.type';
 import { useDrives, useFileNavigation, useFileSelection } from '@/hooks/useDrive';
 import { FileUploader } from './FileUploader';
 import { FilePreview } from './FilePreview';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
 
+const { THESIS_PAGE } = CURRENT_MESSAGES;
+const { ERROR_LOADING_FILES } = THESIS_PAGE.DRIVE_INFO;
 interface FileExplorerProps {
   classId: string;
 }
@@ -46,7 +49,7 @@ export const FileExplorer: React.FC<FileExplorerProps> = ({ classId }: { classId
     return (
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription>Error loading files. Please try again later.</AlertDescription>
+        <AlertDescription>{ERROR_LOADING_FILES}</AlertDescription>
       </Alert>
     );
   }

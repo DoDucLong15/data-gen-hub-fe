@@ -39,6 +39,7 @@ import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
+import { THESIS_TABLE } from '@/configs/messages.config';
 
 interface ThesisTableProps {
   thesisType: EThesisDocumentType;
@@ -126,7 +127,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
         `${config.title}.zip`,
       );
     } catch (error) {
-      toast.error('Đã xảy ra lỗi khi tải tệp');
+      toast.error(THESIS_TABLE.TOAST.DOWNLOAD_ERROR);
     }
   };
 
@@ -134,7 +135,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
     try {
       await StorageApi.downloadOneFile(path);
     } catch (error) {
-      toast.error('Đã xảy ra lỗi khi tải tệp');
+      toast.error(THESIS_TABLE.TOAST.DOWNLOAD_ERROR);
     }
   };
 
@@ -153,13 +154,13 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={() => refetchListThesis()} className="flex items-center gap-2">
             <RefreshCw className="h-4 w-4" />
-            Làm mới
+            {THESIS_TABLE.ACTIONS.REFRESH}
           </Button>
 
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
             <Button variant="default" size="sm" onClick={handleCreate} className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
-              Tạo mới
+              {THESIS_TABLE.ACTIONS.CREATE}
             </Button>
           </ProtectedComponent>
         </div>
@@ -174,7 +175,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
               className="flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
-              Tải tất cả
+              {THESIS_TABLE.ACTIONS.DOWNLOAD_ALL}
             </Button>
           )}
         </div>
@@ -184,7 +185,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
       <div className="relative">
         <Search className="text-muted-foreground absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2" />
         <Input
-          placeholder={`Tìm kiếm ${config.title.toLowerCase()}...`}
+          placeholder={THESIS_TABLE.ACTIONS.SEARCH.replace('{type}', config.title.toLowerCase())}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pr-8 pl-8"
@@ -207,26 +208,28 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
           <Table className="table-fixed">
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50px]">STT</TableHead>
+                <TableHead className="w-[50px]">{THESIS_TABLE.TABLE.HEADER.NO}</TableHead>
                 {visibleColumns.map((column) => (
                   <TableHead key={column.accessorKey} className="w-[125px]">
                     {column.header}
                   </TableHead>
                 ))}
-                <TableHead className="w-[140px]">Hành động</TableHead>
+                <TableHead className="w-[140px]">{THESIS_TABLE.TABLE.HEADER.ACTIONS}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoadingListThesis ? (
                 <TableRow>
                   <TableCell colSpan={visibleColumns.length + 2} className="text-center">
-                    Đang tải...
+                    {THESIS_TABLE.TABLE.LOADING}
                   </TableCell>
                 </TableRow>
               ) : filteredEntities.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={visibleColumns.length + 2} className="text-center">
-                    {searchTerm ? 'Không tìm thấy kết quả phù hợp' : `Chưa có ${config.title.toLowerCase()} nào`}
+                    {searchTerm
+                      ? THESIS_TABLE.TABLE.NO_RESULTS
+                      : THESIS_TABLE.TABLE.NO_DATA.replace('{type}', config.title.toLowerCase())}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -260,25 +263,24 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
                             <Edit className="h-4 w-4" />
                           </Button>
                           <AlertDialog>
-                            {/* Nút kích hoạt AlertDialog */}
                             <AlertDialogTrigger asChild>
                               <Button variant="ghost" size="icon">
                                 <Trash className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
 
-                            {/* Nội dung hộp thoại */}
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                <AlertDialogTitle>{THESIS_TABLE.DIALOG.DELETE.TITLE}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  This action cannot be undone. This will permanently delete the thesis with ID:{' '}
-                                  {entity.id}.
+                                  {THESIS_TABLE.DIALOG.DELETE.DESCRIPTION.replace('{id}', entity.id)}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => deleteThesis(entity.id)}>Confirm</AlertDialogAction>
+                                <AlertDialogCancel>{THESIS_TABLE.DIALOG.DELETE.CANCEL}</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => deleteThesis(entity.id)}>
+                                  {THESIS_TABLE.DIALOG.DELETE.CONFIRM}
+                                </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -387,7 +389,11 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
       <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{editingEntity ? `Cập nhật ${config.title}` : `Tạo ${config.title} mới`}</DialogTitle>
+            <DialogTitle>
+              {editingEntity
+                ? THESIS_TABLE.DIALOG.UPDATE_TITLE.replace('{type}', config.title)
+                : THESIS_TABLE.DIALOG.CREATE_TITLE.replace('{type}', config.title)}
+            </DialogTitle>
           </DialogHeader>
           <ThesisForm
             config={config}

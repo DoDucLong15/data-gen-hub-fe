@@ -8,6 +8,7 @@ import HistoryOtherDocument from './_components/History';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { THESIS_PAGE } from '@/configs/messages.config';
 
 function OtherDocumentsPage() {
   const { id } = useParams();
@@ -19,11 +20,11 @@ function OtherDocumentsPage() {
           <TabsList className="w-full">
             <TabsTrigger value="generator" className="flex flex-1 items-center justify-center gap-2">
               <FileText className="h-4 w-4" />
-              Tạo tài liệu
+              {THESIS_PAGE.OTHER_DOCUMENTS.TABS.GENERATOR.LABEL}
             </TabsTrigger>
             <TabsTrigger value="history" className="flex flex-1 items-center justify-center gap-2">
               <History className="h-4 w-4" />
-              Lịch sử tạo
+              {THESIS_PAGE.OTHER_DOCUMENTS.TABS.HISTORY.LABEL}
             </TabsTrigger>
           </TabsList>
 

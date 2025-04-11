@@ -20,6 +20,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { GENERATE_THESIS } from '@/configs/messages.config';
 
 export default function ProcessTable({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const { processes, processesIsLoafing, refetchProcesses } = useGenerateThesis(thesisType, classId);
@@ -31,11 +32,11 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
   const getStatusBadge = (status: EProgressStatus) => {
     switch (status) {
       case EProgressStatus.PROCESSING:
-        return <Badge variant="secondary">Đang xử lý</Badge>;
+        return <Badge variant="secondary">{GENERATE_THESIS.PROCESS.STATUS.PROCESSING}</Badge>;
       case EProgressStatus.COMPLETED:
-        return <Badge variant="success">Hoàn thành</Badge>;
+        return <Badge variant="success">{GENERATE_THESIS.PROCESS.STATUS.COMPLETED}</Badge>;
       case EProgressStatus.FAILED:
-        return <Badge variant="destructive">Thất bại</Badge>;
+        return <Badge variant="destructive">{GENERATE_THESIS.PROCESS.STATUS.FAILED}</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -52,9 +53,9 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
       <div className="flex justify-between">
         <Button variant="outline" size="sm" onClick={() => refetchProcesses()} className="flex items-center gap-2">
           <RefreshCw className="h-4 w-4" />
-          Làm mới
+          {GENERATE_THESIS.PROCESS.ACTIONS.REFRESH}
         </Button>
-        <div className="text-muted-foreground text-sm">Tự động cập nhật mỗi 10 giây</div>
+        <div className="text-muted-foreground text-sm">{GENERATE_THESIS.PROCESS.AUTO_UPDATE}</div>
       </div>
 
       <div className="rounded-md border">
@@ -62,32 +63,32 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>#</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Loại</TableHead>
-                <TableHead>Lỗi (nếu có)</TableHead>
-                <TableHead>Trạng thái</TableHead>
-                <TableHead>Thời gian</TableHead>
-                <TableHead>Người tạo</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.NO}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.ACTION}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.TYPE}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.ERROR}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.STATUS}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.TIME}</TableHead>
+                <TableHead>{GENERATE_THESIS.PROCESS.HEADER.CREATOR}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {processesIsLoafing ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
-                    Đang tải...
+                  <TableCell colSpan={7} className="text-center">
+                    {GENERATE_THESIS.PROCESS.EMPTY.LOADING}
                   </TableCell>
                 </TableRow>
               ) : processes.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
-                    Không có tiến trình nào
+                  <TableCell colSpan={7} className="text-center">
+                    {GENERATE_THESIS.PROCESS.EMPTY.NO_PROCESS}
                   </TableCell>
                 </TableRow>
               ) : (
                 currentItems.map((process, index) => (
                   <TableRow key={process.id}>
-                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{indexOfFirstItem + index + 1}</TableCell>
                     <TableCell>{process.action}</TableCell>
                     <TableCell>{process.type}</TableCell>
                     <TableCell className="truncate">{process.error ? JSON.stringify(process.error) : ''}</TableCell>

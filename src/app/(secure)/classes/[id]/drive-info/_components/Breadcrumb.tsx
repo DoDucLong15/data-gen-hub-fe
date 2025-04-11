@@ -1,5 +1,9 @@
 import React from 'react';
 import { ChevronRight, Home } from 'lucide-react';
+import { CURRENT_MESSAGES } from '@/configs/messages.config';
+
+const { THESIS_PAGE } = CURRENT_MESSAGES;
+const { BREADCRUMB } = THESIS_PAGE.DRIVE_INFO;
 
 interface BreadcrumbProps {
   items: { id: string; name: string }[];
@@ -25,7 +29,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, onNavigate }) => 
               {index === 0 ? (
                 <>
                   <Home className="mr-1 h-4 w-4" />
-                  Root
+                  {BREADCRUMB.ROOT}
                 </>
               ) : (
                 item.name
