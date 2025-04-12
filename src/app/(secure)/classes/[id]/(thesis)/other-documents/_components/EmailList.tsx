@@ -8,6 +8,8 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useFieldArray } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
+import { useI18n } from '@/i18n';
+
 interface EmailListProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
   componentId: string;
@@ -18,6 +20,9 @@ export function EmailList({ form, componentId }: EmailListProps) {
     control: form.control,
     name: 'shareEmails' as never,
   });
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
 
   return (
     <FormField
@@ -25,14 +30,20 @@ export function EmailList({ form, componentId }: EmailListProps) {
       name="shareEmails"
       render={() => (
         <FormItem>
-          <FormLabel>Email Notifications</FormLabel>
+          <FormLabel>{t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.EMAIL_LIST.LABEL')}</FormLabel>
           <div className="space-y-2">
             {fields.map((field, index) => (
               <div key={field.id} className="flex items-center gap-2">
                 <FormField
                   control={form.control}
                   name={`shareEmails.${index}`}
-                  render={({ field }) => <Input {...field} placeholder="email@example.com" type="email" />}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      placeholder={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.EMAIL_LIST.PLACEHOLDER')}
+                      type="email"
+                    />
+                  )}
                 />
                 <Button
                   type="button"
@@ -51,10 +62,12 @@ export function EmailList({ form, componentId }: EmailListProps) {
             ))}
             <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => append('')}>
               <Plus className="mr-2 h-4 w-4" />
-              Add Email
+              {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.EMAIL_LIST.ADD_BUTTON')}
             </Button>
           </div>
-          <FormDescription>Receive notifications when generation is complete</FormDescription>
+          <FormDescription>
+            {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.EMAIL_LIST.DESCRIPTION')}
+          </FormDescription>
           <FormMessage />
         </FormItem>
       )}

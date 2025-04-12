@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { XCircle, Upload } from 'lucide-react';
 import { UseFormReturn } from 'react-hook-form';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
+import { useI18n } from '@/i18n';
 
 interface FileUploadProps {
   name: keyof GeneratorOtherDocumentFormValues | `${keyof GeneratorOtherDocumentFormValues & string}.${string}`;
@@ -21,6 +22,7 @@ interface FileUploadProps {
 
 export function FileUpload({ name, label, description, form, multiple = false, accept, componentId }: FileUploadProps) {
   const [fileNames, setFileNames] = useState<string[]>([]);
+  const { t, isReady } = useI18n();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -41,6 +43,8 @@ export function FileUpload({ name, label, description, form, multiple = false, a
     });
   };
 
+  if (!isReady) return null;
+
   return (
     <FormField
       control={form.control}
@@ -57,7 +61,9 @@ export function FileUpload({ name, label, description, form, multiple = false, a
                 onClick={() => document.getElementById(`file-${name}`)?.click()}
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {multiple ? 'Upload Files' : 'Upload File'}
+                {multiple
+                  ? t('THESIS_PAGE.OTHER_DOCUMENTS.FILE_UPLOAD.UPLOAD_FILES')
+                  : t('THESIS_PAGE.OTHER_DOCUMENTS.FILE_UPLOAD.UPLOAD_FILE')}
               </Button>
             </div>
             <Input

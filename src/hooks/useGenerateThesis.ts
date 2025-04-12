@@ -1,6 +1,7 @@
 import { ProcessApi } from '@/apis/process.api';
 import { StorageApi } from '@/apis/storage.api';
 import { ThesisDocumentApi } from '@/apis/thesis-document.api';
+import { GENERATE_THESIS } from '@/configs/messages.config';
 import { EProgressAction, EProgressType } from '@/utils/enums/progress.enum';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { TStudent } from '@/utils/types/student.type';
@@ -42,19 +43,19 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
       thesisApiInstance.updateTemplate(file, id, type),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: TEMPLATE_EXPORT_THESIS_QUERY_KEYS(type, classId) });
-      toast.success('Template uploaded successfully');
+      toast.success(GENERATE_THESIS.TEMPLATE_UPLOADED);
     },
     onError: (error) => {
-      toast.error(`Upload failed: ${error.message}`);
+      toast.error(GENERATE_THESIS.TEMPLATE_UPLOAD_FAILED.replace('{message}', error.message));
     },
   });
 
   const downloadTemplate = async (path: string) => {
     try {
       await StorageApi.downloadOneFile(path);
-      toast.success(`Default ${type} template downloaded`);
+      toast.success(GENERATE_THESIS.TEMPLATE_DOWNLOADED.replace('{type}', type));
     } catch (error) {
-      toast.error(`Download failed`);
+      toast.error(GENERATE_THESIS.TEMPLATE_DOWNLOAD_FAILED);
     }
   };
 
@@ -67,10 +68,10 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: PROCESS_EXPORT_THESIS_QUERY_KEYS(type, classId) });
       queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
-      toast.success('Đã gửi yêu cầu tạo phiếu');
+      toast.success(GENERATE_THESIS.REQUEST_SENT);
     },
     onError: (error) => {
-      toast.error(`Tạo phiếu thất bại: ${error.message}`);
+      toast.error(GENERATE_THESIS.GENERATION_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -128,10 +129,10 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
-      toast.success('Đã xóa phiếu');
+      toast.success(GENERATE_THESIS.SHEET_DELETED);
     },
     onError: (error) => {
-      toast.error(`Xóa phiếu thất bại: ${error.message}`);
+      toast.error(GENERATE_THESIS.SHEET_DELETE_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -142,10 +143,10 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: GENERATED_SHEETS_QUERY_KEY(type, classId) });
-      toast.success('Đã xóa tất cả phiếu');
+      toast.success(GENERATE_THESIS.ALL_SHEETS_DELETED);
     },
     onError: (error) => {
-      toast.error(`Xóa phiếu thất bại: ${error.message}`);
+      toast.error(GENERATE_THESIS.ALL_SHEETS_DELETE_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -155,7 +156,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
         classId,
       });
     } catch (error) {
-      toast.error(`Download failed`);
+      toast.error(GENERATE_THESIS.DOWNLOAD_FAILED);
     }
   };
 

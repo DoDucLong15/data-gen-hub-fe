@@ -10,12 +10,15 @@ import { FileViewMode, FileItem } from '@/utils/types/file.type';
 import { useDrives, useFileNavigation, useFileSelection } from '@/hooks/useDrive';
 import { FileUploader } from './FileUploader';
 import { FilePreview } from './FilePreview';
+import { useI18n } from '@/i18n';
 
 interface FileExplorerProps {
   classId: string;
 }
 
 export const FileExplorer: React.FC<FileExplorerProps> = ({ classId }: { classId: string }) => {
+  const { t, isReady } = useI18n();
+
   const [viewMode, setViewMode] = useState<FileViewMode>('grid');
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,12 +49,13 @@ export const FileExplorer: React.FC<FileExplorerProps> = ({ classId }: { classId
     return (
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription>Error loading files. Please try again later.</AlertDescription>
+        <AlertDescription>{t('THESIS_PAGE.DRIVE_INFO.ERROR_LOADING_FILES')}</AlertDescription>
       </Alert>
     );
   }
 
   if (!fileTree) return null;
+  if (!isReady) return null;
 
   return (
     <div className="space-y-4">

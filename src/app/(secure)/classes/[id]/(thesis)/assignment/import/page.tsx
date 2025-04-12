@@ -9,9 +9,14 @@ import { ThesisTable } from '../../_components/import/ThesisTable';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { useI18n } from '@/i18n';
 
 export default function AssignmentSheetImportPage() {
   const { id } = useParams();
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <div className="container mx-auto space-y-6 py-4">
       <ProtectedComponent
@@ -22,7 +27,7 @@ export default function AssignmentSheetImportPage() {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Execute Import</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.IMPORT.IMPORT_MANAGEMENT')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ImportManagement classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
@@ -33,7 +38,7 @@ export default function AssignmentSheetImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_AssignmentSheets }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Phiếu đã import</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.IMPORT.IMPORTED_SHEETS')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ThesisTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
@@ -44,7 +49,7 @@ export default function AssignmentSheetImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Tiến trình xử lý</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.IMPORT.PROCESS_TABLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />

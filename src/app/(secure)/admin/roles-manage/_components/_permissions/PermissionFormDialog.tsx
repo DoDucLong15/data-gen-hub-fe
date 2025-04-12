@@ -18,13 +18,7 @@ import { toast } from 'sonner';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-
-// Zod schema for form validation
-const permissionFormSchema = z.object({
-  action: z.string().min(2, { message: 'Hành động phải có ít nhất 2 ký tự' }),
-  subject: z.string().min(2, { message: 'Đối tượng phải có ít nhất 2 ký tự' }),
-  description: z.string().optional(),
-});
+import { useI18n } from '@/i18n';
 
 type PermissionFormDialogProps = {
   open: boolean;
@@ -40,11 +34,19 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
   const [showActionSuggestions, setShowActionSuggestions] = useState(false);
   const [showSubjectSuggestions, setShowSubjectSuggestions] = useState(false);
   const [isDialogInitialized, setIsDialogInitialized] = useState(false);
+  const { t, isReady } = useI18n();
 
   const actionInputRef = useRef<HTMLInputElement>(null);
   const subjectInputRef = useRef<HTMLInputElement>(null);
 
   const permission = permissionId ? permissions?.find((p) => p.id === permissionId) : undefined;
+
+  // Zod schema for form validation
+  const permissionFormSchema = z.object({
+    action: z.string().min(2, { message: t('PERMISSION_FORM.FORM.ACTION.VALIDATION') }),
+    subject: z.string().min(2, { message: t('PERMISSION_FORM.FORM.SUBJECT.VALIDATION') }),
+    description: z.string().optional(),
+  });
 
   const form = useForm<z.infer<typeof permissionFormSchema>>({
     resolver: zodResolver(permissionFormSchema),
@@ -93,17 +95,15 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
 
       if (mode === 'add') {
         await addPermission(formData);
-        toast.success('Thêm quyền thành công');
+        toast.success(t('PERMISSION_FORM.TOAST.SUCCESS.ADD'));
       } else if (mode === 'edit' && permissionId) {
         await updatePermission(permissionId, formData);
-        toast.success('Cập nhật quyền thành công');
+        toast.success(t('PERMISSION_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(
-        mode === 'add' ? 'Không thể thêm quyền. Vui lòng thử lại.' : 'Không thể cập nhật quyền. Vui lòng thử lại.',
-      );
+      toast.error(mode === 'add' ? t('PERMISSION_FORM.TOAST.ERROR.ADD') : t('PERMISSION_FORM.TOAST.ERROR.UPDATE'));
     }
   };
 
@@ -179,13 +179,15 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
     setShowSubjectSuggestions(false);
   };
 
+  if (!isReady) return null;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader className="mb-5">
-          <DialogTitle>{mode === 'add' ? 'Thêm quyền mới' : 'Chỉnh sửa quyền'}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? t('PERMISSION_FORM.TITLE.ADD') : t('PERMISSION_FORM.TITLE.EDIT')}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? 'Nhập thông tin để tạo quyền mới.' : 'Cập nhật thông tin quyền.'}
+            {mode === 'add' ? t('PERMISSION_FORM.DESCRIPTION.ADD') : t('PERMISSION_FORM.DESCRIPTION.EDIT')}
           </DialogDescription>
         </DialogHeader>
 
@@ -196,11 +198,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="action"
               render={({ field }) => (
                 <FormItem className="relative flex flex-col">
-                  <FormLabel>Hành động</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.ACTION.LABEL')}</FormLabel>
                   <div className="flex space-x-2" ref={actionInputRef}>
                     <FormControl>
                       <Input
-                        placeholder="Chọn hoặc nhập hành động"
+                        placeholder={t('PERMISSION_FORM.FORM.ACTION.PLACEHOLDER')}
                         {...field}
                         onChange={(e) => handleActionChange(e.target.value)}
                         onFocus={handleActionFocus}
@@ -230,11 +232,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="subject"
               render={({ field }) => (
                 <FormItem className="relative flex flex-col">
-                  <FormLabel>Đối tượng</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.SUBJECT.LABEL')}</FormLabel>
                   <div className="flex space-x-2" ref={subjectInputRef}>
                     <FormControl>
                       <Input
-                        placeholder="Chọn hoặc nhập đối tượng"
+                        placeholder={t('PERMISSION_FORM.FORM.SUBJECT.PLACEHOLDER')}
                         {...field}
                         onChange={(e) => handleSubjectChange(e.target.value)}
                         onFocus={handleSubjectFocus}
@@ -264,9 +266,13 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mô tả</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.DESCRIPTION.LABEL')}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Nhập mô tả cho quyền này" {...field} value={field.value || ''} />
+                    <Textarea
+                      placeholder={t('PERMISSION_FORM.FORM.DESCRIPTION.PLACEHOLDER')}
+                      {...field}
+                      value={field.value || ''}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -275,9 +281,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
 
             <DialogFooter className="pt-4">
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                Hủy
+                {t('PERMISSION_FORM.BUTTON.CANCEL')}
               </Button>
-              <Button type="submit">{mode === 'add' ? 'Thêm quyền' : 'Lưu thay đổi'}</Button>
+              <Button type="submit">
+                {mode === 'add' ? t('PERMISSION_FORM.BUTTON.ADD') : t('PERMISSION_FORM.BUTTON.SAVE')}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

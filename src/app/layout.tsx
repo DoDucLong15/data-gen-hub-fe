@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/context/query.context';
 import Header from './_components/Header';
 import { ThemeProvider } from '@/context/theme.context';
+import { I18nProvider } from '@/i18n';
 
 export const metadata: Metadata = {
   title: 'Data gen hub',
@@ -22,8 +23,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Header />
-            {children} <Toaster />
+            <I18nProvider>
+              <Header />
+              {children} <Toaster />
+            </I18nProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>

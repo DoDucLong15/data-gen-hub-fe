@@ -10,9 +10,14 @@ import ProcessTable from '../../_components/generate/ProcessTable';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { useI18n } from '@/i18n';
 
 export default function AssignmentSheetGeneratePage() {
   const { id } = useParams();
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <div className="container mx-auto space-y-6 py-4">
       <ProtectedComponent
@@ -24,7 +29,7 @@ export default function AssignmentSheetGeneratePage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Quản lý Template</CardTitle>
+              <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.GENERATE.TEMPLATE_MANAGEMENT')}</CardTitle>
             </CardHeader>
             <CardContent>
               <TemplateManagement classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
@@ -33,7 +38,7 @@ export default function AssignmentSheetGeneratePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Generate Phiếu Giao Nhiệm Vụ</CardTitle>
+              <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.GENERATE.GENERATE_FORM')}</CardTitle>
             </CardHeader>
             <CardContent>
               <GenerateForm classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
@@ -45,7 +50,7 @@ export default function AssignmentSheetGeneratePage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_AssignmentSheets }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Phiếu đã tạo</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.GENERATE.GENERATED_SHEETS')}</CardTitle>
           </CardHeader>
           <CardContent>
             <GeneratedSheetsTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />
@@ -56,7 +61,7 @@ export default function AssignmentSheetGeneratePage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Tiến trình xử lý</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.ASSIGNMENT.GENERATE.PROCESS_TABLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.ASSIGNMENT_SHEET} />

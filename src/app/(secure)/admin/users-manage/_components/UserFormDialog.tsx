@@ -26,17 +26,7 @@ import { AdminApi } from '@/apis/admin.api';
 import { capitalizeFirstLetters } from '@/utils/common.util';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRoles } from '@/hooks/useRoles';
-
-// Zod schema for form validation
-const userFormSchema = z.object({
-  name: z.string().min(2, { message: 'Tên phải có ít nhất 2 ký tự' }),
-  email: z.string().email({ message: 'Email không hợp lệ' }),
-  roleId: z.string(),
-  phone: z.string().min(10, { message: 'Số điện thoại không hợp lệ' }).optional(),
-  school: z.string().min(2, { message: 'Tên trường không hợp lệ' }).optional(),
-  department: z.string().min(2, { message: 'Tên khoa không hợp lệ' }).optional(),
-  position: z.string().min(2, { message: 'Chức vụ không hợp lệ' }).optional(),
-});
+import { useI18n } from '@/i18n';
 
 type UserFormDialogProps = {
   open: boolean;
@@ -57,6 +47,30 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       return users.find((u) => u.id === userId);
     },
     enabled: !!userId,
+  });
+  const { t, isReady } = useI18n();
+
+  // Zod schema for form validation
+  const userFormSchema = z.object({
+    name: z.string().min(2, { message: t('USER_FORM.FORM.NAME.VALIDATION') }),
+    email: z.string().email({ message: t('USER_FORM.FORM.EMAIL.VALIDATION') }),
+    roleId: z.string(),
+    phone: z
+      .string()
+      .min(10, { message: t('USER_FORM.FORM.PHONE.VALIDATION') })
+      .optional(),
+    school: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.SCHOOL.VALIDATION') })
+      .optional(),
+    department: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.DEPARTMENT.VALIDATION') })
+      .optional(),
+    position: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.POSITION.VALIDATION') })
+      .optional(),
   });
 
   const form = useForm<z.infer<typeof userFormSchema>>({
@@ -110,34 +124,32 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
 
       if (mode === 'add') {
         await addUser(formData);
-        toast('Thêm người thành công');
+        toast(t('USER_FORM.TOAST.SUCCESS.ADD'));
       } else if (mode === 'edit' && userId) {
         await updateUser(userId, formData);
-        toast('Cập nhật người dùng thành công');
+        toast(t('USER_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(
-        mode === 'add'
-          ? 'Không thể thêm người dùng. Vui lòng thử lại.'
-          : 'Không thể cập nhật người dùng. Vui lòng thử lại.',
-      );
+      toast.error(mode === 'add' ? t('USER_FORM.TOAST.ERROR.ADD') : t('USER_FORM.TOAST.ERROR.UPDATE'));
     }
   };
+
+  if (!isReady) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader className="mb-5">
-          <DialogTitle>{mode === 'add' ? 'Thêm người dùng mới' : 'Chỉnh sửa người dùng'}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? t('USER_FORM.TITLE.ADD') : t('USER_FORM.TITLE.EDIT')}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? 'Nhập thông tin để tạo người dùng mới.' : 'Cập nhật thông tin người dùng.'}
+            {mode === 'add' ? t('USER_FORM.DESCRIPTION.ADD') : t('USER_FORM.DESCRIPTION.EDIT')}
           </DialogDescription>
         </DialogHeader>
 
         {isLoading && mode === 'edit' ? (
-          <div className="my-4 flex justify-center">Loading user data...</div>
+          <div className="my-4 flex justify-center">{t('USER_FORM.LOADING')}</div>
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -146,9 +158,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tên</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.NAME.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nhập tên người dùng" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.NAME.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -160,9 +172,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.EMAIL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="email@example.com" type="email" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.EMAIL.PLACEHOLDER')} type="email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,11 +186,11 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="roleId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Vai trò</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.ROLE.LABEL')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Chọn vai trò" />
+                          <SelectValue placeholder={t('USER_FORM.FORM.ROLE.PLACEHOLDER')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -199,9 +211,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Số điện thoại</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.PHONE.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nhập số điện thoại" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.PHONE.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -213,9 +225,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="school"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Trường</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.SCHOOL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nhập tên trường" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.SCHOOL.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -227,9 +239,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="department"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Khoa</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.DEPARTMENT.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nhập tên khoa" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.DEPARTMENT.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -241,9 +253,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="position"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Chức vụ</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.POSITION.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nhập chức vụ" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.POSITION.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,9 +264,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
 
               <DialogFooter className="pt-4">
                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                  Hủy
+                  {t('USER_FORM.BUTTON.CANCEL')}
                 </Button>
-                <Button type="submit">{mode === 'add' ? 'Thêm người dùng' : 'Lưu thay đổi'}</Button>
+                <Button type="submit">{mode === 'add' ? t('USER_FORM.BUTTON.ADD') : t('USER_FORM.BUTTON.SAVE')}</Button>
               </DialogFooter>
             </form>
           </Form>

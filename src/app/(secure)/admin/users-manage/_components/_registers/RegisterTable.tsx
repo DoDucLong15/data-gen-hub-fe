@@ -10,11 +10,14 @@ import {
 } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { useRegisters } from '@/hooks/useRegisters';
-import { columns } from './Column';
+import { getColumns } from './Column';
+import { useI18n } from '@/i18n';
 
 export function RegisterTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const { registers, isLoading, error } = useRegisters();
+  const { t, isReady } = useI18n();
+  const columns = getColumns();
 
   const table = useReactTable({
     data: registers,
@@ -32,6 +35,8 @@ export function RegisterTable() {
       },
     },
   });
+
+  if (!isReady) return null;
 
   if (isLoading) {
     return <div className="py-10 text-center">Loading registration requests...</div>;

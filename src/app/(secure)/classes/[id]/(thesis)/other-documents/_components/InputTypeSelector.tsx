@@ -8,6 +8,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { InputType } from '@/utils/types/other-document.type';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 import { ListFilter, FileInput } from 'lucide-react';
+import { useI18n } from '@/i18n';
 
 interface InputTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
@@ -15,13 +16,19 @@ interface InputTypeSelectorProps {
 }
 
 export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps) {
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <FormField
       control={form.control}
       name="importType"
       render={({ field }) => (
         <FormItem className="space-y-4">
-          <FormLabel className="text-lg font-semibold">Input Type</FormLabel>
+          <FormLabel className="text-lg font-semibold">
+            {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.LABEL')}
+          </FormLabel>
           <RadioGroup
             onValueChange={field.onChange}
             defaultValue={field.value}
@@ -36,10 +43,12 @@ export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps)
                 <div className="flex items-center space-x-2">
                   <ListFilter className="text-primary h-5 w-5" />
                   <Label htmlFor="input-list" className="font-medium">
-                    Process as List
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.LABEL')}
                   </Label>
                 </div>
-                <p className="text-muted-foreground text-sm">Xử lý tất cả file đầu vào như một danh sách</p>
+                <p className="text-muted-foreground text-sm">
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.DESCRIPTION')}
+                </p>
               </div>
             </div>
 
@@ -52,10 +61,12 @@ export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps)
                 <div className="flex items-center space-x-2">
                   <FileInput className="text-primary h-5 w-5" />
                   <Label htmlFor="input-single" className="font-medium">
-                    Process as Single File
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.LABEL')}
                   </Label>
                 </div>
-                <p className="text-muted-foreground text-sm">Xử lý mỗi file đầu vào độc lập với nhau</p>
+                <p className="text-muted-foreground text-sm">
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.DESCRIPTION')}
+                </p>
               </div>
             </div>
           </RadioGroup>

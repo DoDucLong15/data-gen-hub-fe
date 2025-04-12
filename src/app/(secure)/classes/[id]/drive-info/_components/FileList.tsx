@@ -6,6 +6,7 @@ import { useFileDownload } from '@/hooks/useDrive';
 import { formatDate, isFolder } from '../_helpers/file-helper.helper';
 import { FileIcon } from './FileIcon';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useI18n } from '@/i18n';
 
 interface FileListProps {
   classId: string;
@@ -26,6 +27,8 @@ export const FileList: React.FC<FileListProps> = ({
   isSelected,
   onFilePreview,
 }) => {
+  const { t, isReady } = useI18n();
+
   const { downloadFile } = useFileDownload();
 
   const filteredFiles = useMemo(() => {
@@ -62,15 +65,17 @@ export const FileList: React.FC<FileListProps> = ({
     return `${nameWithoutExt.slice(0, 22)}...${extension ? `.${extension}` : ''}`;
   };
 
+  if (!isReady) return null;
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className="w-12"></TableHead>
           <TableHead className="w-12"></TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Owner</TableHead>
-          <TableHead>Modified</TableHead>
+          <TableHead>{t('THESIS_PAGE.DRIVE_INFO.FILE_LIST.HEADERS.NAME')}</TableHead>
+          <TableHead>{t('THESIS_PAGE.DRIVE_INFO.FILE_LIST.HEADERS.OWNER')}</TableHead>
+          <TableHead>{t('THESIS_PAGE.DRIVE_INFO.FILE_LIST.HEADERS.MODIFIED')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

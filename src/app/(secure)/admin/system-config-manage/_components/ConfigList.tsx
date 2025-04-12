@@ -14,6 +14,7 @@ import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { useI18n } from '@/i18n';
 
 interface ConfigListProps {
   configs: TSystemConfig[];
@@ -23,6 +24,8 @@ interface ConfigListProps {
 }
 
 export const ConfigList = ({ configs, onEdit, onDelete, isLoading = false }: ConfigListProps) => {
+  const { t, isReady } = useI18n();
+
   const formatValue = (config: TSystemConfig) => {
     const type = getConfigValueType(config);
     const value = getConfigValue(config);
@@ -57,22 +60,24 @@ export const ConfigList = ({ configs, onEdit, onDelete, isLoading = false }: Con
     );
   };
 
+  if (!isReady) return null;
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[200px]">Key</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead className="w-[40%]">Value</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="w-[200px]">{t('SYSTEM_CONFIG_PAGE.LIST.HEADERS.KEY')}</TableHead>
+            <TableHead>{t('SYSTEM_CONFIG_PAGE.LIST.HEADERS.TYPE')}</TableHead>
+            <TableHead className="w-[40%]">{t('SYSTEM_CONFIG_PAGE.LIST.HEADERS.VALUE')}</TableHead>
+            <TableHead className="text-right">{t('SYSTEM_CONFIG_PAGE.LIST.HEADERS.ACTIONS')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {configs.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="p-4 text-center">
-                {isLoading ? 'Loading...' : 'No configurations found'}
+                {isLoading ? t('SYSTEM_CONFIG_PAGE.LIST.EMPTY.LOADING') : t('SYSTEM_CONFIG_PAGE.LIST.EMPTY.NO_DATA')}
               </TableCell>
             </TableRow>
           ) : (
@@ -94,14 +99,14 @@ export const ConfigList = ({ configs, onEdit, onDelete, isLoading = false }: Con
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => onEdit(config)}>
                           <Pencil className="mr-2 h-4 w-4" />
-                          Edit
+                          {t('SYSTEM_CONFIG_PAGE.LIST.DROPDOWN.EDIT')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive focus:text-destructive"
                           onClick={() => onDelete(config.key)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
+                          {t('SYSTEM_CONFIG_PAGE.LIST.DROPDOWN.DELETE')}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

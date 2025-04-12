@@ -2,10 +2,11 @@ import React, { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
-import { Upload, X, Check, AlertCircle } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 import { useDrives } from '@/hooks/useDrive';
 import { useDropzone } from 'react-dropzone';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useI18n } from '@/i18n';
 
 interface FileUploaderProps {
   classId: string;
@@ -18,6 +19,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
   const [files, setFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { uploadFilesMutation: uploadFiles } = useDrives(classId);
+  const { t, isReady } = useI18n();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);
@@ -77,11 +79,13 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
     return `${nameWithoutExtension.substring(0, maxLength - 5)}...${extension ? `.${extension}` : ''}`;
   };
 
+  if (!isReady) return null;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Upload Files</DialogTitle>
+          <DialogTitle>{t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.TITLE')}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -93,12 +97,14 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
           >
             <input {...getInputProps()} />
             <Upload className="mx-auto h-10 w-10 text-gray-400" />
-            <p className="mt-2 text-sm text-gray-500">Drag and drop files here, or click to select files</p>
+            <p className="mt-2 text-sm text-gray-500">{t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.DRAG_DROP')}</p>
           </div>
 
           {files.length > 0 && (
             <div className="space-y-2">
-              <h4 className="text-sm font-medium">Files to upload ({files.length})</h4>
+              <h4 className="text-sm font-medium">
+                {t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.FILES_TO_UPLOAD').replace('{count}', files.length.toString())}
+              </h4>
 
               <div className="max-h-40 space-y-2 overflow-y-auto">
                 {files.map((file, index) => (
@@ -130,7 +136,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
           {uploadProgress > 0 && (
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span>Uploading...</span>
+                <span>{t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.UPLOADING')}</span>
                 <span>{uploadProgress}%</span>
               </div>
               <Progress value={uploadProgress} />
@@ -139,10 +145,10 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ classId, isOpen, onC
 
           <div className="flex justify-end space-x-2">
             <Button variant="outline" onClick={onClose}>
-              Cancel
+              {t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.CANCEL')}
             </Button>
             <Button onClick={handleUpload} disabled={files.length === 0 || uploadProgress > 0}>
-              Upload
+              {t('THESIS_PAGE.DRIVE_INFO.FILE_UPLOADER.UPLOAD')}
             </Button>
           </div>
         </div>

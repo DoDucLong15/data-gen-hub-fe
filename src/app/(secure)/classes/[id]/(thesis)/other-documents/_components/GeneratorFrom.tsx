@@ -13,6 +13,7 @@ import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 import { ExportTypeSelector } from './ExportType';
 import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
+import { useI18n } from '@/i18n';
 
 export function GeneratorForm({ classId }: { classId: string }) {
   const { form, isSubmitting, setIsSubmitting } = useOtherDocumentGeneratorForm();
@@ -27,6 +28,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
       toast.error(error.message);
     },
   });
+  const { t, isReady } = useI18n();
 
   const onSubmit = async (data: GeneratorOtherDocumentFormValues) => {
     setIsSubmitting(true);
@@ -39,13 +41,15 @@ export function GeneratorForm({ classId }: { classId: string }) {
     }
   };
 
+  if (!isReady) return null;
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Card bên trái - Input Configuration */}
         <Card>
           <CardHeader>
-            <CardTitle>Input Configuration</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.TITLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -53,8 +57,8 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 <FileUpload
                   componentId={`inputFiles-${componentId}`}
                   name="inputFiles"
-                  label="Input Files"
-                  description="Upload your input files"
+                  label={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_FILES.LABEL')}
+                  description={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_FILES.DESCRIPTION')}
                   form={form}
                   multiple
                 />
@@ -62,8 +66,8 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 <FileUpload
                   componentId={`specificationInput-${componentId}`}
                   name="specificationInput"
-                  label="Input Configuration"
-                  description="Upload JSON file that defines which fields to extract"
+                  label={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.SPECIFICATION.LABEL')}
+                  description={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.SPECIFICATION.DESCRIPTION')}
                   form={form}
                   accept=".json"
                 />
@@ -77,7 +81,7 @@ export function GeneratorForm({ classId }: { classId: string }) {
         {/* Card bên phải - Output Configuration */}
         <Card>
           <CardHeader>
-            <CardTitle>Output Configuration</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.TITLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -85,8 +89,8 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 <FileUpload
                   componentId={`specificationOutput-${componentId}`}
                   name="specificationOutput"
-                  label="Output Configuration"
-                  description="Upload JSON file that defines output format"
+                  label={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.SPECIFICATION.LABEL')}
+                  description={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.SPECIFICATION.DESCRIPTION')}
                   form={form}
                   accept=".json"
                 />
@@ -94,8 +98,8 @@ export function GeneratorForm({ classId }: { classId: string }) {
                 <FileUpload
                   componentId={`templateFile-${componentId}`}
                   name="templateFile"
-                  label="Template File"
-                  description="Upload template file for data output"
+                  label={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.TEMPLATE_FILE.LABEL')}
+                  description={t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.TEMPLATE_FILE.DESCRIPTION')}
                   form={form}
                 />
                 <Separator />
@@ -109,14 +113,16 @@ export function GeneratorForm({ classId }: { classId: string }) {
       {/* Card dưới cùng - Email & Submit */}
       <Card>
         <CardHeader>
-          <CardTitle>Notification Settings</CardTitle>
+          <CardTitle>{t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.TITLE')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <EmailList form={form} componentId={`emailList-${componentId}`} />
               <Button type="submit" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? 'Submitting...' : 'Generate Data'}
+                {isSubmitting
+                  ? t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.SUBMIT.SUBMITTING')
+                  : t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.NOTIFICATION.SUBMIT.LABEL')}
               </Button>
             </form>
           </Form>

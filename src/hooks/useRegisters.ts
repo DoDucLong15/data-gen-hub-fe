@@ -1,4 +1,5 @@
 import { RegisterApi } from '@/apis/register.api';
+import { REGISTERS } from '@/configs/messages.config';
 import { ApproveData } from '@/utils/types/register.type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -25,10 +26,10 @@ export function useRegisters() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: REGISTERS_QUERY_KEY });
       queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
-      toast.success('Đã phê duyệt đăng ký thành công');
+      toast.success(REGISTERS.APPROVE_SUCCESS);
     },
     onError: () => {
-      toast.error('Đã xảy ra lỗi khi phê duyệt đăng ký');
+      toast.error(REGISTERS.APPROVE_ERROR);
     },
   });
 
@@ -36,10 +37,10 @@ export function useRegisters() {
     mutationFn: (id: string) => RegisterApi.deleteRegister(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: REGISTERS_QUERY_KEY });
-      toast.success('Đã từ chối đăng ký thành công');
+      toast.success(REGISTERS.REJECT_SUCCESS);
     },
     onError: () => {
-      toast.error('Đã xảy ra lỗi khi từ chối đăng ký');
+      toast.error(REGISTERS.REJECT_ERROR);
     },
   });
 

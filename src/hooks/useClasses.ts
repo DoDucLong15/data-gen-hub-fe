@@ -1,4 +1,5 @@
 import { ClassesApi } from '@/apis/classes.api';
+import { CLASSES } from '@/configs/messages.config';
 import { TClass } from '@/utils/types/classes.type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -56,12 +57,10 @@ export function useClasses() {
       queryClient.setQueryData(CLASSES_QUERY_KEY, (oldData: TClass[] = []) => {
         return [...oldData, newClass];
       });
-      toast.success('Class created', {
-        description: 'The class has been created successfully.',
-      });
+      toast.success(CLASSES.SUCCESS_CREATE);
     },
     onError: () => {
-      toast.error('Failed to create class. Please try again.');
+      toast.error(CLASSES.ERROR_CREATE);
     },
   });
 
@@ -72,12 +71,10 @@ export function useClasses() {
       queryClient.setQueryData(CLASSES_QUERY_KEY, (oldData: TClass[] = []) => {
         return oldData.map((item) => (item.id === id ? { ...item, ...updatedClass } : item));
       });
-      toast.success('Class updated', {
-        description: 'The class has been updated successfully.',
-      });
+      toast.success(CLASSES.SUCCESS_UPDATE);
     },
     onError: () => {
-      toast.error('Failed to update class. Please try again.');
+      toast.error(CLASSES.ERROR_UPDATE);
     },
   });
 
@@ -88,12 +85,10 @@ export function useClasses() {
       queryClient.setQueryData(CLASSES_QUERY_KEY, (oldData: TClass[] = []) => {
         return oldData.filter((item) => item.id !== id);
       });
-      toast.success('Class deleted', {
-        description: 'The class has been deleted successfully.',
-      });
+      toast.success(CLASSES.SUCCESS_DELETE);
     },
     onError: () => {
-      toast.error('Failed to delete class. Please try again.');
+      toast.error(CLASSES.ERROR_DELETE);
     },
   });
 

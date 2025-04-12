@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, MoreHorizontal, Trash2, Key, Plus, Search, Filter, RefreshCw, ChevronsUpDown } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash2, Key, Plus, Search, Filter, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -42,6 +42,7 @@ import {
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
+import { useI18n } from '@/i18n';
 
 export function PermissionsList() {
   const { permissions, permissionsBySubject, subjects, isLoading, deletePermission, refetch } = usePermissions();
@@ -51,6 +52,7 @@ export function PermissionsList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSubject, setFilterSubject] = useState<string>('all');
   const [refreshing, setRefreshing] = useState(false);
+  const { t, isReady } = useI18n();
 
   // Pagination state
   const [page, setPage] = useState(1);
@@ -59,10 +61,10 @@ export function PermissionsList() {
   const handleRefresh = async () => {
     setRefreshing(true);
     try {
-      await refetch(); // force refresh từ server
-      toast('Đã cập nhật danh sách quyền');
+      await refetch();
+      toast(t('PERMISSION_LIST.TOAST.REFRESH_SUCCESS'));
     } catch (error) {
-      toast.error('Không thể làm mới dữ liệu');
+      toast.error(t('PERMISSION_LIST.TOAST.REFRESH_ERROR'));
     } finally {
       setRefreshing(false);
     }
@@ -73,9 +75,9 @@ export function PermissionsList() {
 
     try {
       await deletePermission(permissionToDelete);
-      toast.success('Quyền đã được xóa thành công.');
+      toast.success(t('PERMISSION_LIST.TOAST.DELETE_SUCCESS'));
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi xóa quyền.');
+      toast.error(t('PERMISSION_LIST.TOAST.DELETE_ERROR'));
     } finally {
       setPermissionToDelete(null);
     }
@@ -131,15 +133,12 @@ export function PermissionsList() {
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
-      // Show all pages if there are few
       for (let i = 1; i <= totalPages; i++) {
         links.push(i);
       }
     } else {
-      // Always show first page
       links.push(1);
 
-      // Logic for middle pages
       if (page <= 3) {
         links.push(2, 3, 4);
       } else if (page >= totalPages - 2) {
@@ -148,12 +147,10 @@ export function PermissionsList() {
         links.push(page - 1, page, page + 1);
       }
 
-      // Always show last page
       if (!links.includes(totalPages)) {
         links.push(totalPages);
       }
 
-      // Add ellipsis markers
       const sortedLinks = [...new Set(links)].sort((a, b) => a - b);
       const linksWithEllipsis = [];
 
@@ -201,12 +198,14 @@ export function PermissionsList() {
     );
   }
 
+  if (!isReady) return null;
+
   return (
     <>
       <div className="mb-4 flex items-center justify-end">
         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Permissions }]}>
           <Button onClick={() => setShowAddPermission(true)}>
-            <Plus className="mr-2 h-4 w-4" /> Thêm quyền mới
+            <Plus className="mr-2 h-4 w-4" /> {t('PERMISSION_LIST.ADD_BUTTON')}
           </Button>
         </ProtectedComponent>
         <Button variant="outline" onClick={handleRefresh} disabled={refreshing || isLoading} className="ml-2">
@@ -218,7 +217,7 @@ export function PermissionsList() {
         <div className="relative flex-1">
           <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
           <Input
-            placeholder="Tìm kiếm quyền..."
+            placeholder={t('PERMISSION_LIST.SEARCH.PLACEHOLDER')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-8"
@@ -227,10 +226,10 @@ export function PermissionsList() {
         <Select value={filterSubject} onValueChange={setFilterSubject}>
           <SelectTrigger className="w-full sm:w-[200px]">
             <Filter className="mr-2 h-4 w-4" />
-            <SelectValue placeholder="Lọc theo đối tượng" />
+            <SelectValue placeholder={t('PERMISSION_LIST.FILTER.PLACEHOLDER')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Tất cả đối tượng</SelectItem>
+            <SelectItem value="all">{t('PERMISSION_LIST.FILTER.ALL_SUBJECTS')}</SelectItem>
             {subjects.map((subject) => (
               <SelectItem key={subject} value={subject}>
                 {subject}
@@ -242,18 +241,20 @@ export function PermissionsList() {
 
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle>Danh sách quyền ({filteredPermissions.length})</CardTitle>
+          <CardTitle>
+            {t('PERMISSION_LIST.TITLE')} ({filteredPermissions.length})
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-14">STT</TableHead>
-                  <TableHead>Hành động</TableHead>
-                  <TableHead>Đối tượng</TableHead>
-                  <TableHead>Mô tả</TableHead>
-                  <TableHead className="text-right">Thao tác</TableHead>
+                  <TableHead className="w-14">{t('PERMISSION_LIST.TABLE.NO')}</TableHead>
+                  <TableHead>{t('PERMISSION_LIST.TABLE.ACTION')}</TableHead>
+                  <TableHead>{t('PERMISSION_LIST.TABLE.SUBJECT')}</TableHead>
+                  <TableHead>{t('PERMISSION_LIST.TABLE.DESCRIPTION')}</TableHead>
+                  <TableHead className="text-right">{t('PERMISSION_LIST.TABLE.OPERATIONS')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -281,7 +282,9 @@ export function PermissionsList() {
                               </Tooltip>
                             </TooltipProvider>
                           ) : (
-                            <span className="text-muted-foreground italic">Không có mô tả</span>
+                            <span className="text-muted-foreground italic">
+                              {t('PERMISSION_LIST.TABLE.NO_DESCRIPTION')}
+                            </span>
                           )}
                         </div>
                       </TableCell>
@@ -297,17 +300,17 @@ export function PermissionsList() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                              <DropdownMenuLabel>{t('PERMISSION_LIST.DROPDOWN.LABEL')}</DropdownMenuLabel>
                               <DropdownMenuItem onClick={() => setPermissionToEdit(permission.id)}>
                                 <Edit className="mr-2 h-4 w-4" />
-                                Chỉnh sửa
+                                {t('PERMISSION_LIST.DROPDOWN.EDIT')}
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() => setPermissionToDelete(permission.id)}
                                 className="text-red-600"
                               >
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                Xóa
+                                {t('PERMISSION_LIST.DROPDOWN.DELETE')}
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -320,7 +323,7 @@ export function PermissionsList() {
                     <TableCell colSpan={5} className="h-24 text-center">
                       <div className="text-muted-foreground flex flex-col items-center justify-center">
                         <Key className="mb-2 h-10 w-10 opacity-20" />
-                        <p>Không tìm thấy quyền nào phù hợp.</p>
+                        <p>{t('PERMISSION_LIST.TABLE.EMPTY.MESSAGE')}</p>
                         <Button
                           variant="outline"
                           className="mt-4"
@@ -329,7 +332,7 @@ export function PermissionsList() {
                             setFilterSubject('all');
                           }}
                         >
-                          Xóa bộ lọc
+                          {t('PERMISSION_LIST.TABLE.EMPTY.CLEAR_FILTER')}
                         </Button>
                       </div>
                     </TableCell>
@@ -388,16 +391,13 @@ export function PermissionsList() {
       <AlertDialog open={!!permissionToDelete} onOpenChange={(open) => !open && setPermissionToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận xóa quyền</AlertDialogTitle>
-            <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa quyền này? Hành động này không thể hoàn tác và có thể ảnh hưởng đến vai trò đang
-              sử dụng quyền này.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{t('PERMISSION_LIST.DELETE_DIALOG.TITLE')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('PERMISSION_LIST.DELETE_DIALOG.DESCRIPTION')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogCancel>{t('PERMISSION_LIST.DELETE_DIALOG.CANCEL')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeletePermission} className="bg-red-500 hover:bg-red-600">
-              Xóa
+              {t('PERMISSION_LIST.DELETE_DIALOG.CONFIRM')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

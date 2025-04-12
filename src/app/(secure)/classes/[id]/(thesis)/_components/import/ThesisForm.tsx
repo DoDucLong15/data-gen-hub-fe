@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { EntityConfig } from '../../_config/thesis.config';
+import { useI18n } from '@/i18n';
 
 interface EntityFormProps {
   config: EntityConfig;
@@ -16,6 +17,8 @@ interface EntityFormProps {
 }
 
 export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCancel }: EntityFormProps) {
+  const { t, isReady } = useI18n();
+
   // Process initial data for date fields before setting up form
   const processedInitialData = { ...initialData };
   if (initialData) {
@@ -57,7 +60,9 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
           <Textarea
             {...field}
             className="min-h-24 resize-y border-2"
-            placeholder={column.placeholder || `Nhập ${column.header.toLowerCase()}...`}
+            placeholder={
+              column.placeholder || t('THESIS_FORM.INPUT.PLACEHOLDER').replace('{field}', column.header.toLowerCase())
+            }
           />
         );
       case 'date':
@@ -67,7 +72,7 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
             {...field}
             type="text"
             className="border-2"
-            placeholder="DD/MM/YYYY"
+            placeholder={t('THESIS_FORM.DATE.PLACEHOLDER')}
             // Optional: Add pattern validation if needed
             pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
           />
@@ -79,7 +84,9 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
           <Input
             {...field}
             className="border-2"
-            placeholder={column.placeholder || `Nhập ${column.header.toLowerCase()}...`}
+            placeholder={
+              column.placeholder || t('THESIS_FORM.INPUT.PLACEHOLDER').replace('{field}', column.header.toLowerCase())
+            }
           />
         );
     }
@@ -91,6 +98,8 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
     // Date fields remain in DD/MM/YYYY format
     onSubmit(data);
   };
+
+  if (!isReady) return null;
 
   return (
     <Form {...form}>
@@ -108,7 +117,9 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
                     <FormItem className={column.type === 'textarea' ? 'md:col-span-2' : ''}>
                       <FormLabel className="mb-1 block text-base font-bold text-gray-700">{column.header}</FormLabel>
                       <FormControl>{renderInputField(field, column)}</FormControl>
-                      {column.type === 'date' && <p className="mt-1 text-xs text-gray-500">Định dạng: DD/MM/YYYY</p>}
+                      {column.type === 'date' && (
+                        <p className="mt-1 text-xs text-gray-500">{t('THESIS_FORM.DATE.FORMAT')}</p>
+                      )}
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
@@ -121,10 +132,10 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
         {/* Fixed footer with buttons */}
         <div className="mt-auto flex justify-end gap-3 border-t pt-4">
           <Button variant="outline" type="button" onClick={onCancel} className="w-24">
-            Hủy
+            {t('THESIS_FORM.BUTTONS.CANCEL')}
           </Button>
           <Button type="submit" disabled={isSubmitting} className="w-24">
-            {initialData ? 'Cập nhật' : 'Tạo mới'}
+            {initialData ? t('THESIS_FORM.BUTTONS.UPDATE') : t('THESIS_FORM.BUTTONS.CREATE')}
           </Button>
         </div>
       </form>

@@ -36,6 +36,7 @@ import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { usePathname } from 'next/navigation';
+import { useI18n } from '@/i18n';
 
 export default function GeneratedSheetsTable({
   classId,
@@ -59,6 +60,7 @@ export default function GeneratedSheetsTable({
     downloadAllSheet,
     isDeletingAllSheets,
   } = useGenerateThesis(thesisType, classId);
+  const { t, isReady } = useI18n();
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -92,11 +94,13 @@ export default function GeneratedSheetsTable({
   const downloadOneFile = async (path: string) => {
     try {
       await StorageApi.downloadOneFile(path);
-      toast.success('Tải file thành công');
+      toast.success(t('GENERATE_THESIS.TABLE.TOAST.DOWNLOAD_SUCCESS'));
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi tải file');
+      toast.error(t('GENERATE_THESIS.TABLE.TOAST.DOWNLOAD_ERROR'));
     }
   };
+
+  if (!isReady) return null;
 
   return (
     <div className="space-y-4">
@@ -108,7 +112,7 @@ export default function GeneratedSheetsTable({
           className="flex items-center gap-2"
         >
           <RefreshCw className="h-4 w-4" />
-          Làm mới
+          {t('GENERATE_THESIS.TABLE.ACTIONS.REFRESH')}
         </Button>
 
         <div className="flex gap-2">
@@ -120,7 +124,7 @@ export default function GeneratedSheetsTable({
             className="flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
-            Tải tất cả
+            {t('GENERATE_THESIS.TABLE.ACTIONS.DOWNLOAD_ALL')}
           </Button>
 
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
@@ -133,25 +137,25 @@ export default function GeneratedSheetsTable({
                   className="flex items-center gap-2"
                 >
                   <Trash2 className="h-4 w-4" />
-                  Xóa tất cả
+                  {t('GENERATE_THESIS.TABLE.ACTIONS.DELETE_ALL')}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Xác nhận xóa tất cả</AlertDialogTitle>
+                  <AlertDialogTitle>{t('GENERATE_THESIS.TABLE.DELETE_DIALOG.TITLE')}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Bạn có chắc chắn muốn xóa tất cả phiếu giao nhiệm vụ? Hành động này không thể hoàn tác.
+                    {t('GENERATE_THESIS.TABLE.DELETE_DIALOG.DESCRIPTION')}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Hủy</AlertDialogCancel>
+                  <AlertDialogCancel>{t('GENERATE_THESIS.TABLE.DELETE_DIALOG.CANCEL')}</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => {
                       deleteAllSheets();
                       setIsDeleteDialogOpen(false);
                     }}
                   >
-                    Xóa tất cả
+                    {t('GENERATE_THESIS.TABLE.DELETE_DIALOG.CONFIRM')}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -164,7 +168,7 @@ export default function GeneratedSheetsTable({
       <div className="relative">
         <Search className="text-muted-foreground absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2" />
         <Input
-          placeholder="Tìm kiếm theo MSSV hoặc họ tên..."
+          placeholder={t('GENERATE_THESIS.TABLE.SEARCH.PLACEHOLDER')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pr-8 pl-8"
@@ -186,24 +190,26 @@ export default function GeneratedSheetsTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50px]">STT</TableHead>
-                <TableHead>MSSV</TableHead>
-                <TableHead>Họ tên</TableHead>
-                <TableHead>Thời gian tạo</TableHead>
-                <TableHead className="w-[120px]">Hành động</TableHead>
+                <TableHead className="w-[50px]">{t('GENERATE_THESIS.TABLE.HEADER.NO')}</TableHead>
+                <TableHead>{t('GENERATE_THESIS.TABLE.HEADER.STUDENT_ID')}</TableHead>
+                <TableHead>{t('GENERATE_THESIS.TABLE.HEADER.FULL_NAME')}</TableHead>
+                <TableHead>{t('GENERATE_THESIS.TABLE.HEADER.CREATED_AT')}</TableHead>
+                <TableHead className="w-[120px]">{t('GENERATE_THESIS.TABLE.HEADER.ACTIONS')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {generatedSheetsIsLoading ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center">
-                    Đang tải...
+                    {t('GENERATE_THESIS.TABLE.EMPTY.LOADING')}
                   </TableCell>
                 </TableRow>
               ) : filteredSheets.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center">
-                    {searchTerm ? 'Không tìm thấy kết quả phù hợp' : 'Chưa có phiếu nào được tạo'}
+                    {searchTerm
+                      ? t('GENERATE_THESIS.TABLE.EMPTY.NO_RESULTS')
+                      : t('GENERATE_THESIS.TABLE.EMPTY.NO_SHEETS')}
                   </TableCell>
                 </TableRow>
               ) : (

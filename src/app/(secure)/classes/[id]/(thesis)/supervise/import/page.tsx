@@ -9,9 +9,13 @@ import { ThesisTable } from '../../_components/import/ThesisTable';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
-
+import { useI18n } from '@/i18n';
 export default function SupervisoryCommentImportPage() {
   const { id } = useParams();
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <div className="container mx-auto space-y-6 py-4">
       <ProtectedComponent
@@ -22,7 +26,7 @@ export default function SupervisoryCommentImportPage() {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Execute Import</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORT_MANAGEMENT')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ImportManagement classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -33,7 +37,7 @@ export default function SupervisoryCommentImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_SupervisoryComments }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Phiếu đã import</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORTED_SHEETS')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ThesisTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -44,7 +48,7 @@ export default function SupervisoryCommentImportPage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
           <CardHeader>
-            <CardTitle>Tiến trình xử lý</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.PROCESS_TABLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />

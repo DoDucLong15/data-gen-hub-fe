@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { TClass } from '@/utils/types/classes.type';
 import { Spinner } from '@/components/ui/spinner';
+import { useI18n } from '@/i18n';
 
 interface ClassFormProps {
   initialData?: TClass;
@@ -19,6 +20,7 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
     courseCode: '',
     semester: '',
   });
+  const { t, isReady } = useI18n();
 
   useEffect(() => {
     if (initialData) {
@@ -41,77 +43,79 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
     onSubmit(formData);
   };
 
+  if (!isReady) return null;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="name">Class Name</Label>
+            <Label htmlFor="name">{t('CLASSES.FORM.NAME.LABEL')}</Label>
             <Input
               id="name"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter class name"
+              placeholder={t('CLASSES.FORM.NAME.PLACEHOLDER')}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="classCode">Class Code</Label>
+            <Label htmlFor="classCode">{t('CLASSES.FORM.CLASS_CODE.LABEL')}</Label>
             <Input
               id="classCode"
               name="classCode"
               value={formData.classCode}
               onChange={handleChange}
               required
-              placeholder="e.g. CS101-A"
+              placeholder={t('CLASSES.FORM.CLASS_CODE.PLACEHOLDER')}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="courseCode">Course Code</Label>
+            <Label htmlFor="courseCode">{t('CLASSES.FORM.COURSE_CODE.LABEL')}</Label>
             <Input
               id="courseCode"
               name="courseCode"
               value={formData.courseCode}
               onChange={handleChange}
               required
-              placeholder="e.g. CS101"
+              placeholder={t('CLASSES.FORM.COURSE_CODE.PLACEHOLDER')}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="semester">Semester</Label>
+            <Label htmlFor="semester">{t('CLASSES.FORM.SEMESTER.LABEL')}</Label>
             <Input
               id="semester"
               name="semester"
               value={formData.semester}
               onChange={handleChange}
               required
-              placeholder="e.g. Fall 2025"
+              placeholder={t('CLASSES.FORM.SEMESTER.PLACEHOLDER')}
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="driveId">Drive ID</Label>
+          <Label htmlFor="driveId">{t('CLASSES.FORM.DRIVE_ID.LABEL')}</Label>
           <Input
             id="driveId"
             name="driveId"
             value={formData.driveId || ''}
             onChange={handleChange}
-            placeholder="e.g. 1A2B3C4D5E6F7G8H9I0J"
+            placeholder={t('CLASSES.FORM.DRIVE_ID.PLACEHOLDER')}
           />
           <p className="text-muted-foreground text-sm">
-            Enter the Google Drive folder ID to store class materials. This field is optional.
+            {t('CLASSES.FORM.DRIVE_ID.DESCRIPTION')}
             <br />
-            <span className="font-bold text-red-400">Important:</span> Before using this feature, please share editing
-            access to your folder with our service account:
+            <span className="font-bold text-red-400">{t('CLASSES.FORM.DRIVE_ID.IMPORTANT')}:</span>{' '}
+            {t('CLASSES.FORM.DRIVE_ID.ACCESS_NOTE')}
             <span className="rounded bg-red-200 px-1 font-mono text-xs">
-              data-gen-hub@oauth2-402816.iam.gserviceaccount.com
+              {t('CLASSES.FORM.DRIVE_ID.SERVICE_ACCOUNT')}
             </span>
           </p>
         </div>
@@ -120,12 +124,12 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
       <div className="flex justify-end gap-2">
         {onCancel && (
           <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
+            {t('CLASSES.FORM.BUTTONS.CANCEL')}
           </Button>
         )}
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? <Spinner size="sm" className="mr-2" /> : null}
-          {initialData ? 'Save Changes' : 'Create Class'}
+          {initialData ? t('CLASSES.FORM.BUTTONS.SAVE') : t('CLASSES.FORM.BUTTONS.CREATE')}
         </Button>
       </div>
     </form>

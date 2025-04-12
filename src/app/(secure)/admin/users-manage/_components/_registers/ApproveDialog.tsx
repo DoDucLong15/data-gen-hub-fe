@@ -15,6 +15,7 @@ import { useRoles } from '@/hooks/useRoles';
 import { useRegisters } from '@/hooks/useRegisters';
 import { TRole } from '@/utils/types/role.type';
 import { capitalizeFirstLetters } from '@/utils/common.util';
+import { useI18n } from '@/i18n';
 
 interface ApproveDialogProps {
   register: Register;
@@ -26,6 +27,7 @@ export function ApproveDialog({ register, open, onOpenChange }: ApproveDialogPro
   const [selectedRole, setSelectedRole] = useState<TRole | null>(null);
   const { roles } = useRoles();
   const { approveRegister, isApproveRegisterLoading } = useRegisters();
+  const { t, isReady } = useI18n();
 
   const handleApprove = () => {
     if (selectedRole) {
@@ -37,24 +39,28 @@ export function ApproveDialog({ register, open, onOpenChange }: ApproveDialogPro
     }
   };
 
+  if (!isReady) return null;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Approve Registration</DialogTitle>
-          <DialogDescription>Approve {register.name}'s registration and assign a role.</DialogDescription>
+          <DialogTitle>{t('REGISTER_APPROVE_DIALOG.TITLE')}</DialogTitle>
+          <DialogDescription>
+            {t('REGISTER_APPROVE_DIALOG.DESCRIPTION').replace('{name}', register.name)}
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="role" className="text-right">
-              Role
+              {t('REGISTER_APPROVE_DIALOG.FORM.ROLE.LABEL')}
             </Label>
             <Select
               value={selectedRole?.id}
               onValueChange={(value) => setSelectedRole(roles.find((role) => role.id === value) || null)}
             >
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select a role" />
+                <SelectValue placeholder={t('REGISTER_APPROVE_DIALOG.FORM.ROLE.PLACEHOLDER')} />
               </SelectTrigger>
               <SelectContent>
                 {roles.map((role) => (
@@ -68,10 +74,12 @@ export function ApproveDialog({ register, open, onOpenChange }: ApproveDialogPro
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t('REGISTER_APPROVE_DIALOG.BUTTONS.CANCEL')}
           </Button>
           <Button onClick={handleApprove} disabled={isApproveRegisterLoading}>
-            {isApproveRegisterLoading ? 'Approving...' : 'Approve'}
+            {isApproveRegisterLoading
+              ? t('REGISTER_APPROVE_DIALOG.BUTTONS.APPROVING')
+              : t('REGISTER_APPROVE_DIALOG.BUTTONS.APPROVE')}
           </Button>
         </DialogFooter>
       </DialogContent>

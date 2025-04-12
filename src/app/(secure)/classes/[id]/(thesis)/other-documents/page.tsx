@@ -8,9 +8,13 @@ import HistoryOtherDocument from './_components/History';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import { useI18n } from '@/i18n';
 
 function OtherDocumentsPage() {
   const { id } = useParams();
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
 
   return (
     <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_OtherDocuments }]}>
@@ -19,11 +23,11 @@ function OtherDocumentsPage() {
           <TabsList className="w-full">
             <TabsTrigger value="generator" className="flex flex-1 items-center justify-center gap-2">
               <FileText className="h-4 w-4" />
-              Tạo tài liệu
+              {t('THESIS_PAGE.OTHER_DOCUMENTS.TABS.GENERATOR.LABEL')}
             </TabsTrigger>
             <TabsTrigger value="history" className="flex flex-1 items-center justify-center gap-2">
               <History className="h-4 w-4" />
-              Lịch sử tạo
+              {t('THESIS_PAGE.OTHER_DOCUMENTS.TABS.HISTORY.LABEL')}
             </TabsTrigger>
           </TabsList>
 

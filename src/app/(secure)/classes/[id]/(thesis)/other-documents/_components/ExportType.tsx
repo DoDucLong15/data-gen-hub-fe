@@ -8,6 +8,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { ExportType } from '@/utils/types/other-document.type';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 import { FileText, Files } from 'lucide-react';
+import { useI18n } from '@/i18n';
 
 interface ExportTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
@@ -15,13 +16,19 @@ interface ExportTypeSelectorProps {
 }
 
 export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProps) {
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <FormField
       control={form.control}
       name="exportType"
       render={({ field }) => (
         <FormItem className="space-y-4">
-          <FormLabel className="text-lg font-semibold">Export Type</FormLabel>
+          <FormLabel className="text-lg font-semibold">
+            {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.LABEL')}
+          </FormLabel>
           <RadioGroup
             onValueChange={field.onChange}
             defaultValue={field.value}
@@ -36,10 +43,12 @@ export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProp
                 <div className="flex items-center space-x-2">
                   <FileText className="text-primary h-5 w-5" />
                   <Label htmlFor="export-list" className="font-medium">
-                    Export as List
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.LABEL')}
                   </Label>
                 </div>
-                <p className="text-muted-foreground text-sm">Xuất tất cả dữ liệu vào một file duy nhất</p>
+                <p className="text-muted-foreground text-sm">
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.DESCRIPTION')}
+                </p>
               </div>
             </div>
 
@@ -52,10 +61,12 @@ export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProp
                 <div className="flex items-center space-x-2">
                   <Files className="text-primary h-5 w-5" />
                   <Label htmlFor="export-single" className="font-medium">
-                    Export to Single Files
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.LABEL')}
                   </Label>
                 </div>
-                <p className="text-muted-foreground text-sm">Xuất mỗi bản ghi thành một file riêng biệt</p>
+                <p className="text-muted-foreground text-sm">
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.DESCRIPTION')}
+                </p>
               </div>
             </div>
           </RadioGroup>

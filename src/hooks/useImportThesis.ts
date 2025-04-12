@@ -1,5 +1,6 @@
 import { ProcessApi } from '@/apis/process.api';
 import { ThesisDocumentApi } from '@/apis/thesis-document.api';
+import { IMPORT_THESIS } from '@/configs/messages.config';
 import { EProgressAction, EProgressType } from '@/utils/enums/progress.enum';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -38,7 +39,7 @@ export const useImportThesis = (type: EThesisDocumentType, classId: string) => {
       return data;
     },
     onError: (error) => {
-      toast.error(`Import failed: ${error.message}`);
+      toast.error(IMPORT_THESIS.IMPORT_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -84,10 +85,10 @@ export const useImportThesis = (type: EThesisDocumentType, classId: string) => {
       queryClient.invalidateQueries({
         queryKey: GENERATED_IMPORT_QUERY_KEY(type, classId),
       });
-      toast.success('Thesis created successfully');
+      toast.success(IMPORT_THESIS.THESIS_CREATED);
     },
     onError: (error) => {
-      toast.error(`Create thesis failed: ${error.message}`);
+      toast.error(IMPORT_THESIS.THESIS_CREATE_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -97,10 +98,10 @@ export const useImportThesis = (type: EThesisDocumentType, classId: string) => {
       queryClient.invalidateQueries({
         queryKey: GENERATED_IMPORT_QUERY_KEY(type, classId),
       });
-      toast.success('Thesis updated successfully');
+      toast.success(IMPORT_THESIS.THESIS_UPDATED);
     },
     onError: (error) => {
-      toast.error(`Update thesis failed: ${error.message}`);
+      toast.error(IMPORT_THESIS.THESIS_UPDATE_FAILED.replace('{message}', error.message));
     },
   });
 
@@ -110,10 +111,10 @@ export const useImportThesis = (type: EThesisDocumentType, classId: string) => {
       queryClient.invalidateQueries({
         queryKey: GENERATED_IMPORT_QUERY_KEY(type, classId),
       });
-      toast.success('Thesis deleted successfully');
+      toast.success(IMPORT_THESIS.THESIS_DELETED);
     },
     onError: (error) => {
-      toast.error(`Delete thesis failed: ${error.message}`);
+      toast.error(IMPORT_THESIS.THESIS_DELETE_FAILED.replace('{message}', error.message));
     },
   });
 

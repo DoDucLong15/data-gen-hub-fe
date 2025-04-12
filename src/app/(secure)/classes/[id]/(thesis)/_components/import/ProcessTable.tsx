@@ -21,9 +21,11 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { useImportThesis } from '@/hooks/useImportThesis';
+import { useI18n } from '@/i18n';
 
 export default function ProcessTable({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const { processes, processesIsLoafing, refetchProcesses } = useImportThesis(thesisType, classId);
+  const { t, isReady } = useI18n();
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,11 +34,11 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
   const getStatusBadge = (status: EProgressStatus) => {
     switch (status) {
       case EProgressStatus.PROCESSING:
-        return <Badge variant="secondary">Đang xử lý</Badge>;
+        return <Badge variant="secondary">{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.STATUS.PROCESSING')}</Badge>;
       case EProgressStatus.COMPLETED:
-        return <Badge variant="success">Hoàn thành</Badge>;
+        return <Badge variant="success">{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.STATUS.COMPLETED')}</Badge>;
       case EProgressStatus.FAILED:
-        return <Badge variant="destructive">Thất bại</Badge>;
+        return <Badge variant="destructive">{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.STATUS.FAILED')}</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -48,14 +50,16 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
   const currentItems = processes.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(processes.length / itemsPerPage);
 
+  if (!isReady) return null;
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
         <Button variant="outline" size="sm" onClick={() => refetchProcesses()} className="flex items-center gap-2">
           <RefreshCw className="h-4 w-4" />
-          Làm mới
+          {t('IMPORT_THESIS.PROCESS_TABLE.ACTIONS.REFRESH')}
         </Button>
-        <div className="text-muted-foreground text-sm">Tự động cập nhật mỗi 10 giây</div>
+        <div className="text-muted-foreground text-sm">{t('IMPORT_THESIS.PROCESS_TABLE.AUTO_UPDATE')}</div>
       </div>
 
       <div className="rounded-md border">
@@ -63,26 +67,26 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>#</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>Loại</TableHead>
-                <TableHead>Lỗi (nếu có)</TableHead>
-                <TableHead>Trạng thái</TableHead>
-                <TableHead>Thời gian</TableHead>
-                <TableHead>Người tạo</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.NO')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.ACTION')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.TYPE')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.ERROR')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.STATUS')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.TIME')}</TableHead>
+                <TableHead>{t('IMPORT_THESIS.PROCESS_TABLE.TABLE.HEADER.CREATOR')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {processesIsLoafing ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center">
-                    Đang tải...
+                    {t('IMPORT_THESIS.PROCESS_TABLE.TABLE.EMPTY.LOADING')}
                   </TableCell>
                 </TableRow>
               ) : processes.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center">
-                    Không có tiến trình nào
+                    {t('IMPORT_THESIS.PROCESS_TABLE.TABLE.EMPTY.NO_PROCESS')}
                   </TableCell>
                 </TableRow>
               ) : (
