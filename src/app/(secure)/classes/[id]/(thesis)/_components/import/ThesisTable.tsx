@@ -39,7 +39,7 @@ import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
-import { THESIS_TABLE } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface ThesisTableProps {
   thesisType: EThesisDocumentType;
@@ -64,6 +64,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
     isCreatingThesis,
     isUpdatingThesis,
   } = useImportThesis(thesisType, classId);
+  const { t, isReady } = useI18n();
 
   // Table state
   const [searchTerm, setSearchTerm] = useState('');
@@ -127,7 +128,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
         `${config.title}.zip`,
       );
     } catch (error) {
-      toast.error(THESIS_TABLE.TOAST.DOWNLOAD_ERROR);
+      toast.error(t('THESIS_TABLE.TOAST.DOWNLOAD_ERROR'));
     }
   };
 
@@ -135,7 +136,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
     try {
       await StorageApi.downloadOneFile(path);
     } catch (error) {
-      toast.error(THESIS_TABLE.TOAST.DOWNLOAD_ERROR);
+      toast.error(t('THESIS_TABLE.TOAST.DOWNLOAD_ERROR'));
     }
   };
 
@@ -147,6 +148,8 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
   // Visible columns (exclude hidden ones)
   const visibleColumns = config.columns.filter((column) => !column.hidden).slice(0, 5);
 
+  if (!isReady) return null;
+
   return (
     <div className="space-y-4">
       {/* Actions bar */}
@@ -154,13 +157,13 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={() => refetchListThesis()} className="flex items-center gap-2">
             <RefreshCw className="h-4 w-4" />
-            {THESIS_TABLE.ACTIONS.REFRESH}
+            {t('THESIS_TABLE.ACTIONS.REFRESH')}
           </Button>
 
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
             <Button variant="default" size="sm" onClick={handleCreate} className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
-              {THESIS_TABLE.ACTIONS.CREATE}
+              {t('THESIS_TABLE.ACTIONS.CREATE')}
             </Button>
           </ProtectedComponent>
         </div>
@@ -175,7 +178,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
               className="flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
-              {THESIS_TABLE.ACTIONS.DOWNLOAD_ALL}
+              {t('THESIS_TABLE.ACTIONS.DOWNLOAD_ALL')}
             </Button>
           )}
         </div>
@@ -185,7 +188,7 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
       <div className="relative">
         <Search className="text-muted-foreground absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2" />
         <Input
-          placeholder={THESIS_TABLE.ACTIONS.SEARCH.replace('{type}', config.title.toLowerCase())}
+          placeholder={t('THESIS_TABLE.ACTIONS.SEARCH').replace('{type}', config.title.toLowerCase())}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pr-8 pl-8"
@@ -208,28 +211,28 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
           <Table className="table-fixed">
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[50px]">{THESIS_TABLE.TABLE.HEADER.NO}</TableHead>
+                <TableHead className="w-[50px]">{t('THESIS_TABLE.TABLE.HEADER.NO')}</TableHead>
                 {visibleColumns.map((column) => (
                   <TableHead key={column.accessorKey} className="w-[125px]">
                     {column.header}
                   </TableHead>
                 ))}
-                <TableHead className="w-[140px]">{THESIS_TABLE.TABLE.HEADER.ACTIONS}</TableHead>
+                <TableHead className="w-[140px]">{t('THESIS_TABLE.TABLE.HEADER.ACTIONS')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoadingListThesis ? (
                 <TableRow>
                   <TableCell colSpan={visibleColumns.length + 2} className="text-center">
-                    {THESIS_TABLE.TABLE.LOADING}
+                    {t('THESIS_TABLE.TABLE.LOADING')}
                   </TableCell>
                 </TableRow>
               ) : filteredEntities.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={visibleColumns.length + 2} className="text-center">
                     {searchTerm
-                      ? THESIS_TABLE.TABLE.NO_RESULTS
-                      : THESIS_TABLE.TABLE.NO_DATA.replace('{type}', config.title.toLowerCase())}
+                      ? t('THESIS_TABLE.TABLE.NO_RESULTS')
+                      : t('THESIS_TABLE.TABLE.NO_DATA').replace('{type}', config.title.toLowerCase())}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -271,15 +274,15 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
 
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>{THESIS_TABLE.DIALOG.DELETE.TITLE}</AlertDialogTitle>
+                                <AlertDialogTitle>{t('THESIS_TABLE.DIALOG.DELETE.TITLE')}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  {THESIS_TABLE.DIALOG.DELETE.DESCRIPTION.replace('{id}', entity.id)}
+                                  {t('THESIS_TABLE.DIALOG.DELETE.DESCRIPTION').replace('{id}', entity.id)}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>{THESIS_TABLE.DIALOG.DELETE.CANCEL}</AlertDialogCancel>
+                                <AlertDialogCancel>{t('THESIS_TABLE.DIALOG.DELETE.CANCEL')}</AlertDialogCancel>
                                 <AlertDialogAction onClick={() => deleteThesis(entity.id)}>
-                                  {THESIS_TABLE.DIALOG.DELETE.CONFIRM}
+                                  {t('THESIS_TABLE.DIALOG.DELETE.CONFIRM')}
                                 </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
@@ -391,8 +394,8 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
           <DialogHeader>
             <DialogTitle>
               {editingEntity
-                ? THESIS_TABLE.DIALOG.UPDATE_TITLE.replace('{type}', config.title)
-                : THESIS_TABLE.DIALOG.CREATE_TITLE.replace('{type}', config.title)}
+                ? t('THESIS_TABLE.DIALOG.UPDATE_TITLE').replace('{type}', config.title)
+                : t('THESIS_TABLE.DIALOG.CREATE_TITLE').replace('{type}', config.title)}
             </DialogTitle>
           </DialogHeader>
           <ThesisForm

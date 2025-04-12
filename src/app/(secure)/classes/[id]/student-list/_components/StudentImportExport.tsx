@@ -10,21 +10,19 @@ import { StorageApi } from '@/apis/storage.api';
 import { EProgressStatus } from '@/utils/enums/progress.enum';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProcessTable } from './ProcessTable';
-import { CURRENT_MESSAGES } from '@/configs/messages.config';
-
-const { THESIS_PAGE } = CURRENT_MESSAGES;
-const { IMPORT } = THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT;
+import { useI18n } from '@/i18n';
 
 export function ImportExport({ classId }: { classId: string }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
   const { templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
     useStudents(classId);
+  const { t, isReady } = useI18n();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       if (Array.from(e.target.files).length > 10) {
-        toast.error(IMPORT.UPLOAD_SECTION.MAX_FILES_ERROR);
+        toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.MAX_FILES_ERROR'));
         return;
       }
       setSelectedFiles(Array.from(e.target.files));
@@ -42,9 +40,9 @@ export function ImportExport({ classId }: { classId: string }) {
     try {
       await importStudents(selectedFiles);
       setSelectedFiles([]);
-      toast.success(IMPORT.UPLOAD_SECTION.IMPORT_SUCCESS);
+      toast.success(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.IMPORT_SUCCESS'));
     } catch (error) {
-      toast.error(IMPORT.UPLOAD_SECTION.IMPORT_ERROR);
+      toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.IMPORT_ERROR'));
     }
   };
 
@@ -54,54 +52,78 @@ export function ImportExport({ classId }: { classId: string }) {
       if (templateImport) {
         await uploadTemplate(templateFile, templateImport.id);
         setTemplateFile(null);
-        toast.success(IMPORT.TEMPLATE.UPLOAD.SUCCESS);
+        toast.success(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SUCCESS'));
       }
     } catch (error) {
-      toast.error(IMPORT.TEMPLATE.UPLOAD.ERROR);
+      toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.ERROR'));
     }
   };
 
   const handleDownloadTemplate = () => {
     if (templateImport?.jsonFile) {
-      StorageApi.downloadOneFile(templateImport.jsonFile).catch((error) => toast.error(IMPORT.TEMPLATE.DOWNLOAD.ERROR));
+      StorageApi.downloadOneFile(templateImport.jsonFile).catch((error) =>
+        toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.ERROR')),
+      );
     } else {
-      toast.error(IMPORT.TEMPLATE.DOWNLOAD.NOT_FOUND);
+      toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.NOT_FOUND'));
     }
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case EProgressStatus.COMPLETED:
-        return <Badge className="bg-green-500">{IMPORT.PROGRESS.STATUS.COMPLETED}</Badge>;
+        return (
+          <Badge className="bg-green-500">
+            {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.STATUS.COMPLETED')}
+          </Badge>
+        );
       case EProgressStatus.FAILED:
-        return <Badge variant="destructive">{IMPORT.PROGRESS.STATUS.FAILED}</Badge>;
+        return (
+          <Badge variant="destructive">
+            {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.STATUS.FAILED')}
+          </Badge>
+        );
       case EProgressStatus.PROCESSING:
-        return <Badge className="bg-blue-500">{IMPORT.PROGRESS.STATUS.PROCESSING}</Badge>;
+        return (
+          <Badge className="bg-blue-500">
+            {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.STATUS.PROCESSING')}
+          </Badge>
+        );
       default:
-        return <Badge variant="outline">{IMPORT.PROGRESS.STATUS.PENDING}</Badge>;
+        return (
+          <Badge variant="outline">{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.STATUS.PENDING')}</Badge>
+        );
     }
   };
+
+  if (!isReady) return null;
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">{IMPORT.TITLE}</CardTitle>
-          <CardDescription>{IMPORT.DESCRIPTION}</CardDescription>
+          <CardTitle className="text-2xl">{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TITLE')}</CardTitle>
+          <CardDescription>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.DESCRIPTION')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="import" className="w-full">
             <TabsList className="mb-6 grid w-full grid-cols-2">
-              <TabsTrigger value="import">{IMPORT.TABS.IMPORT}</TabsTrigger>
-              <TabsTrigger value="templates">{IMPORT.TABS.TEMPLATES}</TabsTrigger>
+              <TabsTrigger value="import">{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TABS.IMPORT')}</TabsTrigger>
+              <TabsTrigger value="templates">
+                {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TABS.TEMPLATES')}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="import" className="rounded-lg border p-4">
               <div className="space-y-4">
                 <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8">
                   <FileText className="mb-4 h-12 w-12 text-gray-400" />
-                  <h3 className="mb-2 text-lg font-medium text-gray-700">{IMPORT.UPLOAD_SECTION.TITLE}</h3>
-                  <p className="mb-4 text-center text-sm text-gray-500">{IMPORT.UPLOAD_SECTION.DESCRIPTION}</p>
+                  <h3 className="mb-2 text-lg font-medium text-gray-700">
+                    {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.TITLE')}
+                  </h3>
+                  <p className="mb-4 text-center text-sm text-gray-500">
+                    {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.DESCRIPTION')}
+                  </p>
                   <div className="flex items-center space-x-2">
                     <input
                       type="file"
@@ -116,19 +138,24 @@ export function ImportExport({ classId }: { classId: string }) {
                       className="bg-primary hover:bg-primary/90 inline-flex cursor-pointer items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white"
                     >
                       <Upload className="mr-2 h-4 w-4" />
-                      {IMPORT.UPLOAD_SECTION.SELECT_FILES}
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.SELECT_FILES')}
                     </label>
                   </div>
                   <span className="mt-2 text-sm text-gray-500">
                     {selectedFiles.length
-                      ? IMPORT.UPLOAD_SECTION.FILES_SELECTED.replace('{count}', selectedFiles.length.toString())
-                      : IMPORT.UPLOAD_SECTION.NO_FILES}
+                      ? t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.FILES_SELECTED').replace(
+                          '{count}',
+                          selectedFiles.length.toString(),
+                        )
+                      : t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.NO_FILES')}
                   </span>
                 </div>
 
                 {selectedFiles.length > 0 && (
                   <div className="mt-4">
-                    <h4 className="mb-2 font-medium">{IMPORT.UPLOAD_SECTION.SELECTED_FILES}</h4>
+                    <h4 className="mb-2 font-medium">
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.SELECTED_FILES')}
+                    </h4>
                     <ul className="max-h-32 space-y-1 overflow-y-auto rounded-md border p-2 text-sm">
                       {selectedFiles.map((file, index) => (
                         <li key={index} className="group flex items-center justify-between text-gray-600">
@@ -152,10 +179,10 @@ export function ImportExport({ classId }: { classId: string }) {
                       {isImporting ? (
                         <>
                           <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                          {IMPORT.UPLOAD_SECTION.IMPORTING}
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.IMPORTING')}
                         </>
                       ) : (
-                        IMPORT.UPLOAD_SECTION.IMPORT_BUTTON
+                        t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.UPLOAD_SECTION.IMPORT_BUTTON')
                       )}
                     </Button>
                   </div>
@@ -167,27 +194,39 @@ export function ImportExport({ classId }: { classId: string }) {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <Card className="shadow-lg transition-shadow hover:shadow-xl">
                   <CardHeader className="border-b bg-gray-50">
-                    <CardTitle className="text-lg">{IMPORT.TEMPLATE.DOWNLOAD.TITLE}</CardTitle>
-                    <CardDescription>{IMPORT.TEMPLATE.DOWNLOAD.SUBTITLE}</CardDescription>
+                    <CardTitle className="text-lg">
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.TITLE')}
+                    </CardTitle>
+                    <CardDescription>
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.SUBTITLE')}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6">
-                    <p className="mb-4 text-sm text-gray-600">{IMPORT.TEMPLATE.DOWNLOAD.DESCRIPTION}</p>
+                    <p className="mb-4 text-sm text-gray-600">
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.DESCRIPTION')}
+                    </p>
                   </CardContent>
                   <CardFooter className="border-t bg-gray-50">
                     <Button variant="outline" className="w-full" onClick={handleDownloadTemplate}>
                       <Download className="mr-2 h-4 w-4" />
-                      {IMPORT.TEMPLATE.DOWNLOAD.BUTTON}
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.BUTTON')}
                     </Button>
                   </CardFooter>
                 </Card>
 
                 <Card className="shadow-lg transition-shadow hover:shadow-xl">
                   <CardHeader className="border-b bg-gray-50">
-                    <CardTitle className="text-lg">{IMPORT.TEMPLATE.UPLOAD.TITLE}</CardTitle>
-                    <CardDescription>{IMPORT.TEMPLATE.UPLOAD.SUBTITLE}</CardDescription>
+                    <CardTitle className="text-lg">
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.TITLE')}
+                    </CardTitle>
+                    <CardDescription>
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SUBTITLE')}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6">
-                    <p className="mb-4 text-sm text-gray-600">{IMPORT.TEMPLATE.UPLOAD.DESCRIPTION}</p>
+                    <p className="mb-4 text-sm text-gray-600">
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.DESCRIPTION')}
+                    </p>
                     <div className="flex items-center space-x-2">
                       <input
                         type="file"
@@ -201,16 +240,18 @@ export function ImportExport({ classId }: { classId: string }) {
                         className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-gray-100 px-4 py-2 text-gray-800 hover:bg-gray-200"
                       >
                         <Upload className="h-4 w-4" />
-                        {IMPORT.TEMPLATE.UPLOAD.SELECT_BUTTON}
+                        {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SELECT_BUTTON')}
                       </label>
                     </div>
                     <span className="mt-2 block truncate text-sm text-gray-500">
-                      {templateFile ? templateFile.name : IMPORT.TEMPLATE.UPLOAD.NO_FILE}
+                      {templateFile
+                        ? templateFile.name
+                        : t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.NO_FILE')}
                     </span>
                   </CardContent>
                   <CardFooter className="border-t bg-gray-50">
                     <Button className="w-full" onClick={handleTemplateUpload} disabled={!templateFile}>
-                      {IMPORT.TEMPLATE.UPLOAD.UPLOAD_BUTTON}
+                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.UPLOAD_BUTTON')}
                     </Button>
                   </CardFooter>
                 </Card>
@@ -222,8 +263,8 @@ export function ImportExport({ classId }: { classId: string }) {
 
       <Card>
         <CardHeader>
-          <CardTitle>{IMPORT.PROGRESS.TITLE}</CardTitle>
-          <CardDescription>{IMPORT.PROGRESS.DESCRIPTION}</CardDescription>
+          <CardTitle>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.TITLE')}</CardTitle>
+          <CardDescription>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.DESCRIPTION')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ProcessTable processes={processes} processesIsLoading={processesIsLoading} getStatusBadge={getStatusBadge} />

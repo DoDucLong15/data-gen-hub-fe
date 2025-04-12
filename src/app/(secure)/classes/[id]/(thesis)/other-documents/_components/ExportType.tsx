@@ -8,7 +8,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { ExportType } from '@/utils/types/other-document.type';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 import { FileText, Files } from 'lucide-react';
-import { THESIS_PAGE } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface ExportTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
@@ -16,6 +16,10 @@ interface ExportTypeSelectorProps {
 }
 
 export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProps) {
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <FormField
       control={form.control}
@@ -23,7 +27,7 @@ export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProp
       render={({ field }) => (
         <FormItem className="space-y-4">
           <FormLabel className="text-lg font-semibold">
-            {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.LABEL}
+            {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.LABEL')}
           </FormLabel>
           <RadioGroup
             onValueChange={field.onChange}
@@ -39,11 +43,11 @@ export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProp
                 <div className="flex items-center space-x-2">
                   <FileText className="text-primary h-5 w-5" />
                   <Label htmlFor="export-list" className="font-medium">
-                    {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.LABEL}
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.LABEL')}
                   </Label>
                 </div>
                 <p className="text-muted-foreground text-sm">
-                  {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.DESCRIPTION}
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.LIST.DESCRIPTION')}
                 </p>
               </div>
             </div>
@@ -57,11 +61,11 @@ export function ExportTypeSelector({ form, componentId }: ExportTypeSelectorProp
                 <div className="flex items-center space-x-2">
                   <Files className="text-primary h-5 w-5" />
                   <Label htmlFor="export-single" className="font-medium">
-                    {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.LABEL}
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.LABEL')}
                   </Label>
                 </div>
                 <p className="text-muted-foreground text-sm">
-                  {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.DESCRIPTION}
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.OUTPUT_CONFIG.EXPORT_TYPE.OPTIONS.SINGLE.DESCRIPTION')}
                 </p>
               </div>
             </div>

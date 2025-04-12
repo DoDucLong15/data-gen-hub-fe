@@ -26,18 +26,7 @@ import { AdminApi } from '@/apis/admin.api';
 import { capitalizeFirstLetters } from '@/utils/common.util';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRoles } from '@/hooks/useRoles';
-import { USER_FORM } from '@/configs/messages.config';
-
-// Zod schema for form validation
-const userFormSchema = z.object({
-  name: z.string().min(2, { message: USER_FORM.FORM.NAME.VALIDATION }),
-  email: z.string().email({ message: USER_FORM.FORM.EMAIL.VALIDATION }),
-  roleId: z.string(),
-  phone: z.string().min(10, { message: USER_FORM.FORM.PHONE.VALIDATION }).optional(),
-  school: z.string().min(2, { message: USER_FORM.FORM.SCHOOL.VALIDATION }).optional(),
-  department: z.string().min(2, { message: USER_FORM.FORM.DEPARTMENT.VALIDATION }).optional(),
-  position: z.string().min(2, { message: USER_FORM.FORM.POSITION.VALIDATION }).optional(),
-});
+import { useI18n } from '@/i18n';
 
 type UserFormDialogProps = {
   open: boolean;
@@ -58,6 +47,30 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       return users.find((u) => u.id === userId);
     },
     enabled: !!userId,
+  });
+  const { t, isReady } = useI18n();
+
+  // Zod schema for form validation
+  const userFormSchema = z.object({
+    name: z.string().min(2, { message: t('USER_FORM.FORM.NAME.VALIDATION') }),
+    email: z.string().email({ message: t('USER_FORM.FORM.EMAIL.VALIDATION') }),
+    roleId: z.string(),
+    phone: z
+      .string()
+      .min(10, { message: t('USER_FORM.FORM.PHONE.VALIDATION') })
+      .optional(),
+    school: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.SCHOOL.VALIDATION') })
+      .optional(),
+    department: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.DEPARTMENT.VALIDATION') })
+      .optional(),
+    position: z
+      .string()
+      .min(2, { message: t('USER_FORM.FORM.POSITION.VALIDATION') })
+      .optional(),
   });
 
   const form = useForm<z.infer<typeof userFormSchema>>({
@@ -111,30 +124,32 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
 
       if (mode === 'add') {
         await addUser(formData);
-        toast(USER_FORM.TOAST.SUCCESS.ADD);
+        toast(t('USER_FORM.TOAST.SUCCESS.ADD'));
       } else if (mode === 'edit' && userId) {
         await updateUser(userId, formData);
-        toast(USER_FORM.TOAST.SUCCESS.UPDATE);
+        toast(t('USER_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(mode === 'add' ? USER_FORM.TOAST.ERROR.ADD : USER_FORM.TOAST.ERROR.UPDATE);
+      toast.error(mode === 'add' ? t('USER_FORM.TOAST.ERROR.ADD') : t('USER_FORM.TOAST.ERROR.UPDATE'));
     }
   };
+
+  if (!isReady) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader className="mb-5">
-          <DialogTitle>{mode === 'add' ? USER_FORM.TITLE.ADD : USER_FORM.TITLE.EDIT}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? t('USER_FORM.TITLE.ADD') : t('USER_FORM.TITLE.EDIT')}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? USER_FORM.DESCRIPTION.ADD : USER_FORM.DESCRIPTION.EDIT}
+            {mode === 'add' ? t('USER_FORM.DESCRIPTION.ADD') : t('USER_FORM.DESCRIPTION.EDIT')}
           </DialogDescription>
         </DialogHeader>
 
         {isLoading && mode === 'edit' ? (
-          <div className="my-4 flex justify-center">{USER_FORM.LOADING}</div>
+          <div className="my-4 flex justify-center">{t('USER_FORM.LOADING')}</div>
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -143,9 +158,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.NAME.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.NAME.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.NAME.PLACEHOLDER} {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.NAME.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -157,9 +172,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.EMAIL.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.EMAIL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.EMAIL.PLACEHOLDER} type="email" {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.EMAIL.PLACEHOLDER')} type="email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -171,11 +186,11 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="roleId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.ROLE.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.ROLE.LABEL')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={USER_FORM.FORM.ROLE.PLACEHOLDER} />
+                          <SelectValue placeholder={t('USER_FORM.FORM.ROLE.PLACEHOLDER')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -196,9 +211,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.PHONE.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.PHONE.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.PHONE.PLACEHOLDER} {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.PHONE.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -210,9 +225,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="school"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.SCHOOL.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.SCHOOL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.SCHOOL.PLACEHOLDER} {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.SCHOOL.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -224,9 +239,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="department"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.DEPARTMENT.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.DEPARTMENT.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.DEPARTMENT.PLACEHOLDER} {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.DEPARTMENT.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -238,9 +253,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                 name="position"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{USER_FORM.FORM.POSITION.LABEL}</FormLabel>
+                    <FormLabel>{t('USER_FORM.FORM.POSITION.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={USER_FORM.FORM.POSITION.PLACEHOLDER} {...field} />
+                      <Input placeholder={t('USER_FORM.FORM.POSITION.PLACEHOLDER')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -249,9 +264,9 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
 
               <DialogFooter className="pt-4">
                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                  {USER_FORM.BUTTON.CANCEL}
+                  {t('USER_FORM.BUTTON.CANCEL')}
                 </Button>
-                <Button type="submit">{mode === 'add' ? USER_FORM.BUTTON.ADD : USER_FORM.BUTTON.SAVE}</Button>
+                <Button type="submit">{mode === 'add' ? t('USER_FORM.BUTTON.ADD') : t('USER_FORM.BUTTON.SAVE')}</Button>
               </DialogFooter>
             </form>
           </Form>

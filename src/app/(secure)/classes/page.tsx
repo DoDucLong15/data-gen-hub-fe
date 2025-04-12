@@ -11,13 +11,12 @@ import { ClassPageHeader } from './_components/ClassPageHeader';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
-import { CURRENT_MESSAGES } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 export default function ClassesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const { CLASSES } = CURRENT_MESSAGES;
-
+  const { t, isReady } = useI18n();
   const { classes, isLoading, refetch, search, create, isCreating } = useClasses();
 
   const { data: searchResults = [], isLoading: isSearching } = search(searchQuery);
@@ -48,13 +47,15 @@ export default function ClassesPage() {
     setIsAddDialogOpen(false);
   };
 
+  if (!isReady) return null;
+
   return (
     <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Classes }]}>
       <div className="container mx-auto px-6 py-8">
         <ClassPageHeader
-          title={CLASSES.PAGE.TITLE}
-          description={CLASSES.PAGE.DESCRIPTION}
-          actionLabel={CLASSES.PAGE.ADD_BUTTON}
+          title={t('CLASSES.PAGE.TITLE')}
+          description={t('CLASSES.PAGE.DESCRIPTION')}
+          actionLabel={t('CLASSES.PAGE.ADD_BUTTON')}
           onAction={() => setIsAddDialogOpen(true)}
           onRefresh={handleRefresh}
         />
@@ -65,7 +66,7 @@ export default function ClassesPage() {
             onChange={setSearchQuery}
             onSubmit={handleSearch}
             isLoading={isSearching}
-            placeholder={CLASSES.PAGE.SEARCH_PLACEHOLDER}
+            placeholder={t('CLASSES.PAGE.SEARCH_PLACEHOLDER')}
           />
         </div>
 

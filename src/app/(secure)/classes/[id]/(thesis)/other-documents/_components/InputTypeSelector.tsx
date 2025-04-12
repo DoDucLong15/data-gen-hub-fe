@@ -8,7 +8,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { InputType } from '@/utils/types/other-document.type';
 import { GeneratorOtherDocumentFormValues } from '../utils/validations';
 import { ListFilter, FileInput } from 'lucide-react';
-import { THESIS_PAGE } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface InputTypeSelectorProps {
   form: UseFormReturn<GeneratorOtherDocumentFormValues>;
@@ -16,6 +16,10 @@ interface InputTypeSelectorProps {
 }
 
 export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps) {
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <FormField
       control={form.control}
@@ -23,7 +27,7 @@ export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps)
       render={({ field }) => (
         <FormItem className="space-y-4">
           <FormLabel className="text-lg font-semibold">
-            {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.LABEL}
+            {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.LABEL')}
           </FormLabel>
           <RadioGroup
             onValueChange={field.onChange}
@@ -39,11 +43,11 @@ export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps)
                 <div className="flex items-center space-x-2">
                   <ListFilter className="text-primary h-5 w-5" />
                   <Label htmlFor="input-list" className="font-medium">
-                    {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.LABEL}
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.LABEL')}
                   </Label>
                 </div>
                 <p className="text-muted-foreground text-sm">
-                  {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.DESCRIPTION}
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.LIST.DESCRIPTION')}
                 </p>
               </div>
             </div>
@@ -57,11 +61,11 @@ export function InputTypeSelector({ form, componentId }: InputTypeSelectorProps)
                 <div className="flex items-center space-x-2">
                   <FileInput className="text-primary h-5 w-5" />
                   <Label htmlFor="input-single" className="font-medium">
-                    {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.LABEL}
+                    {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.LABEL')}
                   </Label>
                 </div>
                 <p className="text-muted-foreground text-sm">
-                  {THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.DESCRIPTION}
+                  {t('THESIS_PAGE.OTHER_DOCUMENTS.GENERATOR_FORM.INPUT_CONFIG.INPUT_TYPE.OPTIONS.SINGLE.DESCRIPTION')}
                 </p>
               </div>
             </div>

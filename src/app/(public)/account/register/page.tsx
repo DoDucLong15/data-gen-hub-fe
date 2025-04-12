@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import axios from 'axios';
-import { REGISTER } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 type UserRegistration = {
   email: string;
@@ -35,6 +35,7 @@ export default function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const { t, isReady } = useI18n();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,7 +53,7 @@ export default function Register() {
     try {
       // Validate email (required field)
       if (!formData.email || !formData.email.includes('@')) {
-        throw new Error(REGISTER.FORM.EMAIL.REQUIRED);
+        throw new Error(t('REGISTER.FORM.EMAIL.REQUIRED'));
       }
 
       // Call API to request admin to add the user
@@ -60,7 +61,7 @@ export default function Register() {
 
       if (response.status !== 201) {
         const errorData = response.data;
-        throw new Error(errorData.message || REGISTER.ERROR.DEFAULT);
+        throw new Error(errorData.message || t('REGISTER.ERROR.DEFAULT'));
       }
 
       // Registration request successful
@@ -81,11 +82,13 @@ export default function Register() {
         router.push('/account/login');
       }, 3000);
     } catch (err: any) {
-      setError(err?.response?.data?.message ?? err?.message ?? REGISTER.ERROR.DEFAULT);
+      setError(err?.response?.data?.message ?? err?.message ?? t('REGISTER.ERROR.DEFAULT'));
     } finally {
       setLoading(false);
     }
   };
+
+  if (!isReady) return null;
 
   return (
     <div className="flex min-h-screen items-start justify-center bg-slate-100 px-4 pt-8 md:pt-16">
@@ -97,11 +100,11 @@ export default function Register() {
               className="text-primary mr-auto inline-flex items-center text-sm font-medium hover:underline"
             >
               <ArrowLeft className="mr-1 h-4 w-4" />
-              {REGISTER.BACK_TO_LOGIN}
+              {t('REGISTER.BACK_TO_LOGIN')}
             </Link>
           </div>
-          <CardTitle className="mt-4 text-center text-2xl font-bold">{REGISTER.TITLE}</CardTitle>
-          <CardDescription className="text-center">{REGISTER.DESCRIPTION}</CardDescription>
+          <CardTitle className="mt-4 text-center text-2xl font-bold">{t('REGISTER.TITLE')}</CardTitle>
+          <CardDescription className="text-center">{t('REGISTER.DESCRIPTION')}</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -114,7 +117,7 @@ export default function Register() {
 
           {success && (
             <Alert className="border-green-300 bg-green-50 text-green-800">
-              <AlertDescription>{REGISTER.SUCCESS.MESSAGE}</AlertDescription>
+              <AlertDescription>{t('REGISTER.SUCCESS.MESSAGE')}</AlertDescription>
             </Alert>
           )}
 
@@ -122,7 +125,7 @@ export default function Register() {
             {/* Email - Required */}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
-                {REGISTER.FORM.EMAIL.LABEL} <span className="text-red-500">*</span>
+                {t('REGISTER.FORM.EMAIL.LABEL')} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Mail className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -130,7 +133,7 @@ export default function Register() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder={REGISTER.FORM.EMAIL.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.EMAIL.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.email}
                   onChange={handleChange}
@@ -142,7 +145,7 @@ export default function Register() {
             {/* Name */}
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
-                {REGISTER.FORM.NAME.LABEL} <span className="text-red-500">*</span>
+                {t('REGISTER.FORM.NAME.LABEL')} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <User className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -150,7 +153,7 @@ export default function Register() {
                   id="name"
                   name="name"
                   type="text"
-                  placeholder={REGISTER.FORM.NAME.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.NAME.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.name}
                   onChange={handleChange}
@@ -162,7 +165,7 @@ export default function Register() {
             {/* Phone */}
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-sm font-medium">
-                {REGISTER.FORM.PHONE.LABEL} <span className="text-red-500">*</span>
+                {t('REGISTER.FORM.PHONE.LABEL')} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Phone className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -170,7 +173,7 @@ export default function Register() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  placeholder={REGISTER.FORM.PHONE.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.PHONE.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.phone}
                   onChange={handleChange}
@@ -182,7 +185,7 @@ export default function Register() {
             {/* School */}
             <div className="space-y-2">
               <Label htmlFor="school" className="text-sm font-medium">
-                {REGISTER.FORM.SCHOOL.LABEL} <span className="text-red-500">*</span>
+                {t('REGISTER.FORM.SCHOOL.LABEL')} <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <BookOpen className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -190,7 +193,7 @@ export default function Register() {
                   id="school"
                   name="school"
                   type="text"
-                  placeholder={REGISTER.FORM.SCHOOL.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.SCHOOL.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.school}
                   onChange={handleChange}
@@ -202,7 +205,7 @@ export default function Register() {
             {/* Department */}
             <div className="space-y-2">
               <Label htmlFor="department" className="text-sm font-medium">
-                {REGISTER.FORM.DEPARTMENT.LABEL}
+                {t('REGISTER.FORM.DEPARTMENT.LABEL')}
               </Label>
               <div className="relative">
                 <Building className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -210,7 +213,7 @@ export default function Register() {
                   id="department"
                   name="department"
                   type="text"
-                  placeholder={REGISTER.FORM.DEPARTMENT.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.DEPARTMENT.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.department}
                   onChange={handleChange}
@@ -221,7 +224,7 @@ export default function Register() {
             {/* Position */}
             <div className="space-y-2">
               <Label htmlFor="position" className="text-sm font-medium">
-                {REGISTER.FORM.POSITION.LABEL}
+                {t('REGISTER.FORM.POSITION.LABEL')}
               </Label>
               <div className="relative">
                 <Briefcase className="absolute top-3 left-3 h-4 w-4 text-gray-400" />
@@ -229,7 +232,7 @@ export default function Register() {
                   id="position"
                   name="position"
                   type="text"
-                  placeholder={REGISTER.FORM.POSITION.PLACEHOLDER}
+                  placeholder={t('REGISTER.FORM.POSITION.PLACEHOLDER')}
                   className="pl-10"
                   value={formData.position}
                   onChange={handleChange}
@@ -260,15 +263,15 @@ export default function Register() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  {REGISTER.FORM.PROCESSING}
+                  {t('REGISTER.FORM.PROCESSING')}
                 </>
               ) : (
-                REGISTER.FORM.SUBMIT
+                t('REGISTER.FORM.SUBMIT')
               )}
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-gray-500">{REGISTER.TERMS}</p>
+          <p className="mt-4 text-center text-xs text-gray-500">{t('REGISTER.TERMS')}</p>
         </CardContent>
       </Card>
     </div>

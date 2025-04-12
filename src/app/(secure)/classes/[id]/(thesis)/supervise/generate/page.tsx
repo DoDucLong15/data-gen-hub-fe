@@ -10,10 +10,13 @@ import ProcessTable from '../../_components/generate/ProcessTable';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
-import { THESIS_PAGE } from '@/configs/messages.config';
-
+import { useI18n } from '@/i18n';
 export default function SupervisoryCommentGeneratePage() {
   const { id } = useParams();
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
+
   return (
     <div className="container mx-auto space-y-6 py-4">
       <ProtectedComponent
@@ -25,7 +28,7 @@ export default function SupervisoryCommentGeneratePage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>{THESIS_PAGE.SUPERVISORY.GENERATE.TEMPLATE_MANAGEMENT}</CardTitle>
+              <CardTitle>{t('THESIS_PAGE.SUPERVISORY.GENERATE.TEMPLATE_MANAGEMENT')}</CardTitle>
             </CardHeader>
             <CardContent>
               <TemplateManagement classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -34,7 +37,7 @@ export default function SupervisoryCommentGeneratePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{THESIS_PAGE.SUPERVISORY.GENERATE.GENERATE_FORM}</CardTitle>
+              <CardTitle>{t('THESIS_PAGE.SUPERVISORY.GENERATE.GENERATE_FORM')}</CardTitle>
             </CardHeader>
             <CardContent>
               <GenerateForm classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -46,7 +49,7 @@ export default function SupervisoryCommentGeneratePage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_SupervisoryComments }]}>
         <Card>
           <CardHeader>
-            <CardTitle>{THESIS_PAGE.SUPERVISORY.GENERATE.GENERATED_SHEETS}</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.GENERATE.GENERATED_SHEETS')}</CardTitle>
           </CardHeader>
           <CardContent>
             <GeneratedSheetsTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -57,7 +60,7 @@ export default function SupervisoryCommentGeneratePage() {
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
           <CardHeader>
-            <CardTitle>{THESIS_PAGE.SUPERVISORY.GENERATE.PROCESS_TABLE}</CardTitle>
+            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.GENERATE.PROCESS_TABLE')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />

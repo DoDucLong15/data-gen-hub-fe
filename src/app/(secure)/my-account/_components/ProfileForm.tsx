@@ -12,28 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2, Save, X } from 'lucide-react';
 import { toast } from 'sonner';
-import { PROFILE_FORM } from '@/configs/messages.config';
-
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: PROFILE_FORM.FORM.NAME.VALIDATION,
-    })
-    .optional(),
-  email: z.string().email({
-    message: PROFILE_FORM.FORM.EMAIL.VALIDATION,
-  }),
-  phone: z
-    .string()
-    .min(10, {
-      message: PROFILE_FORM.FORM.PHONE.VALIDATION,
-    })
-    .optional(),
-  school: z.string().optional(),
-  department: z.string().optional(),
-  position: z.string().optional(),
-});
+import { useI18n } from '@/i18n';
 
 interface ProfileFormProps {
   user: User;
@@ -44,6 +23,28 @@ interface ProfileFormProps {
 export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { updateUser } = useAuth();
+  const { t, isReady } = useI18n();
+
+  const formSchema = z.object({
+    name: z
+      .string()
+      .min(2, {
+        message: t('PROFILE_FORM.FORM.NAME.VALIDATION'),
+      })
+      .optional(),
+    email: z.string().email({
+      message: t('PROFILE_FORM.FORM.EMAIL.VALIDATION'),
+    }),
+    phone: z
+      .string()
+      .min(10, {
+        message: t('PROFILE_FORM.FORM.PHONE.VALIDATION'),
+      })
+      .optional(),
+    school: z.string().optional(),
+    department: z.string().optional(),
+    position: z.string().optional(),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,26 +73,28 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
         position: values.position,
       });
 
-      toast.success(PROFILE_FORM.TOAST.SUCCESS.TITLE, {
-        description: PROFILE_FORM.TOAST.SUCCESS.DESCRIPTION,
+      toast.success(t('PROFILE_FORM.TOAST.SUCCESS.TITLE'), {
+        description: t('PROFILE_FORM.TOAST.SUCCESS.DESCRIPTION'),
       });
 
       onSuccess();
     } catch (error) {
-      toast.error(PROFILE_FORM.TOAST.ERROR.TITLE, {
-        description: PROFILE_FORM.TOAST.ERROR.DESCRIPTION,
+      toast.error(t('PROFILE_FORM.TOAST.ERROR.TITLE'), {
+        description: t('PROFILE_FORM.TOAST.ERROR.DESCRIPTION'),
       });
     } finally {
       setIsSubmitting(false);
     }
   }
 
+  if (!isReady) return null;
+
   return (
     <Card className="bg-card/30 overflow-hidden backdrop-blur-sm">
       <CardHeader className="bg-muted/30 border-b pb-6">
         <div className="space-y-1">
-          <CardTitle className="text-2xl">{PROFILE_FORM.TITLE}</CardTitle>
-          <CardDescription>{PROFILE_FORM.DESCRIPTION}</CardDescription>
+          <CardTitle className="text-2xl">{t('PROFILE_FORM.TITLE')}</CardTitle>
+          <CardDescription>{t('PROFILE_FORM.DESCRIPTION')}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6">
@@ -103,9 +106,13 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.NAME.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.NAME.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={PROFILE_FORM.FORM.NAME.PLACEHOLDER} {...field} value={field.value || ''} />
+                      <Input
+                        placeholder={t('PROFILE_FORM.FORM.NAME.PLACEHOLDER')}
+                        {...field}
+                        value={field.value || ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,9 +123,9 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.EMAIL.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.EMAIL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={PROFILE_FORM.FORM.EMAIL.PLACEHOLDER} {...field} disabled />
+                      <Input placeholder={t('PROFILE_FORM.FORM.EMAIL.PLACEHOLDER')} {...field} disabled />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -129,9 +136,13 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.PHONE.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.PHONE.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={PROFILE_FORM.FORM.PHONE.PLACEHOLDER} {...field} value={field.value || ''} />
+                      <Input
+                        placeholder={t('PROFILE_FORM.FORM.PHONE.PLACEHOLDER')}
+                        {...field}
+                        value={field.value || ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,9 +153,13 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="school"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.SCHOOL.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.SCHOOL.LABEL')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={PROFILE_FORM.FORM.SCHOOL.PLACEHOLDER} {...field} value={field.value || ''} />
+                      <Input
+                        placeholder={t('PROFILE_FORM.FORM.SCHOOL.PLACEHOLDER')}
+                        {...field}
+                        value={field.value || ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -155,10 +170,10 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="department"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.DEPARTMENT.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.DEPARTMENT.LABEL')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={PROFILE_FORM.FORM.DEPARTMENT.PLACEHOLDER}
+                        placeholder={t('PROFILE_FORM.FORM.DEPARTMENT.PLACEHOLDER')}
                         {...field}
                         value={field.value || ''}
                       />
@@ -172,10 +187,10 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
                 name="position"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{PROFILE_FORM.FORM.POSITION.LABEL}</FormLabel>
+                    <FormLabel>{t('PROFILE_FORM.FORM.POSITION.LABEL')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={PROFILE_FORM.FORM.POSITION.PLACEHOLDER}
+                        placeholder={t('PROFILE_FORM.FORM.POSITION.PLACEHOLDER')}
                         {...field}
                         value={field.value || ''}
                       />
@@ -189,18 +204,18 @@ export default function ProfileForm({ user, onCancel, onSuccess }: ProfileFormPr
             <div className="flex justify-end space-x-2">
               <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting} className="gap-2">
                 <X className="h-4 w-4" />
-                {PROFILE_FORM.BUTTONS.CANCEL}
+                {t('PROFILE_FORM.BUTTONS.CANCEL')}
               </Button>
               <Button type="submit" disabled={isSubmitting} className="gap-2">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    {PROFILE_FORM.BUTTONS.SAVING}
+                    {t('PROFILE_FORM.BUTTONS.SAVING')}
                   </>
                 ) : (
                   <>
                     <Save className="h-4 w-4" />
-                    {PROFILE_FORM.BUTTONS.SAVE}
+                    {t('PROFILE_FORM.BUTTONS.SAVE')}
                   </>
                 )}
               </Button>

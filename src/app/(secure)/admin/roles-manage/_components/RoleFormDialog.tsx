@@ -25,14 +25,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePermissions } from '@/hooks/usePermissions';
 import { TPermission } from '@/utils/types/permission.type';
 import { Loader2 } from 'lucide-react';
-import { ROLE_FORM } from '@/configs/messages.config';
-
-// Zod schema for form validation
-const roleFormSchema = z.object({
-  name: z.string().min(2, { message: ROLE_FORM.FORM.NAME.VALIDATION }),
-  description: z.string().min(2, { message: ROLE_FORM.FORM.DESCRIPTION.VALIDATION }).optional(),
-  permissionIds: z.array(z.string()).optional(),
-});
+import { useI18n } from '@/i18n';
 
 type RoleFormDialogProps = {
   open: boolean;
@@ -46,6 +39,7 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
   const { addRole, updateRole } = useRoles();
   const { permissions = [], isLoading: isLoadingPermissions } = usePermissions();
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
+  const { t, isReady } = useI18n();
 
   const { data: role, isLoading } = useQuery({
     queryKey: [...ROLES_QUERY_KEY, 'role', roleId],
@@ -55,6 +49,16 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
       return roles.find((u) => u.id === roleId);
     },
     enabled: !!roleId && mode === 'edit',
+  });
+
+  // Zod schema for form validation
+  const roleFormSchema = z.object({
+    name: z.string().min(2, { message: t('ROLE_FORM.FORM.NAME.VALIDATION') }),
+    description: z
+      .string()
+      .min(2, { message: t('ROLE_FORM.FORM.DESCRIPTION.VALIDATION') })
+      .optional(),
+    permissionIds: z.array(z.string()).optional(),
   });
 
   const form = useForm<z.infer<typeof roleFormSchema>>({
@@ -118,15 +122,15 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
 
       if (mode === 'add') {
         await addRole(formData);
-        toast(ROLE_FORM.TOAST.SUCCESS.ADD);
+        toast(t('ROLE_FORM.TOAST.SUCCESS.ADD'));
       } else if (mode === 'edit' && roleId) {
         await updateRole(roleId, formData);
-        toast(ROLE_FORM.TOAST.SUCCESS.UPDATE);
+        toast(t('ROLE_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(mode === 'add' ? ROLE_FORM.TOAST.ERROR.ADD : ROLE_FORM.TOAST.ERROR.UPDATE);
+      toast.error(t(mode === 'add' ? 'ROLE_FORM.TOAST.ERROR.ADD' : 'ROLE_FORM.TOAST.ERROR.UPDATE'));
     }
   };
 
@@ -140,20 +144,22 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
     return groups;
   }, {});
 
+  if (!isReady) return null;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden sm:max-w-[625px]">
         <DialogHeader className="mb-4">
-          <DialogTitle>{mode === 'add' ? ROLE_FORM.TITLE.ADD : ROLE_FORM.TITLE.EDIT}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? t('ROLE_FORM.TITLE.ADD') : t('ROLE_FORM.TITLE.EDIT')}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? ROLE_FORM.DESCRIPTION.ADD : ROLE_FORM.DESCRIPTION.EDIT}
+            {mode === 'add' ? t('ROLE_FORM.DESCRIPTION.ADD') : t('ROLE_FORM.DESCRIPTION.EDIT')}
           </DialogDescription>
         </DialogHeader>
 
         {(isLoading && mode === 'edit') || isLoadingPermissions ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="text-muted-foreground h-6 w-6 animate-spin" />
-            <span className="ml-2">{ROLE_FORM.LOADING}</span>
+            <span className="ml-2">{t('ROLE_FORM.LOADING')}</span>
           </div>
         ) : (
           <Form {...form}>
@@ -164,9 +170,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{ROLE_FORM.FORM.NAME.LABEL}</FormLabel>
+                      <FormLabel>{t('ROLE_FORM.FORM.NAME.LABEL')}</FormLabel>
                       <FormControl>
-                        <Input placeholder={ROLE_FORM.FORM.NAME.PLACEHOLDER} {...field} />
+                        <Input placeholder={t('ROLE_FORM.FORM.NAME.PLACEHOLDER')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -178,9 +184,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{ROLE_FORM.FORM.DESCRIPTION.LABEL}</FormLabel>
+                      <FormLabel>{t('ROLE_FORM.FORM.DESCRIPTION.LABEL')}</FormLabel>
                       <FormControl>
-                        <Textarea placeholder={ROLE_FORM.FORM.DESCRIPTION.PLACEHOLDER} {...field} rows={3} />
+                        <Textarea placeholder={t('ROLE_FORM.FORM.DESCRIPTION.PLACEHOLDER')} {...field} rows={3} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -194,13 +200,13 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
                 render={() => (
                   <FormItem className="flex flex-1 flex-col overflow-hidden">
                     <div className="flex items-center justify-between">
-                      <FormLabel>{ROLE_FORM.FORM.PERMISSIONS.LABEL}</FormLabel>
+                      <FormLabel>{t('ROLE_FORM.FORM.PERMISSIONS.LABEL')}</FormLabel>
                       <div className="space-x-2">
                         <Button type="button" variant="outline" size="sm" onClick={deselectAllPermissions}>
-                          {ROLE_FORM.FORM.PERMISSIONS.DESELECT_ALL}
+                          {t('ROLE_FORM.FORM.PERMISSIONS.DESELECT_ALL')}
                         </Button>
                         <Button type="button" variant="outline" size="sm" onClick={selectAllPermissions}>
-                          {ROLE_FORM.FORM.PERMISSIONS.SELECT_ALL}
+                          {t('ROLE_FORM.FORM.PERMISSIONS.SELECT_ALL')}
                         </Button>
                       </div>
                     </div>
@@ -244,9 +250,9 @@ export function RoleFormDialog({ open, onOpenChange, roleId, mode }: RoleFormDia
 
               <DialogFooter className="pt-4">
                 <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                  {ROLE_FORM.BUTTON.CANCEL}
+                  {t('ROLE_FORM.BUTTON.CANCEL')}
                 </Button>
-                <Button type="submit">{mode === 'add' ? ROLE_FORM.BUTTON.ADD : ROLE_FORM.BUTTON.SAVE}</Button>
+                <Button type="submit">{mode === 'add' ? t('ROLE_FORM.BUTTON.ADD') : t('ROLE_FORM.BUTTON.SAVE')}</Button>
               </DialogFooter>
             </form>
           </Form>

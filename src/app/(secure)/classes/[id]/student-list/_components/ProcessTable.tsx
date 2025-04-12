@@ -13,9 +13,7 @@ import {
 } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TProcess } from '@/utils/types/progress.type';
-import { CURRENT_MESSAGES } from '@/configs/messages.config';
-
-const { PROCESS_TABLE } = CURRENT_MESSAGES;
+import { useI18n } from '@/i18n';
 
 // Component chính cho bảng với phân trang
 export function ProcessTable({
@@ -29,6 +27,7 @@ export function ProcessTable({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const { t, isReady } = useI18n();
 
   // Tính toán cho phân trang
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -85,7 +84,7 @@ export function ProcessTable({
     return (
       <div className="flex items-center justify-center py-8">
         <RefreshCw className="text-primary mr-2 h-6 w-6 animate-spin" />
-        <span>{PROCESS_TABLE.LOADING}</span>
+        <span>{t('PROCESS_TABLE.LOADING')}</span>
       </div>
     );
   }
@@ -94,23 +93,25 @@ export function ProcessTable({
     return (
       <div className="rounded-lg border py-12 text-center text-gray-500">
         <AlertCircle className="mx-auto mb-2 h-8 w-8 text-gray-400" />
-        <p>{PROCESS_TABLE.NO_PROCESSES}</p>
+        <p>{t('PROCESS_TABLE.NO_PROCESSES')}</p>
       </div>
     );
   }
+
+  if (!isReady) return null;
 
   return (
     <div className="space-y-4">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">{PROCESS_TABLE.TABLE_HEADERS.NUMBER}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.ACTION}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.TYPE}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.STATUS}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.ERROR}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.CREATED_BY}</TableHead>
-            <TableHead>{PROCESS_TABLE.TABLE_HEADERS.CREATED_AT}</TableHead>
+            <TableHead className="w-12">{t('PROCESS_TABLE.TABLE_HEADERS.NUMBER')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.ACTION')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.TYPE')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.STATUS')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.ERROR')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.CREATED_BY')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.CREATED_AT')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -141,7 +142,7 @@ export function ProcessTable({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <span>{PROCESS_TABLE.PAGINATION.SHOW}</span>
+          <span>{t('PROCESS_TABLE.PAGINATION.SHOW')}</span>
           <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
             <SelectTrigger className="w-16">
               <SelectValue placeholder={itemsPerPage} />
@@ -153,7 +154,7 @@ export function ProcessTable({
               <SelectItem value="50">50</SelectItem>
             </SelectContent>
           </Select>
-          <span>{PROCESS_TABLE.PAGINATION.ENTRIES}</span>
+          <span>{t('PROCESS_TABLE.PAGINATION.ENTRIES')}</span>
         </div>
 
         <Pagination>

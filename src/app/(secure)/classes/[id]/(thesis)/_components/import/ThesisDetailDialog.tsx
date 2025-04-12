@@ -8,7 +8,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { ColumnConfig, EntityConfig } from '../../_config/thesis.config';
 import { Badge } from '@/components/ui/badge';
-import { THESIS_DETAIL_DIALOG } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface ThesisDetailDialogProps {
   isOpen: boolean;
@@ -28,6 +28,9 @@ export function ThesisDetailDialog({
   onDownload,
 }: ThesisDetailDialogProps) {
   if (!entity) return null;
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
 
   // Organize columns into categories for better display
   const organizeColumnsIntoCategories = (columns: ColumnConfig[]) => {
@@ -75,7 +78,7 @@ export function ThesisDetailDialog({
 
   // Helper function to render field value
   const renderFieldValue = (column: ColumnConfig, value: any) => {
-    if (!value) return THESIS_DETAIL_DIALOG.NO_INFO;
+    if (!value) return t('THESIS_DETAIL_DIALOG.NO_INFO');
 
     if (column.accessorKey?.includes('At')) {
       return formatDistanceToNow(new Date(value), {
@@ -134,7 +137,7 @@ export function ThesisDetailDialog({
               className="absolute top-2 right-2 h-8 w-8 p-0"
             >
               <X className="h-4 w-4" />
-              <span className="sr-only">{THESIS_DETAIL_DIALOG.CLOSE}</span>
+              <span className="sr-only">{t('THESIS_DETAIL_DIALOG.CLOSE')}</span>
             </Button>
           </div>
         </DialogHeader>
@@ -146,7 +149,7 @@ export function ThesisDetailDialog({
               <div className="mb-4">
                 <div className="mb-2 flex items-center gap-1.5 text-gray-700">
                   <Clock className="h-4 w-4" />
-                  <h3 className="text-sm font-semibold">{THESIS_DETAIL_DIALOG.SECTIONS.BASIC_INFO.TITLE}</h3>
+                  <h3 className="text-sm font-semibold">{t('THESIS_DETAIL_DIALOG.SECTIONS.BASIC_INFO.TITLE')}</h3>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {metadataColumns.map((column) => (
@@ -166,7 +169,7 @@ export function ThesisDetailDialog({
               <div className="mb-4">
                 <div className="mb-2 flex items-center gap-1.5 text-gray-700">
                   <Info className="h-4 w-4" />
-                  <h3 className="text-sm font-semibold">{THESIS_DETAIL_DIALOG.SECTIONS.DETAILS.TITLE}</h3>
+                  <h3 className="text-sm font-semibold">{t('THESIS_DETAIL_DIALOG.SECTIONS.DETAILS.TITLE')}</h3>
                 </div>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-1 md:grid-cols-2">
                   {regularColumns.map((column) => (
@@ -186,7 +189,7 @@ export function ThesisDetailDialog({
               <div className="mb-4">
                 <div className="mb-2 flex items-center gap-1.5 text-gray-700">
                   <FileText className="h-4 w-4" />
-                  <h3 className="text-sm font-semibold">{THESIS_DETAIL_DIALOG.SECTIONS.CONTENT.TITLE}</h3>
+                  <h3 className="text-sm font-semibold">{t('THESIS_DETAIL_DIALOG.SECTIONS.CONTENT.TITLE')}</h3>
                 </div>
                 <div className="space-y-3">
                   {contentColumns.map((column) => (
@@ -196,7 +199,7 @@ export function ThesisDetailDialog({
                       </CardHeader>
                       <CardContent className="bg-white px-4 py-3">
                         <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-800">
-                          {entity[column.accessorKey] || THESIS_DETAIL_DIALOG.NO_INFO}
+                          {entity[column.accessorKey] || t('THESIS_DETAIL_DIALOG.NO_INFO')}
                         </div>
                       </CardContent>
                     </Card>
@@ -210,7 +213,7 @@ export function ThesisDetailDialog({
               <div className="mb-4">
                 <div className="mb-2 flex items-center gap-1.5 text-gray-700">
                   <Download className="h-4 w-4" />
-                  <h3 className="text-sm font-semibold">{THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.TITLE}</h3>
+                  <h3 className="text-sm font-semibold">{t('THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.TITLE')}</h3>
                 </div>
                 <div className="flex items-center justify-between rounded border border-blue-200 bg-blue-50 p-3">
                   <div className="flex items-center gap-2">
@@ -219,9 +222,11 @@ export function ThesisDetailDialog({
                       <p className="max-w-[200px] truncate text-sm font-medium text-gray-800 md:max-w-[300px]">
                         {entity.fileName ||
                           entity.inputPath.split('/').pop() ||
-                          THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.FILE_LABEL}
+                          t('THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.FILE_LABEL')}
                       </p>
-                      <p className="text-xs text-gray-600">{THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.DOWNLOAD_HINT}</p>
+                      <p className="text-xs text-gray-600">
+                        {t('THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.DOWNLOAD_HINT')}
+                      </p>
                     </div>
                   </div>
                   <Button
@@ -230,7 +235,7 @@ export function ThesisDetailDialog({
                     className="flex h-9 items-center gap-1 border border-blue-300 bg-white px-3 py-0 text-sm hover:bg-blue-100"
                   >
                     <Download className="h-4 w-4" />
-                    {THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.DOWNLOAD_BUTTON}
+                    {t('THESIS_DETAIL_DIALOG.SECTIONS.ATTACHMENTS.DOWNLOAD_BUTTON')}
                   </Button>
                 </div>
               </div>
@@ -240,7 +245,7 @@ export function ThesisDetailDialog({
 
         <DialogFooter className="mt-auto flex justify-end gap-2 border-t bg-gray-50 p-4">
           <Button onClick={() => onOpenChange(false)} className="h-9 bg-slate-600 px-4 py-0 text-sm hover:bg-slate-700">
-            {THESIS_DETAIL_DIALOG.CLOSE}
+            {t('THESIS_DETAIL_DIALOG.CLOSE')}
           </Button>
         </DialogFooter>
       </DialogContent>

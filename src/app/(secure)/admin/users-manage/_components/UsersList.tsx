@@ -30,22 +30,23 @@ import { useUsers } from '@/hooks/useUsers';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
-import { USERS_LIST } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 export function UsersList() {
   const { users, isLoading, deleteUser } = useUsers();
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
   const [userToEdit, setUserToEdit] = useState<string | null>(null);
   const [userToView, setUserToView] = useState<string | null>(null);
+  const { t, isReady } = useI18n();
 
   const handleDeleteUser = async () => {
     if (!userToDelete) return;
 
     try {
       await deleteUser(userToDelete);
-      toast(USERS_LIST.TOAST.DELETE_SUCCESS);
+      toast(t('USERS_LIST.TOAST.DELETE_SUCCESS'));
     } catch (error) {
-      toast.error(USERS_LIST.TOAST.DELETE_ERROR);
+      toast.error(t('USERS_LIST.TOAST.DELETE_ERROR'));
     } finally {
       setUserToDelete(null);
     }
@@ -54,15 +55,16 @@ export function UsersList() {
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'admin':
-        return <Badge className="bg-red-500">{USERS_LIST.TABLE.ROLES.ADMIN}</Badge>;
+        return <Badge className="bg-red-500">{t('USERS_LIST.TABLE.ROLES.ADMIN')}</Badge>;
       default:
-        return <Badge>{USERS_LIST.TABLE.ROLES.TEACHER}</Badge>;
+        return <Badge>{t('USERS_LIST.TABLE.ROLES.TEACHER')}</Badge>;
     }
   };
 
   if (isLoading) {
-    return <div className="my-8 flex justify-center">{USERS_LIST.LOADING}</div>;
+    return <div className="my-8 flex justify-center">{t('USERS_LIST.LOADING')}</div>;
   }
+  if (!isReady) return null;
 
   return (
     <>
@@ -70,13 +72,13 @@ export function UsersList() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.ID}</TableHead>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.NAME}</TableHead>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.EMAIL}</TableHead>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.ROLE}</TableHead>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.CREATED_AT}</TableHead>
-              <TableHead>{USERS_LIST.TABLE.HEADERS.STATUS}</TableHead>
-              <TableHead className="text-right">{USERS_LIST.TABLE.HEADERS.ACTIONS}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.ID')}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.NAME')}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.EMAIL')}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.ROLE')}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.CREATED_AT')}</TableHead>
+              <TableHead>{t('USERS_LIST.TABLE.HEADERS.STATUS')}</TableHead>
+              <TableHead className="text-right">{t('USERS_LIST.TABLE.HEADERS.ACTIONS')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -91,11 +93,11 @@ export function UsersList() {
                   <TableCell>
                     {user.deletedAt ? (
                       <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-100">
-                        {USERS_LIST.TABLE.STATUS.DELETED}
+                        {t('USERS_LIST.TABLE.STATUS.DELETED')}
                       </Badge>
                     ) : (
                       <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-100">
-                        {USERS_LIST.TABLE.STATUS.ACTIVE}
+                        {t('USERS_LIST.TABLE.STATUS.ACTIVE')}
                       </Badge>
                     )}
                   </TableCell>
@@ -108,19 +110,19 @@ export function UsersList() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>{USERS_LIST.DROPDOWN.LABEL}</DropdownMenuLabel>
+                        <DropdownMenuLabel>{t('USERS_LIST.DROPDOWN.LABEL')}</DropdownMenuLabel>
                         <DropdownMenuItem onClick={() => setUserToView(user.id)}>
                           <Eye className="mr-2 h-4 w-4" />
-                          {USERS_LIST.DROPDOWN.VIEW}
+                          {t('USERS_LIST.DROPDOWN.VIEW')}
                         </DropdownMenuItem>
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
                           <DropdownMenuItem onClick={() => setUserToEdit(user.id)}>
                             <Edit className="mr-2 h-4 w-4" />
-                            {USERS_LIST.DROPDOWN.EDIT}
+                            {t('USERS_LIST.DROPDOWN.EDIT')}
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => setUserToDelete(user.id)} className="text-red-600">
                             <Trash2 className="mr-2 h-4 w-4" />
-                            {USERS_LIST.DROPDOWN.DELETE}
+                            {t('USERS_LIST.DROPDOWN.DELETE')}
                           </DropdownMenuItem>
                         </ProtectedComponent>
                       </DropdownMenuContent>
@@ -131,7 +133,7 @@ export function UsersList() {
             ) : (
               <TableRow>
                 <TableCell colSpan={7} className="h-24 text-center">
-                  {USERS_LIST.TABLE.EMPTY}
+                  {t('USERS_LIST.TABLE.EMPTY')}
                 </TableCell>
               </TableRow>
             )}
@@ -143,13 +145,13 @@ export function UsersList() {
       <AlertDialog open={!!userToDelete} onOpenChange={(open) => !open && setUserToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{USERS_LIST.DELETE_DIALOG.TITLE}</AlertDialogTitle>
-            <AlertDialogDescription>{USERS_LIST.DELETE_DIALOG.DESCRIPTION}</AlertDialogDescription>
+            <AlertDialogTitle>{t('USERS_LIST.DELETE_DIALOG.TITLE')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('USERS_LIST.DELETE_DIALOG.DESCRIPTION')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{USERS_LIST.DELETE_DIALOG.CANCEL}</AlertDialogCancel>
+            <AlertDialogCancel>{t('USERS_LIST.DELETE_DIALOG.CANCEL')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteUser} className="bg-red-500 hover:bg-red-600">
-              {USERS_LIST.DELETE_DIALOG.CONFIRM}
+              {t('USERS_LIST.DELETE_DIALOG.CONFIRM')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

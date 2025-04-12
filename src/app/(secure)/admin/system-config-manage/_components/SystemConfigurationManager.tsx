@@ -10,7 +10,7 @@ import { Plus, RefreshCcw } from 'lucide-react';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
-import { SYSTEM_CONFIG_PAGE } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 export default function SystemConfigurationManager() {
   // Query hooks
@@ -31,6 +31,7 @@ export default function SystemConfigurationManager() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [currentConfig, setCurrentConfig] = useState<TSystemConfig | undefined>();
   const [configToDelete, setConfigToDelete] = useState<string | undefined>();
+  const { t, isReady } = useI18n();
 
   // Handlers
   const handleAddNew = () => {
@@ -65,15 +66,17 @@ export default function SystemConfigurationManager() {
     }
   };
 
+  if (!isReady) return null;
+
   return (
     <div className="container mx-auto space-y-6 px-6 py-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">{SYSTEM_CONFIG_PAGE.TITLE}</h1>
+        <h1 className="text-2xl font-bold">{t('SYSTEM_CONFIG_PAGE.TITLE')}</h1>
         <div className="flex items-center gap-2">
           <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Configuration }]}>
             <Button onClick={handleAddNew}>
               <Plus className="mr-2 h-4 w-4" />
-              {SYSTEM_CONFIG_PAGE.ACTIONS.ADD}
+              {t('SYSTEM_CONFIG_PAGE.ACTIONS.ADD')}
             </Button>
           </ProtectedComponent>
           <Button onClick={() => refetch()} variant={'outline'}>

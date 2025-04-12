@@ -8,7 +8,7 @@ import { ClassCard } from './ClassCard';
 import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
-import { CURRENT_MESSAGES } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface ClassListProps {
   classes: TClass[];
@@ -19,7 +19,7 @@ interface ClassListProps {
 }
 
 export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }: ClassListProps) {
-  const { CLASSES } = CURRENT_MESSAGES;
+  const { t, isReady } = useI18n();
 
   if (isLoading) {
     return (
@@ -29,13 +29,15 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
     );
   }
 
+  if (!isReady) return null;
+
   if (classes.length === 0) {
     if (searchQuery) {
       return (
         <EmptyState
-          title={CLASSES.LIST.EMPTY.NO_RESULTS.TITLE}
-          description={CLASSES.LIST.EMPTY.NO_RESULTS.DESCRIPTION.replace('{query}', searchQuery)}
-          actionLabel={CLASSES.LIST.EMPTY.NO_RESULTS.ACTION}
+          title={t('CLASSES.LIST.EMPTY.NO_RESULTS.TITLE')}
+          description={t('CLASSES.LIST.EMPTY.NO_RESULTS.DESCRIPTION').replace('{query}', searchQuery)}
+          actionLabel={t('CLASSES.LIST.EMPTY.NO_RESULTS.ACTION')}
           onAction={onRefresh}
         />
       );
@@ -44,9 +46,9 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
     return (
       <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Classes }]}>
         <EmptyState
-          title={CLASSES.LIST.EMPTY.NO_CLASSES.TITLE}
-          description={CLASSES.LIST.EMPTY.NO_CLASSES.DESCRIPTION}
-          actionLabel={CLASSES.LIST.EMPTY.NO_CLASSES.ACTION}
+          title={t('CLASSES.LIST.EMPTY.NO_CLASSES.TITLE')}
+          description={t('CLASSES.LIST.EMPTY.NO_CLASSES.DESCRIPTION')}
+          actionLabel={t('CLASSES.LIST.EMPTY.NO_CLASSES.ACTION')}
           onAction={onAdd}
         />
       </ProtectedComponent>

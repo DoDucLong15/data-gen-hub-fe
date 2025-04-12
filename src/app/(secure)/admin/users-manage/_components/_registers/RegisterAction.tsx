@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Register } from '@/utils/types/register.type';
 import { ApproveDialog } from './ApproveDialog';
 import { RejectDialog } from './RejectDialog';
-import { REGISTER_ACTIONS } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface RegisterActionsProps {
   register: Register;
@@ -13,6 +13,9 @@ interface RegisterActionsProps {
 export function RegisterActions({ register }: RegisterActionsProps) {
   const [approveDialogOpen, setApproveDialogOpen] = useState(false);
   const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
+  const { t, isReady } = useI18n();
+
+  if (!isReady) return null;
 
   return (
     <div className="flex items-center gap-2">
@@ -23,7 +26,7 @@ export function RegisterActions({ register }: RegisterActionsProps) {
         onClick={() => setApproveDialogOpen(true)}
       >
         <Check className="h-4 w-4" />
-        <span className="sr-only">{REGISTER_ACTIONS.BUTTONS.APPROVE.TOOLTIP}</span>
+        <span className="sr-only">{t('REGISTER_ACTIONS.BUTTONS.APPROVE.TOOLTIP')}</span>
       </Button>
 
       <Button
@@ -33,7 +36,7 @@ export function RegisterActions({ register }: RegisterActionsProps) {
         onClick={() => setRejectDialogOpen(true)}
       >
         <X className="h-4 w-4" />
-        <span className="sr-only">{REGISTER_ACTIONS.BUTTONS.REJECT.TOOLTIP}</span>
+        <span className="sr-only">{t('REGISTER_ACTIONS.BUTTONS.REJECT.TOOLTIP')}</span>
       </Button>
 
       <ApproveDialog register={register} open={approveDialogOpen} onOpenChange={setApproveDialogOpen} />

@@ -18,14 +18,7 @@ import { toast } from 'sonner';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { PERMISSION_FORM } from '@/configs/messages.config';
-
-// Zod schema for form validation
-const permissionFormSchema = z.object({
-  action: z.string().min(2, { message: PERMISSION_FORM.FORM.ACTION.VALIDATION }),
-  subject: z.string().min(2, { message: PERMISSION_FORM.FORM.SUBJECT.VALIDATION }),
-  description: z.string().optional(),
-});
+import { useI18n } from '@/i18n';
 
 type PermissionFormDialogProps = {
   open: boolean;
@@ -41,11 +34,19 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
   const [showActionSuggestions, setShowActionSuggestions] = useState(false);
   const [showSubjectSuggestions, setShowSubjectSuggestions] = useState(false);
   const [isDialogInitialized, setIsDialogInitialized] = useState(false);
+  const { t, isReady } = useI18n();
 
   const actionInputRef = useRef<HTMLInputElement>(null);
   const subjectInputRef = useRef<HTMLInputElement>(null);
 
   const permission = permissionId ? permissions?.find((p) => p.id === permissionId) : undefined;
+
+  // Zod schema for form validation
+  const permissionFormSchema = z.object({
+    action: z.string().min(2, { message: t('PERMISSION_FORM.FORM.ACTION.VALIDATION') }),
+    subject: z.string().min(2, { message: t('PERMISSION_FORM.FORM.SUBJECT.VALIDATION') }),
+    description: z.string().optional(),
+  });
 
   const form = useForm<z.infer<typeof permissionFormSchema>>({
     resolver: zodResolver(permissionFormSchema),
@@ -94,15 +95,15 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
 
       if (mode === 'add') {
         await addPermission(formData);
-        toast.success(PERMISSION_FORM.TOAST.SUCCESS.ADD);
+        toast.success(t('PERMISSION_FORM.TOAST.SUCCESS.ADD'));
       } else if (mode === 'edit' && permissionId) {
         await updatePermission(permissionId, formData);
-        toast.success(PERMISSION_FORM.TOAST.SUCCESS.UPDATE);
+        toast.success(t('PERMISSION_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
       onOpenChange(false);
     } catch (error) {
-      toast.error(mode === 'add' ? PERMISSION_FORM.TOAST.ERROR.ADD : PERMISSION_FORM.TOAST.ERROR.UPDATE);
+      toast.error(mode === 'add' ? t('PERMISSION_FORM.TOAST.ERROR.ADD') : t('PERMISSION_FORM.TOAST.ERROR.UPDATE'));
     }
   };
 
@@ -178,13 +179,15 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
     setShowSubjectSuggestions(false);
   };
 
+  if (!isReady) return null;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader className="mb-5">
-          <DialogTitle>{mode === 'add' ? PERMISSION_FORM.TITLE.ADD : PERMISSION_FORM.TITLE.EDIT}</DialogTitle>
+          <DialogTitle>{mode === 'add' ? t('PERMISSION_FORM.TITLE.ADD') : t('PERMISSION_FORM.TITLE.EDIT')}</DialogTitle>
           <DialogDescription>
-            {mode === 'add' ? PERMISSION_FORM.DESCRIPTION.ADD : PERMISSION_FORM.DESCRIPTION.EDIT}
+            {mode === 'add' ? t('PERMISSION_FORM.DESCRIPTION.ADD') : t('PERMISSION_FORM.DESCRIPTION.EDIT')}
           </DialogDescription>
         </DialogHeader>
 
@@ -195,11 +198,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="action"
               render={({ field }) => (
                 <FormItem className="relative flex flex-col">
-                  <FormLabel>{PERMISSION_FORM.FORM.ACTION.LABEL}</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.ACTION.LABEL')}</FormLabel>
                   <div className="flex space-x-2" ref={actionInputRef}>
                     <FormControl>
                       <Input
-                        placeholder={PERMISSION_FORM.FORM.ACTION.PLACEHOLDER}
+                        placeholder={t('PERMISSION_FORM.FORM.ACTION.PLACEHOLDER')}
                         {...field}
                         onChange={(e) => handleActionChange(e.target.value)}
                         onFocus={handleActionFocus}
@@ -229,11 +232,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="subject"
               render={({ field }) => (
                 <FormItem className="relative flex flex-col">
-                  <FormLabel>{PERMISSION_FORM.FORM.SUBJECT.LABEL}</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.SUBJECT.LABEL')}</FormLabel>
                   <div className="flex space-x-2" ref={subjectInputRef}>
                     <FormControl>
                       <Input
-                        placeholder={PERMISSION_FORM.FORM.SUBJECT.PLACEHOLDER}
+                        placeholder={t('PERMISSION_FORM.FORM.SUBJECT.PLACEHOLDER')}
                         {...field}
                         onChange={(e) => handleSubjectChange(e.target.value)}
                         onFocus={handleSubjectFocus}
@@ -263,10 +266,10 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{PERMISSION_FORM.FORM.DESCRIPTION.LABEL}</FormLabel>
+                  <FormLabel>{t('PERMISSION_FORM.FORM.DESCRIPTION.LABEL')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={PERMISSION_FORM.FORM.DESCRIPTION.PLACEHOLDER}
+                      placeholder={t('PERMISSION_FORM.FORM.DESCRIPTION.PLACEHOLDER')}
                       {...field}
                       value={field.value || ''}
                     />
@@ -278,9 +281,11 @@ export function PermissionFormDialog({ open, onOpenChange, permissionId, mode }:
 
             <DialogFooter className="pt-4">
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                {PERMISSION_FORM.BUTTON.CANCEL}
+                {t('PERMISSION_FORM.BUTTON.CANCEL')}
               </Button>
-              <Button type="submit">{mode === 'add' ? PERMISSION_FORM.BUTTON.ADD : PERMISSION_FORM.BUTTON.SAVE}</Button>
+              <Button type="submit">
+                {mode === 'add' ? t('PERMISSION_FORM.BUTTON.ADD') : t('PERMISSION_FORM.BUTTON.SAVE')}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

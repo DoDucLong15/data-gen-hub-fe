@@ -16,7 +16,7 @@ import { useGenerateThesis } from '@/hooks/useGenerateThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { useStudents } from '@/hooks/useStudents';
 import { entityConfigs } from '../../_config/thesis.config';
-import { GENERATE_THESIS } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 export default function GenerateForm({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const config = entityConfigs[thesisType];
@@ -24,6 +24,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
     useGenerateThesis(thesisType, classId);
   const { students } = useStudents(classId, false);
   const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
+  const { t, isReady } = useI18n();
 
   const form = useForm<TGenerateThesisDocFormData>({
     defaultValues: {
@@ -46,7 +47,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
 
   const onSubmit = (data: TGenerateThesisDocFormData) => {
     if (data.studentIds.length === 0) {
-      toast.error(GENERATE_THESIS.FORM.ERROR.NO_STUDENT);
+      toast.error(t('GENERATE_THESIS.FORM.ERROR.NO_STUDENT'));
       return;
     }
 
@@ -59,12 +60,14 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
     setSelectedStudentIds([]);
   };
 
+  if (!isReady) return null;
+
   return (
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormItem>
-            <FormLabel>{GENERATE_THESIS.FORM.STUDENT.LABEL}</FormLabel>
+            <FormLabel>{t('GENERATE_THESIS.FORM.STUDENT.LABEL')}</FormLabel>
             <div className="flex items-center gap-2">
               <Button
                 type="button"
@@ -75,8 +78,8 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
               >
                 <UsersIcon className="mr-2 h-4 w-4" />
                 {selectedStudentIds.length > 0
-                  ? GENERATE_THESIS.FORM.STUDENT.SELECTED.replace('{count}', selectedStudentIds.length.toString())
-                  : GENERATE_THESIS.FORM.STUDENT.PLACEHOLDER}
+                  ? t('GENERATE_THESIS.FORM.STUDENT.SELECTED').replace('{count}', selectedStudentIds.length.toString())
+                  : t('GENERATE_THESIS.FORM.STUDENT.PLACEHOLDER')}
               </Button>
             </div>
           </FormItem>
@@ -88,7 +91,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="thesisStartDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>{GENERATE_THESIS.FORM.DATE.START.LABEL}</FormLabel>
+                    <FormLabel>{t('GENERATE_THESIS.FORM.DATE.START.LABEL')}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -99,7 +102,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             {field.value ? (
                               format(field.value, 'dd/MM/yyyy')
                             ) : (
-                              <span>{GENERATE_THESIS.FORM.DATE.START.PLACEHOLDER}</span>
+                              <span>{t('GENERATE_THESIS.FORM.DATE.START.PLACEHOLDER')}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -124,7 +127,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="thesisEndDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>{GENERATE_THESIS.FORM.DATE.END.LABEL}</FormLabel>
+                    <FormLabel>{t('GENERATE_THESIS.FORM.DATE.END.LABEL')}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -135,7 +138,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             {field.value ? (
                               format(field.value, 'dd/MM/yyyy')
                             ) : (
-                              <span>{GENERATE_THESIS.FORM.DATE.END.PLACEHOLDER}</span>
+                              <span>{t('GENERATE_THESIS.FORM.DATE.END.PLACEHOLDER')}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -160,7 +163,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                 name="teacherSignatureDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>{GENERATE_THESIS.FORM.DATE.SIGNATURE.LABEL}</FormLabel>
+                    <FormLabel>{t('GENERATE_THESIS.FORM.DATE.SIGNATURE.LABEL')}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -171,7 +174,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
                             {field.value ? (
                               format(field.value, 'dd/MM/yyyy')
                             ) : (
-                              <span>{GENERATE_THESIS.FORM.DATE.SIGNATURE.PLACEHOLDER}</span>
+                              <span>{t('GENERATE_THESIS.FORM.DATE.SIGNATURE.PLACEHOLDER')}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -196,8 +199,8 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
           <div className="flex justify-end">
             <Button type="submit" disabled={isGenerating}>
               {isGenerating
-                ? GENERATE_THESIS.FORM.SUBMIT.PROCESSING
-                : GENERATE_THESIS.FORM.SUBMIT.LABEL.replace('{type}', config.title.toLowerCase())}
+                ? t('GENERATE_THESIS.FORM.SUBMIT.PROCESSING')
+                : t('GENERATE_THESIS.FORM.SUBMIT.LABEL').replace('{type}', config.title.toLowerCase())}
             </Button>
           </div>
         </form>

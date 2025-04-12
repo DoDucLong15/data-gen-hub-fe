@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Register } from '@/utils/types/register.type';
 import { useRegisters } from '@/hooks/useRegisters';
-import { REGISTER_REJECT_DIALOG } from '@/configs/messages.config';
+import { useI18n } from '@/i18n';
 
 interface RejectDialogProps {
   register: Register;
@@ -21,29 +21,34 @@ interface RejectDialogProps {
 
 export function RejectDialog({ register, open, onOpenChange }: RejectDialogProps) {
   const { rejectRegister, isRejectRegisterLoading } = useRegisters();
+  const { t, isReady } = useI18n();
 
   const handleReject = () => {
     rejectRegister(register.id);
     onOpenChange(false);
   };
 
+  if (!isReady) return null;
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{REGISTER_REJECT_DIALOG.TITLE}</AlertDialogTitle>
+          <AlertDialogTitle>{t('REGISTER_REJECT_DIALOG.TITLE')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {REGISTER_REJECT_DIALOG.DESCRIPTION.replace('{name}', register.name)}
+            {t('REGISTER_REJECT_DIALOG.DESCRIPTION').replace('{name}', register.name)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{REGISTER_REJECT_DIALOG.BUTTONS.CANCEL}</AlertDialogCancel>
+          <AlertDialogCancel>{t('REGISTER_REJECT_DIALOG.BUTTONS.CANCEL')}</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleReject}
             disabled={isRejectRegisterLoading}
             className="bg-red-500 hover:bg-red-600"
           >
-            {isRejectRegisterLoading ? REGISTER_REJECT_DIALOG.BUTTONS.REJECTING : REGISTER_REJECT_DIALOG.BUTTONS.REJECT}
+            {isRejectRegisterLoading
+              ? t('REGISTER_REJECT_DIALOG.BUTTONS.REJECTING')
+              : t('REGISTER_REJECT_DIALOG.BUTTONS.REJECT')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
