@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/auth.context';
-import { NAVBAR_CONTENT } from '@/utils/constants/navbar-content.const';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -12,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { UserRole } from '@/configs/role.config';
-import { HEADER } from '@/configs/messages.config';
 import { useRouter } from 'next/navigation';
 import { User, Users, Shield, LogOut, Sun, Moon, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -20,12 +18,25 @@ import { useTheme } from 'next-themes';
 import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useI18n } from '@/i18n';
+import { TNavbarContent } from '@/utils/types/nav-bar.type';
 
 function Header() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname(); // Lấy route hiện tại
   const { theme, setTheme } = useTheme();
+  const { t, isReady } = useI18n();
+
+  const NAVBAR_CONTENT: TNavbarContent[] = [
+    { label: t('NAVBAR.HOME'), href: '/' },
+    { label: t('NAVBAR.CLASSES'), href: '/classes' },
+    { label: t('NAVBAR.ABOUT_US'), href: '/about-us' },
+    { label: t('NAVBAR.CONTACT_US'), href: '/contact-us' },
+  ];
+
+  if (!isReady) return null;
 
   return (
     <div>
@@ -47,7 +58,8 @@ function Header() {
             );
           })}
         </ul>
-        <div className="flex gap-5">
+        <div className="flex items-center gap-5">
+          <LanguageSwitcher />
           <Button
             variant="ghost"
             size="icon"
@@ -56,12 +68,12 @@ function Header() {
           >
             <Sun className="h-5 w-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
             <Moon className="absolute h-5 w-5 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            <span className="sr-only">{HEADER.TOGGLE_THEME}</span>
+            <span className="sr-only">{t('HEADER.TOGGLE_THEME')}</span>
           </Button>
           {!user ? (
             <Button>
               <Link href={'/account/login'} className="cursor-pointer">
-                {HEADER.LOGIN}
+                {t('HEADER.LOGIN')}
               </Link>
             </Button>
           ) : (
@@ -73,12 +85,12 @@ function Header() {
               <DropdownMenuContent>
                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/my-account')}>
                   <User className="h-5 w-5" />
-                  <span>{HEADER.MY_ACCOUNT}</span>
+                  <span>{t('HEADER.MY_ACCOUNT')}</span>
                 </DropdownMenuItem>
                 <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Users }]}>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/users-manage')}>
                     <Users className="h-5 w-5" />
-                    <span>{HEADER.MANAGE_USER}</span>
+                    <span>{t('HEADER.MANAGE_USER')}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <ProtectedComponent
@@ -90,7 +102,7 @@ function Header() {
                 >
                   <DropdownMenuItem className="cursor-pointer" onClick={() => router.push('/admin/roles-manage')}>
                     <Shield className="h-5 w-5" />
-                    <span>{HEADER.MANAGE_ROLE}</span>
+                    <span>{t('HEADER.MANAGE_ROLE')}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Configuration }]}>
@@ -99,12 +111,12 @@ function Header() {
                     onClick={() => router.push('/admin/system-config-manage')}
                   >
                     <Settings className="h-5 w-5" />
-                    <span>{HEADER.SETTINGS}</span>
+                    <span>{t('HEADER.SETTINGS')}</span>
                   </DropdownMenuItem>
                 </ProtectedComponent>
                 <DropdownMenuItem className="cursor-pointer" onClick={logout}>
                   <LogOut className="h-5 w-5" />
-                  <span>{HEADER.LOGOUT}</span>
+                  <span>{t('HEADER.LOGOUT')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
