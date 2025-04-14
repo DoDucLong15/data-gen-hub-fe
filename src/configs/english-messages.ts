@@ -190,11 +190,15 @@ export const ENGLISH_MESSAGES = {
         DOWNLOAD_DEFAULT: 'Download Default Template',
         UPLOAD_BUTTON: 'Upload',
         NO_TEMPLATE: 'No Excel template available',
+        CHOOSE_FILE: 'Choose Excel file...',
+        UPLOADING: 'Uploading...',
       },
       JSON: {
         DOWNLOAD_DEFAULT: 'Download Default Mapping',
         UPLOAD_BUTTON: 'Upload',
         NO_MAPPING: 'No JSON mapping available',
+        CHOOSE_FILE: 'Choose JSON file...',
+        UPLOADING: 'Uploading...',
       },
     },
     PROCESS: {

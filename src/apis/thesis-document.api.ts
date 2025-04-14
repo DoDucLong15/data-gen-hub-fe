@@ -37,7 +37,11 @@ export const ThesisDocumentApi = <T extends object = any>(type: EThesisDocumentT
         formData.append('jsonFile', file);
       }
       formData.append('id', id);
-      const response = await apiClient.post(ThesisDocumentsEndpoint.UPDATE_TEMPLATE, formData);
+      const response = await apiClient.patch(ThesisDocumentsEndpoint.UPDATE_TEMPLATE, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;

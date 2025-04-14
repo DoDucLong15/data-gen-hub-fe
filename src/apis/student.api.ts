@@ -84,9 +84,13 @@ export const StudentApi = {
   async updateTemplate(template: File, id: string): Promise<TTemplate> {
     try {
       const formData = new FormData();
-      formData.append('file', template);
+      formData.append('jsonFile', template);
       formData.append('id', id);
-      const response = await apiClient.post(StudentEnpoint.UPDATE_TEMPLATE, formData);
+      const response = await apiClient.patch(StudentEnpoint.UPDATE_TEMPLATE, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;
