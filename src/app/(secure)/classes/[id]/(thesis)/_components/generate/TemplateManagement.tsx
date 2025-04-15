@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Download, Upload, FileUp } from 'lucide-react';
+import { Download, Upload, FileUp, RefreshCw } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGenerateThesis } from '@/hooks/useGenerateThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
@@ -23,6 +23,7 @@ export default function TemplateManagement({
   const [excelFile, setExcelFile] = useState<File | null>(null);
   const [jsonFile, setJsonFile] = useState<File | null>(null);
   const [fileInputKey, setFileInputKey] = useState<number>(0);
+  const [downloadingPath, setDownloadingPath] = useState<string | null>(null);
   const excelInputRef = useRef<HTMLInputElement>(null);
   const jsonInputRef = useRef<HTMLInputElement>(null);
   const { t, isReady } = useI18n();
@@ -49,6 +50,15 @@ export default function TemplateManagement({
     }
   };
 
+  const handleDownloadTemplate = async (path: string) => {
+    try {
+      setDownloadingPath(path);
+      await downloadTemplate(path);
+    } finally {
+      setDownloadingPath(null);
+    }
+  };
+
   if (!isReady) return null;
 
   return (
@@ -65,10 +75,15 @@ export default function TemplateManagement({
               <div className="flex items-center gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => downloadTemplate(template?.templateFile!)}
+                  onClick={() => handleDownloadTemplate(template?.templateFile!)}
+                  disabled={!template?.templateFile || downloadingPath === template?.templateFile}
                   className="flex items-center gap-2"
                 >
-                  <Download className="h-4 w-4" />
+                  {downloadingPath === template?.templateFile ? (
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4" />
+                  )}
                   {t('GENERATE_THESIS.TEMPLATE.EXCEL.DOWNLOAD_DEFAULT')}
                 </Button>
               </div>
@@ -116,10 +131,15 @@ export default function TemplateManagement({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => downloadTemplate(template?.templateFile!)}
+                    onClick={() => handleDownloadTemplate(template?.templateFile!)}
+                    disabled={downloadingPath === template?.templateFile}
                     className="ml-2"
                   >
-                    <Download className="h-4 w-4" />
+                    {downloadingPath === template?.templateFile ? (
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Download className="h-4 w-4" />
+                    )}
                   </Button>
                 </div>
               )}
@@ -141,10 +161,15 @@ export default function TemplateManagement({
               <div className="flex items-center gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => downloadTemplate(template?.jsonFile!)}
+                  onClick={() => handleDownloadTemplate(template?.jsonFile!)}
+                  disabled={!template?.jsonFile || downloadingPath === template?.jsonFile}
                   className="flex items-center gap-2"
                 >
-                  <Download className="h-4 w-4" />
+                  {downloadingPath === template?.jsonFile ? (
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4" />
+                  )}
                   {t('GENERATE_THESIS.TEMPLATE.JSON.DOWNLOAD_DEFAULT')}
                 </Button>
               </div>
@@ -192,10 +217,15 @@ export default function TemplateManagement({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => downloadTemplate(template?.jsonFile!)}
+                    onClick={() => handleDownloadTemplate(template?.jsonFile!)}
+                    disabled={downloadingPath === template?.jsonFile}
                     className="ml-2"
                   >
-                    <Download className="h-4 w-4" />
+                    {downloadingPath === template?.jsonFile ? (
+                      <RefreshCw className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Download className="h-4 w-4" />
+                    )}
                   </Button>
                 </div>
               )}

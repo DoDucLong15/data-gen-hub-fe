@@ -15,6 +15,8 @@ import { useI18n } from '@/i18n';
 export function ImportExport({ classId }: { classId: string }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
+  const [isDownloadingTemplate, setIsDownloadingTemplate] = useState(false);
+  const [isUploadingTemplate, setIsUploadingTemplate] = useState(false);
   const { templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
     useStudents(classId);
   const { t, isReady } = useI18n();
@@ -49,6 +51,7 @@ export function ImportExport({ classId }: { classId: string }) {
   const handleTemplateUpload = async () => {
     if (!templateFile) return;
     try {
+      setIsUploadingTemplate(true);
       if (templateImport) {
         await uploadTemplate(templateFile, templateImport.id);
         setTemplateFile(null);
@@ -56,14 +59,21 @@ export function ImportExport({ classId }: { classId: string }) {
       }
     } catch (error) {
       toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.ERROR'));
+    } finally {
+      setIsUploadingTemplate(false);
     }
   };
 
-  const handleDownloadTemplate = () => {
+  const handleDownloadTemplate = async () => {
     if (templateImport?.jsonFile) {
-      StorageApi.downloadOneFile(templateImport.jsonFile).catch((error) =>
-        toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.ERROR')),
-      );
+      try {
+        setIsDownloadingTemplate(true);
+        await StorageApi.downloadOneFile(templateImport.jsonFile);
+      } catch (error) {
+        toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.ERROR'));
+      } finally {
+        setIsDownloadingTemplate(false);
+      }
     } else {
       toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.NOT_FOUND'));
     }
@@ -207,8 +217,17 @@ export function ImportExport({ classId }: { classId: string }) {
                     </p>
                   </CardContent>
                   <CardFooter className="border-t bg-gray-50">
-                    <Button variant="outline" className="w-full" onClick={handleDownloadTemplate}>
-                      <Download className="mr-2 h-4 w-4" />
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={handleDownloadTemplate}
+                      disabled={isDownloadingTemplate}
+                    >
+                      {isDownloadingTemplate ? (
+                        <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Download className="mr-2 h-4 w-4" />
+                      )}
                       {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.BUTTON')}
                     </Button>
                   </CardFooter>
@@ -234,10 +253,13 @@ export function ImportExport({ classId }: { classId: string }) {
                         className="hidden"
                         onChange={handleTemplateChange}
                         accept=".json"
+                        disabled={isUploadingTemplate}
                       />
                       <label
                         htmlFor="template-file"
-                        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-gray-100 px-4 py-2 text-gray-800 hover:bg-gray-200"
+                        className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2 text-gray-800 ${
+                          isUploadingTemplate ? 'cursor-not-allowed bg-gray-200' : 'bg-gray-100 hover:bg-gray-200'
+                        }`}
                       >
                         <Upload className="h-4 w-4" />
                         {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SELECT_BUTTON')}
@@ -250,8 +272,19 @@ export function ImportExport({ classId }: { classId: string }) {
                     </span>
                   </CardContent>
                   <CardFooter className="border-t bg-gray-50">
-                    <Button className="w-full" onClick={handleTemplateUpload} disabled={!templateFile}>
-                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.UPLOAD_BUTTON')}
+                    <Button
+                      className="w-full"
+                      onClick={handleTemplateUpload}
+                      disabled={!templateFile || isUploadingTemplate}
+                    >
+                      {isUploadingTemplate ? (
+                        <>
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.UPLOADING')}
+                        </>
+                      ) : (
+                        t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.UPLOAD_BUTTON')
+                      )}
                     </Button>
                   </CardFooter>
                 </Card>

@@ -50,6 +50,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   } = useDrives(classId);
   const { downloadFile } = useFileDownload();
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { t, isReady } = useI18n();
 
   const handleDelete = async () => {
@@ -79,6 +80,17 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       toast.success(t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.TOAST.SYNC_SUCCESS'));
     } catch (error) {
       toast.error(t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.TOAST.SYNC_ERROR'));
+    }
+  };
+
+  const handleDownload = async () => {
+    if (selectedFiles.length > 0) {
+      try {
+        setIsDownloading(true);
+        await downloadFile(classId, selectedFiles, 'download');
+      } finally {
+        setIsDownloading(false);
+      }
     }
   };
 
@@ -121,16 +133,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               </Button>
             </ProtectedComponent>
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                if (selectedFiles.length > 0) {
-                  downloadFile(classId, selectedFiles, 'download');
-                }
-              }}
-            >
-              <Download className="mr-2 h-4 w-4" />
+            <Button variant="outline" size="sm" onClick={handleDownload} disabled={isDownloading}>
+              {isDownloading ? (
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="mr-2 h-4 w-4" />
+              )}
               {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.DOWNLOAD')}
             </Button>
           </>

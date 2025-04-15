@@ -347,7 +347,8 @@
         "UPLOAD_BUTTON": "Tải lên mẫu",
         "NO_FILE": "Chưa chọn file nào",
         "SUCCESS": "Tải lên mẫu thành công",
-        "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại."
+        "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại.",
+        "UPLOADING": "Đang tải lên..."
       }
     },
     "PROCESS_TABLE": {
@@ -1695,7 +1696,8 @@
               "UPLOAD_BUTTON": "Tải lên mẫu",
               "NO_FILE": "Chưa chọn file nào",
               "SUCCESS": "Tải lên mẫu thành công",
-              "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại."
+              "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại.",
+              "UPLOADING": "Đang tải lên..."
             }
           },
           "PROGRESS": {

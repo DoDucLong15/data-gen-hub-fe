@@ -91,12 +91,27 @@ export default function GeneratedSheetsTable({
   const currentItems = filteredSheets.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredSheets.length / itemsPerPage);
 
-  const downloadOneFile = async (path: string) => {
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false);
+  const [downloadingItemId, setDownloadingItemId] = useState<string | null>(null);
+
+  const downloadOneFile = async (path: string, id: string) => {
     try {
+      setDownloadingItemId(id);
       await StorageApi.downloadOneFile(path);
       toast.success(t('GENERATE_THESIS.TABLE.TOAST.DOWNLOAD_SUCCESS'));
     } catch (error) {
       toast.error(t('GENERATE_THESIS.TABLE.TOAST.DOWNLOAD_ERROR'));
+    } finally {
+      setDownloadingItemId(null);
+    }
+  };
+
+  const handleDownloadAll = async () => {
+    try {
+      setIsDownloadingAll(true);
+      await downloadAllSheet();
+    } finally {
+      setIsDownloadingAll(false);
     }
   };
 
@@ -119,11 +134,11 @@ export default function GeneratedSheetsTable({
           <Button
             variant="outline"
             size="sm"
-            onClick={downloadAllSheet}
-            disabled={generatedSheets.length === 0}
+            onClick={handleDownloadAll}
+            disabled={generatedSheets.length === 0 || isDownloadingAll}
             className="flex items-center gap-2"
           >
-            <Download className="h-4 w-4" />
+            {isDownloadingAll ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
             {t('GENERATE_THESIS.TABLE.ACTIONS.DOWNLOAD_ALL')}
           </Button>
 
@@ -226,8 +241,17 @@ export default function GeneratedSheetsTable({
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => downloadOneFile(sheet.outputPath)}>
-                          <Download className="h-4 w-4" />
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => downloadOneFile(sheet.outputPath, sheet.id)}
+                          disabled={downloadingItemId === sheet.id}
+                        >
+                          {downloadingItemId === sheet.id ? (
+                            <RefreshCw className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Download className="h-4 w-4" />
+                          )}
                         </Button>
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
                           <Button variant="ghost" size="icon" onClick={() => deleteSheet(sheet.id)}>

@@ -347,7 +347,8 @@
         "UPLOAD_BUTTON": "Upload Template",
         "NO_FILE": "No file selected",
         "SUCCESS": "Template uploaded successfully",
-        "ERROR": "Template upload failed. Please try again."
+        "ERROR": "Template upload failed. Please try again.",
+        "UPLOADING": "Uploading..."
       }
     },
     "PROCESS_TABLE": {
@@ -1695,7 +1696,8 @@
               "UPLOAD_BUTTON": "Upload Template",
               "NO_FILE": "No file selected",
               "SUCCESS": "Template uploaded successfully",
-              "ERROR": "Template upload failed. Please try again."
+              "ERROR": "Template upload failed. Please try again.",
+              "UPLOADING": "Uploading..."
             }
           },
           "PROGRESS": {

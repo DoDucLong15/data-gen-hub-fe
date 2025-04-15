@@ -74,6 +74,8 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
   const [editingEntity, setEditingEntity] = useState<any>(null);
   const [viewingEntity, setViewingEntity] = useState<any>(null);
   const itemsPerPage = 5;
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false);
+  const [downloadingItemPath, setDownloadingItemPath] = useState<string | null>(null);
 
   // Reset pagination when search term changes
   useEffect(() => {
@@ -123,20 +125,26 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
 
   const handleDownloadAllFiles = async () => {
     try {
+      setIsDownloadingAll(true);
       await StorageApi.downloadFile(
         listThesis.map((entity) => entity.inputPath).filter(Boolean),
         `${config.title}.zip`,
       );
     } catch (error) {
       toast.error(t('THESIS_TABLE.TOAST.DOWNLOAD_ERROR'));
+    } finally {
+      setIsDownloadingAll(false);
     }
   };
 
   const handleDownloadFile = async (path: string) => {
     try {
+      setDownloadingItemPath(path);
       await StorageApi.downloadOneFile(path);
     } catch (error) {
       toast.error(t('THESIS_TABLE.TOAST.DOWNLOAD_ERROR'));
+    } finally {
+      setDownloadingItemPath(null);
     }
   };
 
@@ -174,10 +182,10 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
               variant="outline"
               size="sm"
               onClick={handleDownloadAllFiles}
-              disabled={listThesis.length === 0}
+              disabled={listThesis.length === 0 || isDownloadingAll}
               className="flex items-center gap-2"
             >
-              <Download className="h-4 w-4" />
+              {isDownloadingAll ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
               {t('THESIS_TABLE.ACTIONS.DOWNLOAD_ALL')}
             </Button>
           )}
@@ -257,8 +265,17 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
                           <Eye className="h-4 w-4" />
                         </Button>
                         {config.downloadEnabled && entity.inputPath && (
-                          <Button variant="ghost" size="icon" onClick={() => handleDownloadFile(entity.inputPath)}>
-                            <Download className="h-4 w-4" />
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleDownloadFile(entity.inputPath)}
+                            disabled={downloadingItemPath === entity.inputPath}
+                          >
+                            {downloadingItemPath === entity.inputPath ? (
+                              <RefreshCw className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Download className="h-4 w-4" />
+                            )}
                           </Button>
                         )}
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Download, X, Info, Calendar, FileType, User } from 'lucide-react';
+import { Download, X, Info, Calendar, FileType, User, RefreshCw } from 'lucide-react';
 import { useFileDownload } from '@/hooks/useDrive';
 import { formatDate } from '../_helpers/file-helper.helper';
 import { FileItem } from '@/utils/types/file.type';
@@ -18,12 +18,18 @@ interface FilePreviewProps {
 
 export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen, onClose }) => {
   const { downloadFile } = useFileDownload();
+  const [isDownloading, setIsDownloading] = useState(false);
   const { t, isReady } = useI18n();
 
   // Always call hooks at the top level, before any conditional logic
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (file) {
-      downloadFile(classId, [file.id], file.name.split('.').slice(0, -1).join('') || 'file');
+      try {
+        setIsDownloading(true);
+        await downloadFile(classId, [file.id], file.name.split('.').slice(0, -1).join('') || 'file');
+      } finally {
+        setIsDownloading(false);
+      }
     }
   };
 
@@ -147,10 +153,15 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
                 </p>
                 <Button
                   onClick={handleDownload}
-                  className="mt-2 bg-indigo-600 shadow-md transition-colors hover:bg-indigo-700"
+                  className="mt-2 bg-slate-600 shadow-md transition-colors hover:bg-slate-700"
                   size="lg"
+                  disabled={isDownloading}
                 >
-                  <Download className="mr-2 h-5 w-5" />
+                  {isDownloading ? (
+                    <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                  ) : (
+                    <Download className="mr-2 h-5 w-5" />
+                  )}
                   {t('THESIS_PAGE.DRIVE_INFO.FILE_PREVIEW.DOWNLOAD')}
                 </Button>
               </div>
@@ -251,8 +262,16 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
             <X className="mr-2 h-4 w-4" />
             {t('THESIS_PAGE.DRIVE_INFO.FILE_PREVIEW.CLOSE')}
           </Button>
-          <Button onClick={handleDownload} className="bg-indigo-600 shadow-md transition-all hover:bg-indigo-700">
-            <Download className="mr-2 h-4 w-4" />
+          <Button
+            onClick={handleDownload}
+            className="bg-slate-600 shadow-md transition-all hover:bg-slate-700"
+            disabled={isDownloading}
+          >
+            {isDownloading ? (
+              <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="mr-2 h-4 w-4" />
+            )}
             {t('THESIS_PAGE.DRIVE_INFO.FILE_PREVIEW.DOWNLOAD')}
           </Button>
         </div>
