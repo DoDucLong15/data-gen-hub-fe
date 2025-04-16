@@ -47,18 +47,24 @@ export default function UsersPage() {
     <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Users }]}>
       <div className="container mx-auto px-6 py-6">
         <Tabs defaultValue="users" className="w-full space-y-6">
-          <TabsList className="w-full justify-start border-b">
-            <TabsTrigger value="users" className="px-8 py-3 text-base">
+          <TabsList className="w-full justify-start border-b border-gray-200">
+            <TabsTrigger
+              value="users"
+              className="data-[state=active]:text-primary data-[state=active]:after:bg-primary relative rounded-t-md px-8 py-3 text-base font-medium transition-colors data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-0.5 data-[state=active]:after:w-full data-[state=inactive]:text-gray-500 data-[state=inactive]:hover:text-gray-800"
+            >
               {t('USERS_PAGE.TABS.USERS')}
             </TabsTrigger>
             <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
-              <TabsTrigger value="registers" className="px-8 py-3 text-base">
+              <TabsTrigger
+                value="registers"
+                className="data-[state=active]:text-primary data-[state=active]:after:bg-primary relative rounded-t-md px-8 py-3 text-base font-medium transition-colors data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-0.5 data-[state=active]:after:w-full data-[state=inactive]:text-gray-500 data-[state=inactive]:hover:text-gray-800"
+              >
                 {t('USERS_PAGE.TABS.REGISTERS')}
               </TabsTrigger>
             </ProtectedComponent>
           </TabsList>
 
-          <TabsContent value="users" className="mt-6 rounded-lg border p-6">
+          <TabsContent value="users" className="rounded-lg border p-6">
             <div className="mb-6 flex items-center justify-end">
               <div className="flex gap-2">
                 <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
@@ -76,7 +82,7 @@ export default function UsersPage() {
             <UsersList />
           </TabsContent>
 
-          <TabsContent value="registers" className="mt-6 rounded-lg border p-6">
+          <TabsContent value="registers" className="rounded-lg border p-6">
             <div className="mb-6 flex items-center justify-end">
               <Button variant="outline" onClick={() => refetchRegisters()}>
                 <RefreshCw className={`h-4 w-4`} />

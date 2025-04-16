@@ -45,20 +45,26 @@ export default function RolesPage() {
   return (
     <div className="container mx-auto px-6 py-6">
       <Tabs defaultValue="roles" className="w-full space-y-6">
-        <TabsList className="w-full justify-start border-b">
+        <TabsList className="w-full justify-start border-b border-gray-200">
           <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Roles }]}>
-            <TabsTrigger value="roles" className="px-8 py-3 text-base">
+            <TabsTrigger
+              value="roles"
+              className="data-[state=active]:text-primary data-[state=active]:after:bg-primary relative rounded-t-md px-8 py-3 text-base font-medium transition-colors data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-0.5 data-[state=active]:after:w-full data-[state=inactive]:text-gray-500 data-[state=inactive]:hover:text-gray-800"
+            >
               {t('ROLES_PAGE.TABS.ROLES')}
             </TabsTrigger>
           </ProtectedComponent>
           <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.System_Permissions }]}>
-            <TabsTrigger value="permissions" className="px-8 py-3 text-base">
+            <TabsTrigger
+              value="permissions"
+              className="data-[state=active]:text-primary data-[state=active]:after:bg-primary relative rounded-t-md px-8 py-3 text-base font-medium transition-colors data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-0.5 data-[state=active]:after:w-full data-[state=inactive]:text-gray-500 data-[state=inactive]:hover:text-gray-800"
+            >
               {t('ROLES_PAGE.TABS.PERMISSIONS')}
             </TabsTrigger>
           </ProtectedComponent>
         </TabsList>
 
-        <TabsContent value="roles" className="mt-6 rounded-lg border p-6">
+        <TabsContent value="roles" className="rounded-lg border p-6">
           <div className="mb-6 flex items-center justify-end">
             <div className="flex gap-2">
               <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Roles }]}>
@@ -76,7 +82,7 @@ export default function RolesPage() {
           <RolesList />
         </TabsContent>
 
-        <TabsContent value="permissions" className="mt-6 rounded-lg border p-6">
+        <TabsContent value="permissions" className="rounded-lg border p-6">
           <PermissionsList />
         </TabsContent>
       </Tabs>
