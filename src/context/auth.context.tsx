@@ -69,6 +69,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (cachedUser) {
         setUser(JSON.parse(cachedUser) as User);
       }
+      const processWhenError = () => {
+        deleteCookie('accessToken');
+        deleteCookie('refreshToken');
+        localStorage.removeItem('user');
+        sessionStorage.clear();
+        setUser(null);
+      }
       if (accessToken) {
         try {
           const response = await apiClient.get('/users/me');
@@ -76,12 +83,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           localStorage.setItem('user', JSON.stringify(response.data));
         } catch (error) {
           console.error('Failed to fetch user data:', error);
-          deleteCookie('accessToken');
-          deleteCookie('refreshToken');
-          localStorage.removeItem('user');
-          sessionStorage.clear();
-          setUser(null);
+          processWhenError();
         }
+      } else {
+        processWhenError();
       }
       setLoading(false);
     };
