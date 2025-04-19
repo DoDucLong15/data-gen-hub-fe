@@ -191,7 +191,7 @@ export const useDriveDataSyncHistory = (classId: string) => {
         classIds: [classId],
         types: [EProgressType.DRIVE_DATA],
       }),
-    refetchInterval: 10 * 1000,
+    refetchInterval: 5 * 1000,
     enabled: !!classId,
   });
 

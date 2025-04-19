@@ -1,7 +1,7 @@
 // src/components/generator/FileUpload.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormField, FormItem, FormLabel, FormDescription, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,11 @@ interface FileUploadProps {
 export function FileUpload({ name, label, description, form, multiple = false, accept, componentId }: FileUploadProps) {
   const [fileNames, setFileNames] = useState<string[]>([]);
   const { t, isReady } = useI18n();
+
+  // Reset fileNames when componentId changes (form reset)
+  useEffect(() => {
+    setFileNames([]);
+  }, [componentId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

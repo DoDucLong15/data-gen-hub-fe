@@ -38,6 +38,7 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useI18n } from '@/i18n';
+import { toast } from 'sonner';
 
 interface StudentListProps {
   classId: string;
@@ -64,11 +65,16 @@ export function StudentList({ classId }: StudentListProps) {
     exportStudents,
   } = useStudents(classId, false);
 
-  const handleExport = () => {
-    exportStudents({
-      studentIds: selectedStudents.length > 0 ? selectedStudents : undefined,
-      classId,
-    });
+  const handleExport = async () => {
+    try {
+      await exportStudents({
+        studentIds: selectedStudents.length > 0 ? selectedStudents : undefined,
+        classId,
+      });
+      setSelectedStudents([]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleFilterChange = (key: keyof StudentFilter, value: string) => {
@@ -104,13 +110,20 @@ export function StudentList({ classId }: StudentListProps) {
     setIsEditOpen(true);
   };
 
-  const handleSave = (student: TStudent) => {
-    if (student.id) {
-      updateStudent(student.id, student);
-    } else {
-      createStudent(student);
+  const handleSave = async (student: TStudent) => {
+    try {
+      if (student.id) {
+        await updateStudent(student.id, student);
+        toast.success(t('THESIS_PAGE.STUDENT_LIST.UPDATE_SUCCESS'));
+      } else {
+        await createStudent(student);
+        toast.success(t('THESIS_PAGE.STUDENT_LIST.CREATE_SUCCESS'));
+      }
+      setIsEditOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(t('THESIS_PAGE.STUDENT_LIST.SAVE_ERROR'));
     }
-    setIsEditOpen(false);
   };
 
   const toggleSelectStudent = (id: string) => {
@@ -149,7 +162,7 @@ export function StudentList({ classId }: StudentListProps) {
       {/* Mobile and Desktop Header */}
       <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:space-y-0">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="relative w-full sm:w-64">
+          <div className="relative w-full sm:w-80">
             <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
             <Input
               placeholder={t('THESIS_PAGE.STUDENT_LIST.SEARCH_PLACEHOLDER')}
@@ -189,7 +202,7 @@ export function StudentList({ classId }: StudentListProps) {
             {isExporting && <Spinner />}
           </Button>
           <Button variant="outline" onClick={() => studentsRefetch()} disabled={studentsIsLoading}>
-            <RefreshCw className={`h-4 w-4`} />
+            <RefreshCw className={`h-4 w-4 ${studentsIsLoading ? 'animate-spin' : ''}`} />
           </Button>
         </div>
       </div>

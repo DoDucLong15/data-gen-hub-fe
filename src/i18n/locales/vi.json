@@ -1567,6 +1567,9 @@
         "LIST": "Danh sách sinh viên",
         "IMPORT_EXPORT": "Nhập/Xuất"
       },
+      "UPDATE_SUCCESS": "Cập nhật sinh viên thành công",
+      "CREATE_SUCCESS": "Tạo sinh viên thành công",
+      "SAVE_ERROR": "Lỗi khi lưu sinh viên",
       "HEADERS": {
         "MSSV": "MSSV",
         "FULL_NAME": "Họ và tên",

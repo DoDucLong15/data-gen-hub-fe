@@ -31,7 +31,7 @@ export function useStudents(classId: string, getProgress: boolean = true) {
         classIds: [classId],
         types: [EProgressType.STUDENT_LIST],
       }),
-    refetchInterval: 10 * 1000,
+    refetchInterval: 5 * 1000,
     enabled: !!classId && getProgress,
   });
 

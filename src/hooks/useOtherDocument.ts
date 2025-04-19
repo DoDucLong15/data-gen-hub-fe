@@ -162,7 +162,7 @@ export const useOtherDocumentHistory = (classId: string) => {
         classIds: [classId],
         types: [EProgressType.OTHER_DOCUMENT],
       }),
-    refetchInterval: 10 * 1000,
+    refetchInterval: 5 * 1000,
     enabled: !!classId,
   });
 

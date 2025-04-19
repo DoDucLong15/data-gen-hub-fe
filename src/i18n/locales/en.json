@@ -1567,6 +1567,9 @@
         "LIST": "Student List",
         "IMPORT_EXPORT": "Import/Export"
       },
+      "UPDATE_SUCCESS": "Student updated successfully",
+      "CREATE_SUCCESS": "Student created successfully",
+      "SAVE_ERROR": "Error saving student",
       "HEADERS": {
         "MSSV": "MSSV",
         "FULL_NAME": "Full Name",

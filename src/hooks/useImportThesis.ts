@@ -66,7 +66,7 @@ export const useImportThesis = (type: EThesisDocumentType, classId: string) => {
         types: [type as unknown as EProgressType],
         actions: [EProgressAction.IMPORT],
       }),
-    refetchInterval: 10 * 1000,
+    refetchInterval: 5 * 1000,
     enabled: !!classId,
   });
 

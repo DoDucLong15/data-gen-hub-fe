@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('user');
         sessionStorage.clear();
         setUser(null);
-      }
+      };
       if (accessToken) {
         try {
           const response = await apiClient.get('/users/me');

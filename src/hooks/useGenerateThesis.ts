@@ -96,7 +96,7 @@ export const useGenerateThesis = (type: EThesisDocumentType, classId: string) =>
         types: [type as unknown as EProgressType],
         actions: [EProgressAction.EXPORT],
       }),
-    refetchInterval: 10 * 1000,
+    refetchInterval: 5 * 1000,
     enabled: !!classId,
   });
 
