@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { EntityConfig } from '../../_config/thesis.config';
 import { useI18n } from '@/i18n';
+import { Loader2 } from 'lucide-react';
 
 interface EntityFormProps {
   config: EntityConfig;
@@ -32,7 +33,7 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
 
   const form = useForm({
     resolver: zodResolver(config.formSchema),
-    defaultValues: processedInitialData || config.defaultValues,
+    defaultValues: initialData ? processedInitialData : config.defaultValues,
   });
 
   // Filter out columns that shouldn't be displayed in the form
@@ -59,6 +60,7 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
         return (
           <Textarea
             {...field}
+            value={field.value || ''}
             className="min-h-24 resize-y border-2"
             placeholder={
               column.placeholder || t('THESIS_FORM.INPUT.PLACEHOLDER').replace('{field}', column.header.toLowerCase())
@@ -70,6 +72,7 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
         return (
           <Input
             {...field}
+            value={field.value || ''}
             type="text"
             className="border-2"
             placeholder={t('THESIS_FORM.DATE.PLACEHOLDER')}
@@ -78,11 +81,23 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
           />
         );
       case 'number':
-        return <Input {...field} type="number" className="border-2" />;
+        return (
+          <Input
+            {...field}
+            value={field.value === undefined || field.value === null ? 0 : field.value}
+            type="number"
+            className="border-2"
+            onChange={(e) => {
+              const value = e.target.value === '' ? null : parseFloat(e.target.value);
+              field.onChange(value);
+            }}
+          />
+        );
       default:
         return (
           <Input
             {...field}
+            value={field.value || ''}
             className="border-2"
             placeholder={
               column.placeholder || t('THESIS_FORM.INPUT.PLACEHOLDER').replace('{field}', column.header.toLowerCase())
@@ -136,6 +151,7 @@ export function ThesisForm({ config, initialData, onSubmit, isSubmitting, onCanc
           </Button>
           <Button type="submit" disabled={isSubmitting} className="w-24">
             {initialData ? t('THESIS_FORM.BUTTONS.UPDATE') : t('THESIS_FORM.BUTTONS.CREATE')}
+            {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           </Button>
         </div>
       </form>

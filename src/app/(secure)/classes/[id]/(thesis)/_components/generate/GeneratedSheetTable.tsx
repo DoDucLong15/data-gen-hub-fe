@@ -254,9 +254,29 @@ export default function GeneratedSheetsTable({
                           )}
                         </Button>
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: subjectCheck }]}>
-                          <Button variant="ghost" size="icon" onClick={() => deleteSheet(sheet.id)}>
-                            <Trash className="h-4 w-4" />
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  {t('GENERATE_THESIS.TABLE.DELETE_DIALOG.TITLE_ONE')}
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  {t('GENERATE_THESIS.TABLE.DELETE_DIALOG.DESCRIPTION_ONE')}
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>{t('GENERATE_THESIS.TABLE.DELETE_DIALOG.CANCEL')}</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => deleteSheet(sheet.id)}>
+                                  {t('GENERATE_THESIS.TABLE.DELETE_DIALOG.CONFIRM_ONE')}
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </ProtectedComponent>
                       </div>
                     </TableCell>

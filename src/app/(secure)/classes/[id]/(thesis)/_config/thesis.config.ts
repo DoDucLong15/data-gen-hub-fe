@@ -179,57 +179,56 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       fullName: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.ERROR }),
       supervisor: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.ERROR }).optional(),
       projectTitle: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.ERROR }).optional(),
-      typeOfThesis: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.ERROR }).optional(),
       topicUniquenessPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.ERROR })
         .optional(),
-      workloadPoint: z.number().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.WORKLOAD_POINT.ERROR }).optional(),
+      workloadPoint: z.number().min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.WORKLOAD_POINT.ERROR }).optional(),
       problemDifficultyPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROBLEM_DIFFICULTY_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROBLEM_DIFFICULTY_POINT.ERROR })
         .optional(),
       solutionImpactPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SOLUTION_IMPACT_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SOLUTION_IMPACT_POINT.ERROR })
         .optional(),
       productFinalizationPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRODUCT_FINALIZATION_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRODUCT_FINALIZATION_POINT.ERROR })
         .optional(),
       layoutCoherencePoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.LAYOUT_COHERENCE_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.LAYOUT_COHERENCE_POINT.ERROR })
         .optional(),
       contentValidityPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONTENT_VALIDITY_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONTENT_VALIDITY_POINT.ERROR })
         .optional(),
       presentationQualityPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_QUALITY_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_QUALITY_POINT.ERROR })
         .optional(),
       reliabilityAndReferencesPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RELIABILITY_AND_REFERENCES_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RELIABILITY_AND_REFERENCES_POINT.ERROR })
         .optional(),
       responseAccuracyPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.ERROR })
         .optional(),
       presentationSkillsPoint: z
         .number()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.ERROR })
         .optional(),
-      rewardPoint: z.number().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.REWARD_POINT.ERROR }).optional(),
+      rewardPoint: z.number().min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.REWARD_POINT.ERROR }).optional(),
       generalFeedback: z
         .string()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.GENERAL_FEEDBACK.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.GENERAL_FEEDBACK.ERROR })
         .optional(),
-      conclusion: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONCLUSION.ERROR }).optional(),
+      conclusion: z.string().min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.CONCLUSION.ERROR }).optional(),
       teacherSignDate: z
         .string()
-        .min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TEACHER_SIGN_DATE.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TEACHER_SIGN_DATE.ERROR })
         .optional(),
     }),
     defaultValues: {
@@ -237,7 +236,6 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       fullName: '',
       supervisor: '',
       projectTitle: '',
-      typeOfThesis: '',
       topicUniquenessPoint: 0,
       workloadPoint: 0,
       problemDifficultyPoint: 0,
@@ -259,7 +257,6 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
-      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.LABEL, accessorKey: 'typeOfThesis', hidden: true },
       {
         header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.LABEL,
         accessorKey: 'topicUniquenessPoint',

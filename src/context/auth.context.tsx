@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       const accessToken = getCookie('accessToken');
+      const refreshToken = getCookie('refreshToken');
       const cachedUser = localStorage.getItem('user');
       if (cachedUser) {
         setUser(JSON.parse(cachedUser) as User);
@@ -76,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         sessionStorage.clear();
         setUser(null);
       };
-      if (accessToken) {
+      if (accessToken || refreshToken) {
         try {
           const response = await apiClient.get('/users/me');
           setUser(response.data as User);

@@ -101,14 +101,18 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
   const totalPages = Math.ceil(filteredEntities.length / itemsPerPage);
 
   // Handle form submission
-  const handleFormSubmit = (data: any) => {
-    if (editingEntity) {
-      updateThesis(editingEntity.id, data);
-    } else {
-      createThesis(data);
+  const handleFormSubmit = async (data: any) => {
+    try {
+      if (editingEntity) {
+        await updateThesis(editingEntity.id, data);
+      } else {
+        await createThesis(data);
+      }
+      setIsFormDialogOpen(false);
+      setEditingEntity(null);
+    } catch (error) {
+      console.log(error);
     }
-    setIsFormDialogOpen(false);
-    setEditingEntity(null);
   };
 
   // Open form dialog for editing

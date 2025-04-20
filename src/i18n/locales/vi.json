@@ -228,9 +228,12 @@
       },
       "DELETE_DIALOG": {
         "TITLE": "Xác nhận xóa tất cả",
+        "TITLE_ONE": "Xác nhận xóa",
         "DESCRIPTION": "Bạn có chắc chắn muốn xóa tất cả phiếu giao nhiệm vụ? Hành động này không thể hoàn tác.",
+        "DESCRIPTION_ONE": "Bạn có chắc chắn muốn xóa phiếu này? Hành động này không thể hoàn tác.",
         "CANCEL": "Hủy",
-        "CONFIRM": "Xóa tất cả"
+        "CONFIRM": "Xóa tất cả",
+        "CONFIRM_ONE": "Xóa"
       },
       "TOAST": {
         "DOWNLOAD_SUCCESS": "Tải file thành công",
