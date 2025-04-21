@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GalleryVerticalEnd, Minus, Plus } from 'lucide-react';
+import { GalleryVerticalEnd, Minus, Plus, Circle } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Sidebar,
@@ -15,17 +15,31 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { EAction, ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useI18n } from '@/i18n';
 
 export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const params = useParams();
+  const pathname = usePathname();
   const id = params?.id as string;
   const getUrlWithId = (url: string) => {
     return id ? `/classes/${id}/${url}` : `/${url}`;
   };
+
+  const isCurrentPath = (url: string) => {
+    const fullUrl = getUrlWithId(url);
+    return pathname === fullUrl;
+  };
+
+  const isParentPath = (url: string) => {
+    const fullUrl = getUrlWithId(url);
+    const segments = fullUrl.split('/');
+    const parentPath = segments.slice(0, -1).join('/');
+    return pathname.startsWith(parentPath) && pathname !== fullUrl;
+  };
+
   const { t, isReady } = useI18n();
 
   const data = {
@@ -134,38 +148,68 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {data.navMain.map((item, index) => (
-              <ProtectedComponent key={item.title} permissions={[{ action: item.action, subject: item.subject }]}>
-                <Collapsible defaultOpen={index === 1} className="group/collapsible">
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton isActive={item.isActive}>
-                        <Link href={getUrlWithId(item?.url ?? '#')}>{item.title}</Link>{' '}
-                        {item.items?.length && (
-                          <>
-                            <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                            <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
-                          </>
-                        )}
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    {item.items?.length ? (
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          {item.items.map((item) => (
-                            <SidebarMenuSubItem key={item.title}>
-                              <SidebarMenuSubButton asChild>
-                                <Link href={getUrlWithId(item.url)}>{item.title}</Link>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
-                          ))}
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    ) : null}
-                  </SidebarMenuItem>
-                </Collapsible>
-              </ProtectedComponent>
-            ))}
+            {data.navMain.map((item, index) => {
+              const active = isCurrentPath(item.url);
+              const hasActiveChild = item.items?.some((subItem) => isCurrentPath(subItem.url)) || false;
+
+              return (
+                <ProtectedComponent key={item.title} permissions={[{ action: item.action, subject: item.subject }]}>
+                  <Collapsible defaultOpen={index === 1 || active || hasActiveChild} className="group/collapsible">
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton isActive={active || hasActiveChild}>
+                          <div className="flex w-full items-center">
+                            {active ? (
+                              <div className="bg-primary mr-2 h-4 w-1 rounded-full"></div>
+                            ) : hasActiveChild ? (
+                              <div className="bg-primary/50 mr-2 h-4 w-1 rounded-full"></div>
+                            ) : (
+                              <div className="mr-2 h-4 w-1"></div>
+                            )}
+                            <Link
+                              href={getUrlWithId(item?.url ?? '#')}
+                              className={`flex-1 ${active ? 'text-primary font-medium' : ''}`}
+                            >
+                              {item.title}
+                            </Link>
+                          </div>
+                          {item.items?.length && (
+                            <>
+                              <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
+                              <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+                            </>
+                          )}
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      {item.items?.length ? (
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => {
+                              const subActive = isCurrentPath(subItem.url);
+                              return (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                  <SidebarMenuSubButton asChild isActive={subActive}>
+                                    <div className="flex w-full items-center">
+                                      {subActive && <Circle className="fill-primary text-primary mr-2 size-2" />}
+                                      <Link
+                                        href={getUrlWithId(subItem.url)}
+                                        className={`flex-1 ${subActive ? 'text-primary font-medium' : ''}`}
+                                      >
+                                        {subItem.title}
+                                      </Link>
+                                    </div>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              );
+                            })}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      ) : null}
+                    </SidebarMenuItem>
+                  </Collapsible>
+                </ProtectedComponent>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
