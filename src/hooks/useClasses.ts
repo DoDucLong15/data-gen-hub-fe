@@ -113,3 +113,16 @@ export function useClasses() {
     isDeleting: deleteMutation.isPending,
   };
 }
+
+export function useDashboard(id: string) {
+  const { data: dashboard, isLoading: dashboardLoading } = useQuery({
+    queryKey: ['dashboard', id],
+    queryFn: async () => {
+      return await ClassesApi.getDashboardData(id);
+    },
+    enabled: !!id,
+    staleTime: 1 * 60 * 1000,
+  });
+
+  return { dashboard, isLoading: dashboardLoading };
+}

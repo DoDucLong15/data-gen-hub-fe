@@ -1540,6 +1540,25 @@
       }
     },
     "DASHBOARD": {
+      "TITLE": "Dashboard",
+      "TABS": {
+        "CHARTS": "Biểu đồ",
+        "DETAILS": "Chi tiết"
+      },
+      "CHARTS": {
+        "IMPORT_EXPORT": {
+          "TITLE": "Thống kê import/export",
+          "DESCRIPTION": "Số phiếu import (không có trong danh sách sinh viên) và export (có trong danh sách sinh viên)"
+        },
+        "COMPLETION_RATE": {
+          "TITLE": "Tỷ lệ hoàn thành phiếu",
+          "DESCRIPTION": "Biểu đồ thể hiện tỷ lệ hoàn thành các loại phiếu khác nhau"
+        },
+        "SCORE_DISTRIBUTION": {
+          "TITLE": "Phân phối điểm",
+          "DESCRIPTION": "Biểu đồ thể hiện phân phối điểm số theo các khoảng điểm"
+        }
+      },
       "LOADING": "Đang tải dữ liệu...",
       "STATS": {
         "TITLE": "Thống kê tổng quan",
