@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiClient } from './instances/api-client.instance';
-import { TClass } from '@/utils/types/classes.type';
+import { LecturerDashboardResponse, TClass } from '@/utils/types/classes.type';
 import { FileItem, FileTreeResponse, UploadFileResponse } from '@/utils/types/file.type';
 
 const ClassApiEndpoint = {
@@ -14,6 +14,7 @@ const ClassApiEndpoint = {
   DELETE_FILE: (classId: string, fileId: string) => `/class/${classId}/drive-info/${fileId}`,
   CREATE_FOLDER: (classId: string) => `/class/${classId}/drive-info/folders`,
   SYNC_DRIVE_DATA: `/class/drive-info/sync`,
+  GET_DASHBOARD_DATA: (id: string) => `/thesis-management/dashboard/${id}`,
 };
 
 export enum ESyncDriveDataType {
@@ -126,6 +127,15 @@ export const ClassesApi = {
         classIds,
         types,
       });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getDashboardData(classId: string): Promise<LecturerDashboardResponse> {
+    try {
+      const response = await apiClient.get(ClassApiEndpoint.GET_DASHBOARD_DATA(classId));
       return response.data;
     } catch (error) {
       throw error;

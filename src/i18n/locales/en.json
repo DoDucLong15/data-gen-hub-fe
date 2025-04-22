@@ -1540,6 +1540,25 @@
       }
     },
     "DASHBOARD": {
+      "TITLE": "Dashboard",
+      "TABS": {
+        "CHARTS": "Charts",
+        "DETAILS": "Details"
+      },
+      "CHARTS": {
+        "IMPORT_EXPORT": {
+          "TITLE": "Import/Export Statistics",
+          "DESCRIPTION": "Number of import (not in student list) and export (in student list) papers"
+        },
+        "COMPLETION_RATE": {
+          "TITLE": "Completion Rate",
+          "DESCRIPTION": "Completion rate of different types of papers"
+        },
+        "SCORE_DISTRIBUTION": {
+          "TITLE": "Score Distribution",
+          "DESCRIPTION": "Distribution of scores by different ranges"
+        }
+      },
       "LOADING": "Loading data...",
       "STATS": {
         "TITLE": "Overview Statistics",
