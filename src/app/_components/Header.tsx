@@ -21,6 +21,7 @@ import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useI18n } from '@/i18n';
 import { TNavbarContent } from '@/utils/types/nav-bar.type';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 function Header() {
   const { user, logout } = useAuth();
@@ -79,7 +80,12 @@ function Header() {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2">
-                <Image src="/user.png" alt="avatar" width={30} height={30} />
+                <Avatar className="border-background h-9 w-9 border-4">
+                  <AvatarImage src={user.avatar?.url || '/user.png'} alt={user.name || t('USER_SIDEBAR.AVATAR.ALT')} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-lg">
+                    {user.name?.charAt(0) || t('USER_SIDEBAR.AVATAR.FALLBACK')}
+                  </AvatarFallback>
+                </Avatar>
                 {user?.name}
               </DropdownMenuTrigger>
               <DropdownMenuContent>

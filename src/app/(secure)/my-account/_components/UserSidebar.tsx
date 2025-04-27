@@ -7,6 +7,9 @@ import { Separator } from '@/components/ui/separator';
 import { capitalizeFirstLetters } from '@/utils/common.util';
 import { Camera, UserCircle, Mail, BadgeCheck } from 'lucide-react';
 import { useI18n } from '@/i18n';
+import { useAuth } from '@/context/auth.context';
+import { useRef } from 'react';
+import { toast } from 'sonner';
 
 interface UserSidebarProps {
   user: User;
@@ -14,8 +17,32 @@ interface UserSidebarProps {
 
 export default function UserSidebar({ user }: UserSidebarProps) {
   const { t, isReady } = useI18n();
+  const { updateUser } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!isReady) return null;
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      await updateUser(
+        {
+          id: user.id,
+        },
+        file,
+      );
+      toast(t('USER_SIDEBAR.AVATAR.UPLOAD_SUCCESS'));
+    } catch (error) {
+      console.error('Failed to upload avatar:', error);
+      toast.error(t('USER_SIDEBAR.AVATAR.UPLOAD_ERROR'));
+    }
+  };
 
   return (
     <Card className="bg-card/30 overflow-hidden backdrop-blur-sm">
@@ -23,7 +50,7 @@ export default function UserSidebar({ user }: UserSidebarProps) {
         <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 transform">
           <div className="relative">
             <Avatar className="border-background h-24 w-24 border-4">
-              <AvatarImage src="/user.png" alt={user.name || t('USER_SIDEBAR.AVATAR.ALT')} />
+              <AvatarImage src={user.avatar?.url || '/user.png'} alt={user.name || t('USER_SIDEBAR.AVATAR.ALT')} />
               <AvatarFallback className="bg-primary/10 text-primary text-lg">
                 {user.name?.charAt(0) || t('USER_SIDEBAR.AVATAR.FALLBACK')}
               </AvatarFallback>
@@ -33,9 +60,11 @@ export default function UserSidebar({ user }: UserSidebarProps) {
               variant="secondary"
               className="absolute right-0 bottom-0 h-8 w-8 rounded-full shadow-md"
               aria-label={t('USER_SIDEBAR.AVATAR.UPLOAD_BUTTON')}
+              onClick={handleUploadClick}
             >
               <Camera className="h-4 w-4" />
             </Button>
+            <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} />
           </div>
         </div>
       </div>

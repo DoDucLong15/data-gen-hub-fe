@@ -1106,7 +1106,9 @@
     "AVATAR": {
       "ALT": "Người dùng",
       "FALLBACK": "U",
-      "UPLOAD_BUTTON": "Tải lên ảnh đại diện"
+      "UPLOAD_BUTTON": "Tải lên ảnh đại diện",
+      "UPLOAD_SUCCESS": "Ảnh đại diện đã được tải lên thành công",
+      "UPLOAD_ERROR": "Không thể tải lên ảnh đại diện"
     },
     "INFO": {
       "ID": {

@@ -1,5 +1,6 @@
 import { UserRole } from '@/configs/role.config';
 import { IPermission } from './authorization.type';
+import { TImageInfo } from './image.type';
 
 export type User = {
   id: string;
@@ -15,6 +16,7 @@ export type User = {
   updatedAt?: Date;
   deletedAt?: Date;
   permissions: IPermission[];
+  avatar?: TImageInfo;
 };
 
 export type UserFormData = {

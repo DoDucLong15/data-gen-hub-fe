@@ -23,7 +23,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
-  updateUser: (userData: Partial<User>) => Promise<User>;
+  updateUser: (userData: Partial<User>, file?: File) => Promise<User>;
   hasPermission: (action: EAction, subject: ESubject) => boolean;
   checkPermissions: (permissions: Array<{ action: EAction; subject: ESubject }>, logic?: 'AND' | 'OR') => boolean;
 }
@@ -120,12 +120,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const updateUser = async (userData: Partial<User>): Promise<User> => {
+  const updateUser = async (userData: Partial<User>, file?: File): Promise<User> => {
     try {
       setLoading(true);
-      const response = await apiClient.patch('/users', {
-        ...userData,
-        id: user?.id,
+      const formData = new FormData();
+      formData.append('id', userData.id!);
+      if (userData.name) formData.append('name', userData.name);
+      if (userData.email) formData.append('email', userData.email);
+      if (userData.phone) formData.append('phone', userData.phone);
+      if (userData.school) formData.append('school', userData.school);
+      if (userData.department) formData.append('department', userData.department);
+      if (userData.position) formData.append('position', userData.position);
+      if (userData.roleId) formData.append('roleId', userData.roleId);
+      if (file) {
+        formData.append('file', file);
+      }
+      const response = await apiClient.patch('/users', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       const updatedUser = response.data;
       setUser((prevUser) => {
