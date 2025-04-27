@@ -1106,7 +1106,9 @@
     "AVATAR": {
       "ALT": "User",
       "FALLBACK": "U",
-      "UPLOAD_BUTTON": "Upload avatar"
+      "UPLOAD_BUTTON": "Upload avatar",
+      "UPLOAD_SUCCESS": "Avatar uploaded successfully",
+      "UPLOAD_ERROR": "Failed to upload avatar"
     },
     "INFO": {
       "ID": {
