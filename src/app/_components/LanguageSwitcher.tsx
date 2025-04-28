@@ -1,15 +1,14 @@
 'use client';
 
 import { useI18n } from '@/i18n';
-import { useState, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
+import ReactCountryFlag from 'react-country-flag';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Languages } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 type LocaleType = 'en' | 'vi';
 
@@ -18,33 +17,49 @@ export default function LanguageSwitcher() {
 
   if (!isReady) return null;
 
-  // Hiển thị tên ngôn ngữ hiện tại
-  const localeText = {
-    en: 'EN',
-    vi: 'VI',
-  };
+  // Language options with country codes for flags
+  const languages = [
+    { code: 'en', name: 'English (US)', displayName: 'English', countryCode: 'US' },
+    { code: 'vi', name: 'Vietnamese', displayName: 'Vietnamese', countryCode: 'VN' },
+  ];
+
+  // Get current language display info
+  const currentLanguage = languages.find((lang) => lang.code === locale) || languages[0];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="flex h-8 items-center gap-1">
-          <Languages className="h-4 w-4" />
-          <span>{localeText[locale as LocaleType]}</span>
-        </Button>
+        <button className="text-foreground hover:text-foreground/90 flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-200 focus:outline-none">
+          <ReactCountryFlag
+            countryCode={currentLanguage.countryCode}
+            svg
+            style={{
+              width: '18px',
+              height: '12px',
+            }}
+          />
+          <span>{currentLanguage.displayName}</span>
+          <ChevronDown className="h-4 w-4" />
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          onClick={() => setLocale('en' as LocaleType)}
-          className={locale === 'en' ? 'bg-accent text-accent-foreground' : ''}
-        >
-          English
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => setLocale('vi' as LocaleType)}
-          className={locale === 'vi' ? 'bg-accent text-accent-foreground' : ''}
-        >
-          Tiếng Việt
-        </DropdownMenuItem>
+      <DropdownMenuContent className="w-40">
+        {languages.map((lang) => (
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => setLocale(lang.code as LocaleType)}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            <ReactCountryFlag
+              countryCode={lang.countryCode}
+              svg
+              style={{
+                width: '18px',
+                height: '12px',
+              }}
+            />
+            <span>{lang.name}</span>
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
