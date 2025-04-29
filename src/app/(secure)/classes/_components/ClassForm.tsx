@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { TClass } from '@/utils/types/classes.type';
 import { Spinner } from '@/components/ui/spinner';
 import { useI18n } from '@/i18n';
+import Link from 'next/link';
 
 interface ClassFormProps {
   initialData?: TClass;
@@ -116,6 +117,18 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
             {t('CLASSES.FORM.DRIVE_ID.ACCESS_NOTE')}
             <span className="rounded bg-red-200 px-1 font-mono text-xs">
               {t('CLASSES.FORM.DRIVE_ID.SERVICE_ACCOUNT')}
+            </span>
+            <br />
+            {/* Instructions */}
+            <span className="rounded text-sm font-bold">
+              {t('CLASSES.FORM.DRIVE_ID.INSTRUCTIONS')}:{' '}
+              <Link
+                href={process.env.NEXT_PUBLIC_URL_INSTRUCTION_DRIVE || ''}
+                target="_blank"
+                className="text-blue-500 underline hover:text-blue-600"
+              >
+                Link
+              </Link>
             </span>
           </p>
         </div>

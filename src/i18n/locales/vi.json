@@ -103,12 +103,13 @@
         "PLACEHOLDER": "VD: HK1 2025"
       },
       "DRIVE_ID": {
-        "LABEL": "ID Drive",
+        "LABEL": "Google Drive ID",
         "PLACEHOLDER": "VD: 1A2B3C4D5E6F7G8H9I0J",
         "DESCRIPTION": "Nhập ID thư mục Google Drive để lưu trữ tài liệu lớp học. Trường này là tùy chọn.",
         "IMPORTANT": "Quan trọng",
-        "ACCESS_NOTE": "Trước khi sử dụng tính năng này, vui lòng chia sẻ quyền chỉnh sửa thư mục của bạn với tài khoản dịch vụ của chúng tôi:",
-        "SERVICE_ACCOUNT": "data-gen-hub@oauth2-402816.iam.gserviceaccount.com"
+        "ACCESS_NOTE": "Trước khi sử dụng tính năng này, vui lòng chia sẻ quyền chỉnh sửa thư mục của bạn với tài khoản google của chúng tôi:",
+        "SERVICE_ACCOUNT": "data-gen-hub@oauth2-402816.iam.gserviceaccount.com",
+        "INSTRUCTIONS": "Truy cập link sau để xem hướng dẫn chi tiết"
       },
       "BUTTONS": {
         "CANCEL": "Hủy",

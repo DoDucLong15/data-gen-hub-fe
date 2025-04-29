@@ -103,12 +103,13 @@
         "PLACEHOLDER": "e.g. Fall 2025"
       },
       "DRIVE_ID": {
-        "LABEL": "Drive ID",
+        "LABEL": "Google Drive ID",
         "PLACEHOLDER": "e.g. 1A2B3C4D5E6F7G8H9I0J",
         "DESCRIPTION": "Enter the Google Drive folder ID to store class materials. This field is optional.",
         "IMPORTANT": "Important",
-        "ACCESS_NOTE": "Before using this feature, please share editing access to your folder with our service account:",
-        "SERVICE_ACCOUNT": "data-gen-hub@oauth2-402816.iam.gserviceaccount.com"
+        "ACCESS_NOTE": "Before using this feature, please share editing access to your folder with our google account:",
+        "SERVICE_ACCOUNT": "data-gen-hub@oauth2-402816.iam.gserviceaccount.com",
+        "INSTRUCTIONS": "Click the link below to view detailed instructions"
       },
       "BUTTONS": {
         "CANCEL": "Cancel",
