@@ -162,7 +162,8 @@
           "IMPORT": "Nhập phiếu"
         },
         "OTHER_DOCUMENTS": "Tài liệu khác",
-        "DRIVE_INFO": "Thông tin Drive"
+        "DRIVE_INFO": "Google Drive",
+        "ONE_DRIVE": "OneDrive"
       }
     }
   },

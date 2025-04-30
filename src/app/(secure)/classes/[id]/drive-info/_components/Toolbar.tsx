@@ -126,7 +126,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       <div className="flex w-full items-center justify-end gap-2 md:w-auto">
         {selectedFiles.length > 0 && (
           <>
-            <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+            <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
               <Button variant="outline" size="sm" onClick={() => setIsDeleteAlertOpen(true)}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.DELETE')}
@@ -144,7 +144,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </>
         )}
 
-        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
           <Button variant="default" size="sm" onClick={onUploadClick}>
             <Upload className="mr-2 h-4 w-4" />
             {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.UPLOAD')}
@@ -153,7 +153,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Button variant="outline" onClick={() => refetchFileTree()} disabled={isRefetchingFileTree}>
           <RefreshCw className={`h-4 w-4 ${isRefetchingFileTree ? 'animate-spin' : ''}`} />
         </Button>
-        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_Drive }]}>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
           <Button variant="outline" onClick={handleSync} disabled={syncDriveDataMutation.isPending}>
             <FolderSync className={`h-4 w-4 ${syncDriveDataMutation.isPending ? 'animate-spin' : ''}`} />
             {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.SYNC_DRIVE')}

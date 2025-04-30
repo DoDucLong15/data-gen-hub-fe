@@ -162,7 +162,8 @@
           "IMPORT": "Import"
         },
         "OTHER_DOCUMENTS": "Other documents",
-        "DRIVE_INFO": "Drive Info"
+        "DRIVE_INFO": "Google Drive",
+        "ONE_DRIVE": "OneDrive"
       }
     }
   },

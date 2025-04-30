@@ -24,7 +24,7 @@ export default function FileManagerPage() {
         <CardContent>
           <Tabs defaultValue="files" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="mb-4 w-full">
-              <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_Drive }]}>
+              <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_GoogleDrive }]}>
                 <TabsTrigger value="files" className="flex-1">
                   {t('THESIS_PAGE.DRIVE_INFO.TABS.FILES.LABEL')}
                 </TabsTrigger>
