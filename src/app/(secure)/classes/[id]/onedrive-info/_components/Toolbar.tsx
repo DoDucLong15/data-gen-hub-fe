@@ -3,7 +3,6 @@ import { Grid3X3, List, Upload, Download, Trash2, Search, RefreshCw, FolderSync 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FileViewMode } from '@/utils/types/file.type';
-import { useDrives, useFileDownload, useFileSelection } from '@/hooks/useDrive';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import {
   AlertDialog,
@@ -20,7 +19,8 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
 import { useI18n } from '@/i18n';
-
+import { useOneDriveDownload, useOneDrives } from '@/hooks/userOneDrive';
+import { TOnedriveIdentity } from '@/utils/types/onedrive.type';
 interface ToolbarProps {
   classId: string;
   viewMode: FileViewMode;
@@ -28,7 +28,7 @@ interface ToolbarProps {
   onUploadClick: () => void;
   onSearchChange: (query: string) => void;
   searchQuery: string;
-  selectedFiles: string[];
+  selectedFiles: TOnedriveIdentity[];
   clearSelection: () => void;
 }
 
@@ -47,16 +47,16 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     refetchFileTree,
     isRefetchingFileTree,
     syncDriveDataMutation,
-  } = useDrives(classId);
-  const { downloadFile } = useFileDownload();
+  } = useOneDrives(classId);
+  const { downloadFile } = useOneDriveDownload();
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { t, isReady } = useI18n();
 
   const handleDelete = async () => {
     try {
-      for (const fileId of selectedFiles) {
-        await deleteItem.mutateAsync(fileId);
+      for (const file of selectedFiles) {
+        await deleteItem.mutateAsync({ driveId: file.driveId, fileId: file.id });
       }
       toast.success(
         selectedFiles.length === 1
@@ -87,7 +87,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (selectedFiles.length > 0) {
       try {
         setIsDownloading(true);
-        await downloadFile(classId, selectedFiles, 'download');
+        await downloadFile(
+          selectedFiles
+            .filter((item) => item.downloadUrl !== undefined && item.downloadUrl !== '' && item.downloadUrl !== null)
+            .map((item) => item.downloadUrl as string),
+        );
       } finally {
         setIsDownloading(false);
       }
@@ -126,7 +130,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       <div className="flex w-full items-center justify-end gap-2 md:w-auto">
         {selectedFiles.length > 0 && (
           <>
-            <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
+            <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_OneDrive }]}>
               <Button variant="outline" size="sm" onClick={() => setIsDeleteAlertOpen(true)}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.DELETE')}
@@ -144,7 +148,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </>
         )}
 
-        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_OneDrive }]}>
           <Button variant="default" size="sm" onClick={onUploadClick}>
             <Upload className="mr-2 h-4 w-4" />
             {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.UPLOAD')}
@@ -153,7 +157,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Button variant="outline" onClick={() => refetchFileTree()} disabled={isRefetchingFileTree}>
           <RefreshCw className={`h-4 w-4 ${isRefetchingFileTree ? 'animate-spin' : ''}`} />
         </Button>
-        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_GoogleDrive }]}>
+        <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Thesis_OneDrive }]}>
           <Button variant="outline" onClick={handleSync} disabled={syncDriveDataMutation.isPending}>
             <FolderSync className={`h-4 w-4 ${syncDriveDataMutation.isPending ? 'animate-spin' : ''}`} />
             {t('THESIS_PAGE.DRIVE_INFO.TOOLBAR.BUTTONS.SYNC_DRIVE')}

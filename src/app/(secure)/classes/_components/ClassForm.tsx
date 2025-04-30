@@ -32,7 +32,7 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'driveId') {
+    if (name === 'driveId' || name === 'onedriveSharedLink') {
       setFormData((prev) => ({ ...prev, [name]: value.trim() === '' ? undefined : value }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -111,8 +111,8 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
             placeholder={t('CLASSES.FORM.DRIVE_ID.PLACEHOLDER')}
           />
           <p className="text-muted-foreground text-sm">
-            {t('CLASSES.FORM.DRIVE_ID.DESCRIPTION')}
-            <br />
+            {/* {t('CLASSES.FORM.DRIVE_ID.DESCRIPTION')}
+            <br /> */}
             <span className="font-bold text-red-400">{t('CLASSES.FORM.DRIVE_ID.IMPORTANT')}:</span>{' '}
             {t('CLASSES.FORM.DRIVE_ID.ACCESS_NOTE')}
             <span className="rounded bg-red-200 px-1 font-mono text-xs">
@@ -124,6 +124,38 @@ export function ClassForm({ initialData, onSubmit, isSubmitting = false, onCance
               {t('CLASSES.FORM.DRIVE_ID.INSTRUCTIONS')}:{' '}
               <Link
                 href={process.env.NEXT_PUBLIC_URL_INSTRUCTION_DRIVE || ''}
+                target="_blank"
+                className="text-blue-500 underline hover:text-blue-600"
+              >
+                Link
+              </Link>
+            </span>
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="onedriveSharedLink">{t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.LABEL')}</Label>
+          <Input
+            id="onedriveSharedLink"
+            name="onedriveSharedLink"
+            value={formData.onedriveSharedLink || ''}
+            onChange={handleChange}
+            placeholder={t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.PLACEHOLDER')}
+          />
+          <p className="text-muted-foreground text-sm">
+            {t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.DESCRIPTION')}
+            <br />
+            <span className="font-bold text-red-400">{t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.IMPORTANT')}:</span>{' '}
+            {t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.ACCESS_NOTE')}
+            <span className="rounded bg-red-200 px-1 font-mono text-xs">
+              {t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.SERVICE_ACCOUNT')}
+            </span>
+            <br />
+            {/* Instructions */}
+            <span className="rounded text-sm font-bold">
+              {t('CLASSES.FORM.ONEDRIVE_SHARED_LINK.INSTRUCTIONS')}:{' '}
+              <Link
+                href={process.env.NEXT_PUBLIC_URL_INSTRUCTION_ONEDRIVE || ''}
                 target="_blank"
                 className="text-blue-500 underline hover:text-blue-600"
               >

@@ -4,6 +4,7 @@ import { ApiResponse } from './instances/instance.config';
 const AuthApiEndPoint = {
   SIGN_IN: '/auth/sign-in',
   REFRESH_TOKEN: '/auth/refresh-token',
+  ADD_ONEDRIVE_CONNECTOR: '/auth/onedrive/login',
 };
 
 export type SignInResponse = {
@@ -33,5 +34,11 @@ export const AuthApi = {
       next: { revalidate: false },
       body: JSON.stringify(request),
     });
+  },
+
+  async addOneDriveConnector(): Promise<void> {
+    const res = await new FetchInstance().get(AuthApiEndPoint.ADD_ONEDRIVE_CONNECTOR);
+    const { url } = res.data;
+    window.open(url, '_blank', 'width=600,height=700');
   },
 };

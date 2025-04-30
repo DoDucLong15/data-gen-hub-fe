@@ -119,7 +119,14 @@ export function ClassSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
         isActive: false,
         url: 'drive-info',
         action: EAction.READ,
-        subject: ESubject.Thesis_Drive,
+        subject: ESubject.Thesis_GoogleDrive,
+      },
+      {
+        title: t('CLASSES.SIDEBAR.MENU.ONE_DRIVE'),
+        isActive: false,
+        url: 'onedrive-info',
+        action: EAction.READ,
+        subject: ESubject.Thesis_OneDrive,
       },
     ],
   };

@@ -7,6 +7,7 @@ export type TClass = {
   studentPaths?: string[];
   outputPath?: string;
   driveId?: string;
+  onedriveSharedLink?: string;
 };
 
 export interface StudentFormStatus {

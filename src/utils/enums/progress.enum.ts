@@ -5,6 +5,7 @@ export enum EProgressType {
   STUDENT_LIST = 'student_list',
   OTHER_DOCUMENT = 'other_document',
   DRIVE_DATA = 'drive_data',
+  ONE_DRIVE_DATA = 'onedrive_data',
 }
 
 export enum EProgressStatus {
