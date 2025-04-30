@@ -779,7 +779,8 @@
     "TITLE": "Cấu hình hệ thống",
     "ACTIONS": {
       "ADD": "Thêm mới",
-      "REFRESH": "Làm mới"
+      "REFRESH": "Làm mới",
+      "ADD_CONNECTOR_ONE_DRIVE": "Tích hợp OneDrive"
     },
     "LIST": {
       "HEADERS": {

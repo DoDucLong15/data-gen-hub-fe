@@ -779,7 +779,8 @@
     "TITLE": "System Configuration",
     "ACTIONS": {
       "ADD": "Add New",
-      "REFRESH": "Refresh"
+      "REFRESH": "Refresh",
+      "ADD_CONNECTOR_ONE_DRIVE": "Integrate OneDrive"
     },
     "LIST": {
       "HEADERS": {

@@ -9,6 +9,15 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
 import { useI18n } from '@/i18n';
+import { useState, useMemo } from 'react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 interface ClassListProps {
   classes: TClass[];
@@ -16,10 +25,24 @@ interface ClassListProps {
   onRefresh: () => void;
   onAdd: () => void;
   searchQuery?: string;
+  itemsPerPage?: number;
 }
 
-export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }: ClassListProps) {
+export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery, itemsPerPage = 6 }: ClassListProps) {
   const { t, isReady } = useI18n();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = useMemo(() => Math.ceil(classes.length / itemsPerPage), [classes.length, itemsPerPage]);
+
+  const paginatedClasses = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return classes.slice(startIndex, endIndex);
+  }, [classes, currentPage, itemsPerPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   if (isLoading) {
     return (
@@ -58,10 +81,38 @@ export function ClassList({ classes, isLoading, onRefresh, onAdd, searchQuery }:
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {classes.map((classItem) => (
+        {paginatedClasses.map((classItem) => (
           <ClassCard key={classItem.id} classItem={classItem} />
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="mt-8 flex justify-center">
+          <Pagination>
+            <PaginationContent>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} />
+                </PaginationItem>
+              )}
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <PaginationItem key={page}>
+                  <PaginationLink isActive={currentPage === page} onClick={() => handlePageChange(page)}>
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+              {currentPage < totalPages && (
+                <PaginationItem>
+                  <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }

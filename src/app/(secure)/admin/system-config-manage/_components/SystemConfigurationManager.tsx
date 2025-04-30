@@ -11,6 +11,7 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction } from '@/utils/types/authorization.type';
 import { useI18n } from '@/i18n';
+import { AuthApi } from '@/apis/auth.api';
 
 export default function SystemConfigurationManager() {
   // Query hooks
@@ -82,6 +83,12 @@ export default function SystemConfigurationManager() {
           <Button onClick={() => refetch()} variant={'outline'}>
             <RefreshCcw className="h-4 w-4" />
           </Button>
+          <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.Onedrive }]}>
+            <Button onClick={() => AuthApi.addOneDriveConnector()}>
+              <Plus className="mr-2 h-4 w-4" />
+              {t('SYSTEM_CONFIG_PAGE.ACTIONS.ADD_CONNECTOR_ONE_DRIVE')}
+            </Button>
+          </ProtectedComponent>
         </div>
       </div>
 
