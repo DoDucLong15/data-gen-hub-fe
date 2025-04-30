@@ -107,8 +107,17 @@
         "PLACEHOLDER": "e.g. 1A2B3C4D5E6F7G8H9I0J",
         "DESCRIPTION": "Enter the Google Drive folder ID to store class materials. This field is optional.",
         "IMPORTANT": "Important",
-        "ACCESS_NOTE": "Before using this feature, please share editing access to your folder with our google account:",
+        "ACCESS_NOTE": "Before using this feature, please share editing access to your folder with our Google account:",
         "SERVICE_ACCOUNT": "data-gen-hub@oauth2-402816.iam.gserviceaccount.com",
+        "INSTRUCTIONS": "Click the link below to view detailed instructions"
+      },
+      "ONEDRIVE_SHARED_LINK": {
+        "LABEL": "OneDrive Shared Link",
+        "PLACEHOLDER": "e.g. https://onedrive.live.com/...",
+        "DESCRIPTION": "To use this feature, your Microsoft account must be a personal account",
+        "IMPORTANT": "Important",
+        "ACCESS_NOTE": "Before using this feature, please share editing access to your folder with our Microsoft account:",
+        "SERVICE_ACCOUNT": "llong6412@gmail.com",
         "INSTRUCTIONS": "Click the link below to view detailed instructions"
       },
       "BUTTONS": {
