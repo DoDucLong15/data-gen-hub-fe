@@ -37,7 +37,7 @@ export const FileGrid: React.FC<FileGridProps> = ({
     if (event.ctrlKey || event.metaKey) {
       toggleFileSelection({
         id: file.id,
-        driveId: file.parentReference.driveId,
+        driveId: file.parentReference?.driveId,
         downloadUrl: file['@microsoft.graph.downloadUrl'],
       });
     } else {
@@ -79,7 +79,7 @@ export const FileGrid: React.FC<FileGridProps> = ({
           className={`cursor-pointer transition-colors hover:bg-gray-50 ${
             isSelected({
               id: file.id,
-              driveId: file.parentReference.driveId,
+              driveId: file.parentReference?.driveId,
               downloadUrl: file['@microsoft.graph.downloadUrl'],
             })
               ? 'ring-2 ring-blue-500'
@@ -91,7 +91,7 @@ export const FileGrid: React.FC<FileGridProps> = ({
             e.preventDefault();
             toggleFileSelection({
               id: file.id,
-              driveId: file.parentReference.driveId,
+              driveId: file.parentReference?.driveId,
               downloadUrl: file['@microsoft.graph.downloadUrl'],
             });
           }}

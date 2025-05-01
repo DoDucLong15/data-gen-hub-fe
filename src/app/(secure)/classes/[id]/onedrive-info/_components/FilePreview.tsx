@@ -20,7 +20,7 @@ export const FilePreview: React.FC<FilePreviewProps> = ({ classId, file, isOpen,
   const { downloadFile } = useOneDriveDownload();
   const [isDownloading, setIsDownloading] = useState(false);
   const { oneDriveFilePreview, oneDriveFilePreviewIsLoading } = useOneDriveFilePreview(
-    file?.parentReference.driveId || '',
+    file?.parentReference?.driveId || '',
     file?.id || '',
   );
   const { t, isReady } = useI18n();

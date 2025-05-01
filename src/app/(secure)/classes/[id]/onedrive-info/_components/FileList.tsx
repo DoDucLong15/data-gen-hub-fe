@@ -83,7 +83,7 @@ export const FileList: React.FC<FileListProps> = ({
         {filteredFiles.map((file) => (
           <TableRow
             key={file.id}
-            className={`cursor-pointer hover:bg-gray-50 ${isSelected({ id: file.id, driveId: file.parentReference.driveId, downloadUrl: file['@microsoft.graph.downloadUrl'] }) ? 'bg-blue-50' : ''}`}
+            className={`cursor-pointer hover:bg-gray-50 ${isSelected({ id: file.id, driveId: file.parentReference?.driveId, downloadUrl: file['@microsoft.graph.downloadUrl'] }) ? 'bg-blue-50' : ''}`}
             onClick={() => handleItemClick(file)}
             onDoubleClick={() => handleDoubleClick(file)}
           >
@@ -91,13 +91,13 @@ export const FileList: React.FC<FileListProps> = ({
               <Checkbox
                 checked={isSelected({
                   id: file.id,
-                  driveId: file.parentReference.driveId,
+                  driveId: file.parentReference?.driveId,
                   downloadUrl: file['@microsoft.graph.downloadUrl'],
                 })}
                 onCheckedChange={() =>
                   toggleFileSelection({
                     id: file.id,
-                    driveId: file.parentReference.driveId,
+                    driveId: file.parentReference?.driveId,
                     downloadUrl: file['@microsoft.graph.downloadUrl'],
                   })
                 }

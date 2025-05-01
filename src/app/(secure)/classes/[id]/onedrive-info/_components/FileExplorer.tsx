@@ -102,7 +102,7 @@ export const FileExplorer: React.FC<FileExplorerProps> = ({ classId }: { classId
         isOpen={isUploadOpen}
         onClose={() => setIsUploadOpen(false)}
         folderId={currentFolder?.id || 'root'}
-        driveId={currentFolder?.parentReference.driveId || ''}
+        driveId={currentFolder?.parentReference?.driveId || ''}
       />
 
       {previewFile && (
