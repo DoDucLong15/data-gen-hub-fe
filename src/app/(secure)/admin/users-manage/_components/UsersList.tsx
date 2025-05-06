@@ -31,6 +31,7 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useI18n } from '@/i18n';
+import { capitalizeFirstLetters } from '@/utils/common.util';
 
 export function UsersList() {
   const { users, isLoading, deleteUser } = useUsers();
@@ -53,11 +54,11 @@ export function UsersList() {
   };
 
   const getRoleBadge = (role: string) => {
-    switch (role) {
+    switch (role?.toLowerCase()) {
       case 'admin':
-        return <Badge className="bg-red-500">{t('USERS_LIST.TABLE.ROLES.ADMIN')}</Badge>;
+        return <Badge className="bg-red-500">{capitalizeFirstLetters(role)}</Badge>;
       default:
-        return <Badge>{t('USERS_LIST.TABLE.ROLES.TEACHER')}</Badge>;
+        return <Badge>{capitalizeFirstLetters(role)}</Badge>;
     }
   };
 
