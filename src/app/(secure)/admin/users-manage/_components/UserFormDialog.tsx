@@ -31,23 +31,13 @@ import { useI18n } from '@/i18n';
 type UserFormDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  userId?: string;
+  user?: User;
   mode: 'add' | 'edit';
 };
 
-export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDialogProps) {
-  const queryClient = useQueryClient();
+export function UserFormDialog({ open, onOpenChange, user, mode }: UserFormDialogProps) {
   const { addUser, updateUser } = useUsers();
   const { roles } = useRoles();
-  const { data: user, isLoading } = useQuery({
-    queryKey: [...USERS_QUERY_KEY, 'user', userId],
-    queryFn: () => {
-      const users: User[] | undefined = queryClient.getQueryData(USERS_QUERY_KEY);
-      if (!users) return null;
-      return users.find((u) => u.id === userId);
-    },
-    enabled: !!userId,
-  });
   const { t, isReady } = useI18n();
 
   // Zod schema for form validation
@@ -125,8 +115,8 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
       if (mode === 'add') {
         await addUser(formData);
         toast(t('USER_FORM.TOAST.SUCCESS.ADD'));
-      } else if (mode === 'edit' && userId) {
-        await updateUser(userId, formData);
+      } else if (mode === 'edit' && user) {
+        await updateUser(user.id, formData);
         toast(t('USER_FORM.TOAST.SUCCESS.UPDATE'));
       }
 
@@ -148,7 +138,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
           </DialogDescription>
         </DialogHeader>
 
-        {isLoading && mode === 'edit' ? (
+        {!user && mode === 'edit' ? (
           <div className="my-4 flex justify-center">{t('USER_FORM.LOADING')}</div>
         ) : (
           <Form {...form}>
@@ -194,7 +184,7 @@ export function UserFormDialog({ open, onOpenChange, userId, mode }: UserFormDia
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {roles.map((role, index) => (
+                        {roles?.map((role, index) => (
                           <SelectItem key={index} value={role.id}>
                             {capitalizeFirstLetters(role.name)}
                           </SelectItem>

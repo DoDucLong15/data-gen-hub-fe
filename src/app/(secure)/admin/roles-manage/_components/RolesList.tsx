@@ -175,12 +175,10 @@ export function RolesList() {
                   </TableCell>
                   <TableCell>
                     <Badge
-                      variant={role.id.charCodeAt(0) % 2 === 0 ? 'default' : 'outline'}
-                      className={role.id.charCodeAt(0) % 2 === 0 ? 'bg-green-500 hover:bg-green-600' : ''}
+                      variant={role.userCount ? 'default' : 'outline'}
+                      className={role.userCount ? 'bg-green-500 hover:bg-green-600' : ''}
                     >
-                      {role.id.charCodeAt(0) % 2 === 0
-                        ? t('ROLE_LIST.TABLE.STATUS.ACTIVE')
-                        : t('ROLE_LIST.TABLE.STATUS.INACTIVE')}
+                      {role.userCount ? t('ROLE_LIST.TABLE.STATUS.ACTIVE') : t('ROLE_LIST.TABLE.STATUS.INACTIVE')}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">

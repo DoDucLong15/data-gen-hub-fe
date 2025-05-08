@@ -32,11 +32,11 @@ import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useI18n } from '@/i18n';
 import { capitalizeFirstLetters } from '@/utils/common.util';
-
+import { User } from '@/utils/types/user.type';
 export function UsersList() {
   const { users, isLoading, deleteUser } = useUsers();
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
-  const [userToEdit, setUserToEdit] = useState<string | null>(null);
+  const [userToEdit, setUserToEdit] = useState<User | null>(null);
   const [userToView, setUserToView] = useState<string | null>(null);
   const { t, isReady } = useI18n();
 
@@ -117,7 +117,7 @@ export function UsersList() {
                           {t('USERS_LIST.DROPDOWN.VIEW')}
                         </DropdownMenuItem>
                         <ProtectedComponent permissions={[{ action: EAction.MANAGE, subject: ESubject.System_Users }]}>
-                          <DropdownMenuItem onClick={() => setUserToEdit(user.id)}>
+                          <DropdownMenuItem onClick={() => setUserToEdit(user)}>
                             <Edit className="mr-2 h-4 w-4" />
                             {t('USERS_LIST.DROPDOWN.EDIT')}
                           </DropdownMenuItem>
@@ -162,7 +162,7 @@ export function UsersList() {
       <UserFormDialog
         open={!!userToEdit}
         onOpenChange={(open) => !open && setUserToEdit(null)}
-        userId={userToEdit || undefined}
+        user={userToEdit || undefined}
         mode="edit"
       />
 
