@@ -211,6 +211,7 @@ export default function GenerateForm({ classId, thesisType }: { classId: string;
         onClose={closeStudentSelection}
         students={selectedStudents}
         onSelectStudents={handleSelectStudents}
+        selectedStudentIds={selectedStudentIds}
       />
     </div>
   );
