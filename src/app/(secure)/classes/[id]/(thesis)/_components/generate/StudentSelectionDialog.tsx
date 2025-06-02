@@ -16,6 +16,7 @@ interface StudentSelectionDialogProps {
   onClose: () => void;
   students: TStudent[];
   onSelectStudents: (selectedIds: string[]) => void;
+  selectedStudentIds?: string[];
 }
 
 export default function StudentSelectionDialog({
@@ -23,6 +24,7 @@ export default function StudentSelectionDialog({
   onClose,
   students,
   onSelectStudents,
+  selectedStudentIds = [],
 }: StudentSelectionDialogProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,11 +34,11 @@ export default function StudentSelectionDialog({
   // Reset selection when dialog opens with new students
   useEffect(() => {
     if (open) {
-      setSelectedIds(new Set());
+      setSelectedIds(new Set(selectedStudentIds));
       setSearchTerm('');
       setFilteredStudents(students);
     }
-  }, [open, students]);
+  }, [open, students, selectedStudentIds]);
 
   // Filter students based on search term
   useEffect(() => {
