@@ -54,18 +54,18 @@ function Header() {
                 alt="logo"
                 width={60}
                 height={60}
-                className="w-[150px] cursor-pointer"
+                className="h-10 cursor-pointer"
                 onClick={() => router.push('/')}
               />
             </div>
           ) : (
-            <div className="mr-6 flex items-center">
+            <div className="ml-1 mr-6 flex items-center">
               <Image
                 src="/logo.svg"
                 alt="logo"
                 width={60}
                 height={60}
-                className="w-[150px] cursor-pointer"
+                className="h-10 cursor-pointer"
                 onClick={() => router.push('/')}
               />
             </div>
