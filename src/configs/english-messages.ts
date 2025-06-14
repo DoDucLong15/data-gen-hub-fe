@@ -1352,6 +1352,95 @@ export const ENGLISH_MESSAGES = {
           LABEL: 'Reliability and References Point',
           ERROR: 'Reliability and references point is optional',
         },
+        RESPONSIBILITY_ATTITUDE_POINT: {
+          LABEL: 'Responsibility Attitude Point',
+          ERROR: 'Responsibility attitude point is optional',
+        },
+        TECH_MASTERY_POINT: {
+          LABEL: 'Tech Mastery Point',
+          ERROR: 'Tech mastery point is optional',
+        },
+        PROACTIVENESS_POINT: {
+          LABEL: 'Proactiveness Point',
+          ERROR: 'Proactiveness point is optional',
+        },
+        REWARD_POINT: {
+          LABEL: 'Reward Point',
+          ERROR: 'Reward point is optional',
+        },
+        GENERAL_FEEDBACK: {
+          LABEL: 'General Feedback',
+          ERROR: 'General feedback is optional',
+        },
+        CONCLUSION: {
+          LABEL: 'Conclusion',
+          ERROR: 'Conclusion is optional',
+        },
+        TEACHER_SIGN_DATE: {
+          LABEL: 'Teacher Sign Date',
+          ERROR: 'Teacher sign date is optional',
+        },
+      },
+    },
+    SUPERVISORY_COMMENTS: {
+      TITLE: 'Supervisory Comments',
+      FORM: {
+        MSSV: {
+          LABEL: 'Student ID',
+          ERROR: 'Student ID is required',
+        },
+        FULL_NAME: {
+          LABEL: 'Full Name',
+          ERROR: 'Full name is required',
+        },
+        REVIEWER: {
+          LABEL: 'Reviewer',
+          ERROR: 'Reviewer is optional',
+        },
+        PROJECT_TITLE: {
+          LABEL: 'Project Title',
+          ERROR: 'Project title is optional',
+        },
+        TYPE_OF_THESIS: {
+          LABEL: 'Thesis Type',
+          ERROR: 'Thesis type is optional',
+        },
+        TOPIC_UNIQUENESS_POINT: {
+          LABEL: 'Topic Uniqueness Point',
+          ERROR: 'Topic uniqueness point is optional',
+        },
+        WORKLOAD_POINT: {
+          LABEL: 'Workload Point',
+          ERROR: 'Workload point is optional',
+        },
+        PROBLEM_DIFFICULTY_POINT: {
+          LABEL: 'Problem Difficulty Point',
+          ERROR: 'Problem difficulty point is optional',
+        },
+        SOLUTION_IMPACT_POINT: {
+          LABEL: 'Solution Impact Point',
+          ERROR: 'Solution impact point is optional',
+        },
+        PRODUCT_FINALIZATION_POINT: {
+          LABEL: 'Product Finalization Point',
+          ERROR: 'Product finalization point is optional',
+        },
+        LAYOUT_COHERENCE_POINT: {
+          LABEL: 'Layout Coherence Point',
+          ERROR: 'Layout coherence point is optional',
+        },
+        CONTENT_VALIDITY_POINT: {
+          LABEL: 'Content Validity Point',
+          ERROR: 'Content validity point is optional',
+        },
+        PRESENTATION_QUALITY_POINT: {
+          LABEL: 'Presentation Quality Point',
+          ERROR: 'Presentation quality point is optional',
+        },
+        RELIABILITY_AND_REFERENCES_POINT: {
+          LABEL: 'Reliability and References Point',
+          ERROR: 'Reliability and references point is optional',
+        },
         RESPONSE_ACCURACY_POINT: {
           LABEL: 'Response Accuracy Point',
           ERROR: 'Response accuracy point is optional',
@@ -1375,27 +1464,6 @@ export const ENGLISH_MESSAGES = {
         TEACHER_SIGN_DATE: {
           LABEL: 'Teacher Sign Date',
           ERROR: 'Teacher sign date is optional',
-        },
-      },
-    },
-    SUPERVISORY_COMMENTS: {
-      TITLE: 'Supervisory Comments',
-      FORM: {
-        SUPERVISOR: {
-          LABEL: 'Supervisor',
-          ERROR: 'Supervisor is optional',
-        },
-        MSSV: {
-          LABEL: 'Student ID',
-          ERROR: 'Student ID is required',
-        },
-        FULL_NAME: {
-          LABEL: 'Full Name',
-          ERROR: 'Full name is required',
-        },
-        PROJECT_TITLE: {
-          LABEL: 'Project Title',
-          ERROR: 'Project title is optional',
         },
       },
     },

@@ -80,7 +80,7 @@ export function ThesisDetailDialog({
   const renderFieldValue = (column: ColumnConfig, value: any) => {
     if (!value) return t('THESIS_DETAIL_DIALOG.NO_INFO');
 
-    if (column.accessorKey?.includes('At')) {
+    if (column.accessorKey?.endsWith('At')) {
       return formatDistanceToNow(new Date(value), {
         addSuffix: true,
         locale: vi,
