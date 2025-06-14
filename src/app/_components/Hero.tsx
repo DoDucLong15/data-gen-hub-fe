@@ -28,7 +28,10 @@ function Hero() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          <Link href="/demo">
+          <Link
+            href={process.env.NEXT_PUBLIC_URL_DEMO || "https://drive.google.com/file/d/1Pic9QHPUF1s6AczS1DuQbmf0WM30aWH9/view?usp=sharing"}
+            target="_blank"
+          >
             <Button className="flex cursor-pointer items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-base font-medium text-slate-700 transition-all hover:bg-slate-50 md:px-8 md:py-4 md:text-lg">
               {t('HERO.CTA.DEMO')}
             </Button>
