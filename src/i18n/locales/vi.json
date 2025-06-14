@@ -1902,13 +1902,17 @@
       "STATUS": "Trạng thái",
       "ERROR": "Lỗi",
       "CREATED_BY": "Người tạo",
-      "CREATED_AT": "Thời gian tạo"
+      "CREATED_AT": "Thời gian tạo",
+      "LOG": "Logs"
     },
     "LOADING": "Đang tải dữ liệu...",
     "NO_PROCESSES": "Không tìm thấy quy trình xử lý nào",
     "PAGINATION": {
       "SHOW": "Hiển thị",
       "ENTRIES": "bản ghi"
+    },
+    "LOG_MODAL": {
+      "TITLE": "Progress Logs"
     }
   }
 }

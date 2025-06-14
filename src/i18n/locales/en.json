@@ -1889,13 +1889,17 @@
       "STATUS": "Status",
       "ERROR": "Error",
       "CREATED_BY": "Created By",
-      "CREATED_AT": "Created At"
+      "CREATED_AT": "Created At",
+      "LOG": "Logs"
     },
     "LOADING": "Loading processes...",
     "NO_PROCESSES": "No import processes found",
     "PAGINATION": {
       "SHOW": "Show",
       "ENTRIES": "entries"
+    },
+    "LOG_MODAL": {
+      "TITLE": "Progress Logs"
     }
   }
 }

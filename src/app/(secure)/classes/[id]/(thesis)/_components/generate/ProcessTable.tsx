@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { formatDistanceToNow } from 'date-fns';
@@ -21,6 +21,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { useI18n } from '@/i18n';
+import { ProgressLog } from '@/components/common/ProgressLog';
 
 export default function ProcessTable({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const { processes, processesIsLoafing, refetchProcesses } = useGenerateThesis(thesisType, classId);
@@ -29,6 +30,10 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  // Progress Log modal states
+  const [isLogModalOpen, setIsLogModalOpen] = useState(false);
+  const [selectedProgressId, setSelectedProgressId] = useState<string>('');
 
   const getStatusBadge = (status: EProgressStatus) => {
     switch (status) {
@@ -41,6 +46,11 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
+  };
+
+  const handleViewLog = (processId: string) => {
+    setSelectedProgressId(processId);
+    setIsLogModalOpen(true);
   };
 
   // Calculate pagination
@@ -73,18 +83,19 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
                 <TableHead>{t('GENERATE_THESIS.PROCESS.HEADER.STATUS')}</TableHead>
                 <TableHead>{t('GENERATE_THESIS.PROCESS.HEADER.TIME')}</TableHead>
                 <TableHead>{t('GENERATE_THESIS.PROCESS.HEADER.CREATOR')}</TableHead>
+                <TableHead>Logs</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {processesIsLoafing ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={8} className="text-center">
                     {t('GENERATE_THESIS.PROCESS.EMPTY.LOADING')}
                   </TableCell>
                 </TableRow>
               ) : processes.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={8} className="text-center">
                     {t('GENERATE_THESIS.PROCESS.EMPTY.NO_PROCESS')}
                   </TableCell>
                 </TableRow>
@@ -103,6 +114,16 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
                       })}
                     </TableCell>
                     <TableCell>{process.createBy}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleViewLog(process.processId)}
+                        className="h-8 w-8 cursor-pointer p-0"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               )}
@@ -199,6 +220,8 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
           </PaginationContent>
         </Pagination>
       )}
+
+      <ProgressLog isOpen={isLogModalOpen} onClose={() => setIsLogModalOpen(false)} progressId={selectedProgressId} />
     </div>
   );
 }

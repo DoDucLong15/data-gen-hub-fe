@@ -9,6 +9,7 @@ export type TProcess = {
   classId: string;
   createBy: string;
   createdAt: Date;
+  processId: string;
 };
 
 export type TProcessFilter = {
