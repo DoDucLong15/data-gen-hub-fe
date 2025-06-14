@@ -179,6 +179,7 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       fullName: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.ERROR }),
       supervisor: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.ERROR }).optional(),
       projectTitle: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.ERROR }).optional(),
+      typeOfThesis: z.string().min(1, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.ERROR }).optional(),
       topicUniquenessPoint: z
         .number()
         .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.ERROR })
@@ -212,13 +213,17 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
         .number()
         .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RELIABILITY_AND_REFERENCES_POINT.ERROR })
         .optional(),
-      responseAccuracyPoint: z
+      responsibilityAttitudePoint: z
         .number()
-        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSIBILITY_ATTITUDE_POINT.ERROR })
         .optional(),
-      presentationSkillsPoint: z
+      techMasteryPoint: z
         .number()
-        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.ERROR })
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TECH_MASTERY_POINT.ERROR })
+        .optional(),
+      proactivenessPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROACTIVENESS_POINT.ERROR })
         .optional(),
       rewardPoint: z.number().min(0, { message: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.REWARD_POINT.ERROR }).optional(),
       generalFeedback: z
@@ -236,6 +241,7 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       fullName: '',
       supervisor: '',
       projectTitle: '',
+      typeOfThesis: '',
       topicUniquenessPoint: 0,
       workloadPoint: 0,
       problemDifficultyPoint: 0,
@@ -245,8 +251,9 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       contentValidityPoint: 0,
       presentationQualityPoint: 0,
       reliabilityAndReferencesPoint: 0,
-      responseAccuracyPoint: 0,
-      presentationSkillsPoint: 0,
+      responsibilityAttitudePoint: 0,
+      techMasteryPoint: 0,
+      proactivenessPoint: 0,
       rewardPoint: 0,
       generalFeedback: '',
       conclusion: '',
@@ -257,6 +264,11 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.LABEL,
+        accessorKey: 'typeOfThesis',
+        hidden: true,
+      },
       {
         header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.LABEL,
         accessorKey: 'topicUniquenessPoint',
@@ -312,14 +324,20 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
         type: 'number',
       },
       {
-        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSE_ACCURACY_POINT.LABEL,
-        accessorKey: 'responseAccuracyPoint',
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.RESPONSIBILITY_ATTITUDE_POINT.LABEL,
+        accessorKey: 'responsibilityAttitudePoint',
         hidden: true,
         type: 'number',
       },
       {
-        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PRESENTATION_SKILLS_POINT.LABEL,
-        accessorKey: 'presentationSkillsPoint',
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TECH_MASTERY_POINT.LABEL,
+        accessorKey: 'techMasteryPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROACTIVENESS_POINT.LABEL,
+        accessorKey: 'proactivenessPoint',
         hidden: true,
         type: 'number',
       },
@@ -355,25 +373,193 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
     fileListName: 'supervisory-comments.zip',
     title: THESIS_CONFIG.SUPERVISORY_COMMENTS.TITLE,
     formSchema: z.object({
-      supervisor: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SUPERVISOR.ERROR }).optional(),
       mssv: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.MSSV.ERROR }),
       fullName: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.FULL_NAME.ERROR }),
+      reviewer: z.string().min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.REVIEWER.ERROR }).optional(),
       projectTitle: z
         .string()
         .min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.ERROR })
         .optional(),
+      typeOfThesis: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TYPE_OF_THESIS.ERROR })
+        .optional(),
+      topicUniquenessPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TOPIC_UNIQUENESS_POINT.ERROR })
+        .optional(),
+      workloadPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.WORKLOAD_POINT.ERROR })
+        .optional(),
+      solutionImpactPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SOLUTION_IMPACT_POINT.ERROR })
+        .optional(),
+      productFinalizationPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRODUCT_FINALIZATION_POINT.ERROR })
+        .optional(),
+      layoutCoherencePoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.LAYOUT_COHERENCE_POINT.ERROR })
+        .optional(),
+      contentValidityPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.CONTENT_VALIDITY_POINT.ERROR })
+        .optional(),
+      presentationQualityPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRESENTATION_QUALITY_POINT.ERROR })
+        .optional(),
+      reliabilityAndReferencesPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.RELIABILITY_AND_REFERENCES_POINT.ERROR })
+        .optional(),
+      responseAccuracyPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.RESPONSE_ACCURACY_POINT.ERROR })
+        .optional(),
+      presentationSkillsPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRESENTATION_SKILLS_POINT.ERROR })
+        .optional(),
+      rewardPoint: z
+        .number()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.REWARD_POINT.ERROR })
+        .optional(),
+      generalFeedback: z
+        .string()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.GENERAL_FEEDBACK.ERROR })
+        .optional(),
+      conclusion: z.string().min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.CONCLUSION.ERROR }).optional(),
+      teacherSignDate: z
+        .string()
+        .min(0, { message: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TEACHER_SIGN_DATE.ERROR })
+        .optional(),
     }),
     defaultValues: {
-      fullName: '',
       mssv: '',
+      fullName: '',
+      reviewer: '',
       projectTitle: '',
-      supervisor: '',
+      typeOfThesis: '',
+      topicUniquenessPoint: 0,
+      workloadPoint: 0,
+      problemDifficultyPoint: 0,
+      solutionImpactPoint: 0,
+      productFinalizationPoint: 0,
+      layoutCoherencePoint: 0,
+      contentValidityPoint: 0,
+      presentationQualityPoint: 0,
+      reliabilityAndReferencesPoint: 0,
+      responseAccuracyPoint: 0,
+      presentationSkillsPoint: 0,
+      rewardPoint: 0,
+      generalFeedback: '',
+      conclusion: '',
+      // teacherSignDate: '',
     },
     columns: [
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.MSSV.LABEL, accessorKey: 'mssv' },
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
+      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.REVIEWER.LABEL, accessorKey: 'reviewer' },
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
-      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TYPE_OF_THESIS.LABEL,
+        accessorKey: 'typeOfThesis',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TOPIC_UNIQUENESS_POINT.LABEL,
+        accessorKey: 'topicUniquenessPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.WORKLOAD_POINT.LABEL,
+        accessorKey: 'workloadPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROBLEM_DIFFICULTY_POINT.LABEL,
+        accessorKey: 'problemDifficultyPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.SOLUTION_IMPACT_POINT.LABEL,
+        accessorKey: 'solutionImpactPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRODUCT_FINALIZATION_POINT.LABEL,
+        accessorKey: 'productFinalizationPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.LAYOUT_COHERENCE_POINT.LABEL,
+        accessorKey: 'layoutCoherencePoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.CONTENT_VALIDITY_POINT.LABEL,
+        accessorKey: 'contentValidityPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRESENTATION_QUALITY_POINT.LABEL,
+        accessorKey: 'presentationQualityPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.RELIABILITY_AND_REFERENCES_POINT.LABEL,
+        accessorKey: 'reliabilityAndReferencesPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.RESPONSE_ACCURACY_POINT.LABEL,
+        accessorKey: 'responseAccuracyPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PRESENTATION_SKILLS_POINT.LABEL,
+        accessorKey: 'presentationSkillsPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.REWARD_POINT.LABEL,
+        accessorKey: 'rewardPoint',
+        hidden: true,
+        type: 'number',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.GENERAL_FEEDBACK.LABEL,
+        accessorKey: 'generalFeedback',
+        hidden: true,
+        type: 'textarea',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.CONCLUSION.LABEL,
+        accessorKey: 'conclusion',
+        hidden: true,
+        type: 'textarea',
+      },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TEACHER_SIGN_DATE.LABEL,
+        accessorKey: 'teacherSignDate',
+        type: 'date',
+        hidden: true,
+      },
       { header: THESIS_CONFIG.COMMON.CREATED_AT, accessorKey: 'createdAt' },
     ],
     downloadEnabled: true,

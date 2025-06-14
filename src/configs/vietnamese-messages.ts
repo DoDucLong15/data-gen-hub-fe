@@ -1353,6 +1353,95 @@ export const VIETNAMESE_MESSAGES = {
           LABEL: 'Điểm đáng tin cậy và tài liệu tham khảo',
           ERROR: 'Điểm đáng tin cậy và tài liệu tham khảo là không bắt buộc',
         },
+        RESPONSIBILITY_ATTITUDE_POINT: {
+          LABEL: 'Điểm trách nhiệm',
+          ERROR: 'Điểm trách nhiệm là không bắt buộc',
+        },
+        TECH_MASTERY_POINT: {
+          LABEL: 'Điểm làm chủ kỹ thuật',
+          ERROR: 'Điểm làm chủ kỹ thuật là không bắt buộc',
+        },
+        PROACTIVENESS_POINT: {
+          LABEL: 'Điểm chủ động, sáng tạo, chấp nhận thách thức trong công việc',
+          ERROR: 'Điểm chủ động, sáng tạo, chấp nhận thách thức trong công việc là không bắt buộc',
+        },
+        REWARD_POINT: {
+          LABEL: 'Điểm thưởng',
+          ERROR: 'Điểm thưởng là không bắt buộc',
+        },
+        GENERAL_FEEDBACK: {
+          LABEL: 'Phản hồi chung',
+          ERROR: 'Phản hồi chung là không bắt buộc',
+        },
+        CONCLUSION: {
+          LABEL: 'Kết luận',
+          ERROR: 'Kết luận là không bắt buộc',
+        },
+        TEACHER_SIGN_DATE: {
+          LABEL: 'Ngày ký của giảng viên',
+          ERROR: 'Ngày ký của giảng viên là không bắt buộc',
+        },
+      },
+    },
+    SUPERVISORY_COMMENTS: {
+      TITLE: 'Phiếu nhận xét phản biện',
+      FORM: {
+        MSSV: {
+          LABEL: 'MSSV',
+          ERROR: 'MSSV là bắt buộc',
+        },
+        FULL_NAME: {
+          LABEL: 'Họ tên',
+          ERROR: 'Họ tên là bắt buộc',
+        },
+        REVIEWER: {
+          LABEL: 'Người phản biện',
+          ERROR: 'Người phản biện là không bắt buộc',
+        },
+        PROJECT_TITLE: {
+          LABEL: 'Tên đề tài',
+          ERROR: 'Tên đề tài là không bắt buộc',
+        },
+        TYPE_OF_THESIS: {
+          LABEL: 'Loại đề tài',
+          ERROR: 'Loại đề tài là không bắt buộc',
+        },
+        TOPIC_UNIQUENESS_POINT: {
+          LABEL: 'Điểm đề tài',
+          ERROR: 'Điểm đề tài là không bắt buộc',
+        },
+        WORKLOAD_POINT: {
+          LABEL: 'Điểm công việc',
+          ERROR: 'Điểm công việc là không bắt buộc',
+        },
+        PROBLEM_DIFFICULTY_POINT: {
+          LABEL: 'Điểm khó khăn',
+          ERROR: 'Điểm khó khăn là không bắt buộc',
+        },
+        SOLUTION_IMPACT_POINT: {
+          LABEL: 'Điểm ảnh hưởng',
+          ERROR: 'Điểm ảnh hưởng là không bắt buộc',
+        },
+        PRODUCT_FINALIZATION_POINT: {
+          LABEL: 'Điểm hoàn thành sản phẩm',
+          ERROR: 'Điểm hoàn thành sản phẩm là không bắt buộc',
+        },
+        LAYOUT_COHERENCE_POINT: {
+          LABEL: 'Điểm trật tự',
+          ERROR: 'Điểm trật tự là không bắt buộc',
+        },
+        CONTENT_VALIDITY_POINT: {
+          LABEL: 'Điểm nội dung',
+          ERROR: 'Điểm nội dung là không bắt buộc',
+        },
+        PRESENTATION_QUALITY_POINT: {
+          LABEL: 'Điểm trình bày',
+          ERROR: 'Điểm trình bày là không bắt buộc',
+        },
+        RELIABILITY_AND_REFERENCES_POINT: {
+          LABEL: 'Điểm đáng tin cậy và tài liệu tham khảo',
+          ERROR: 'Điểm đáng tin cậy và tài liệu tham khảo là không bắt buộc',
+        },
         RESPONSE_ACCURACY_POINT: {
           LABEL: 'Điểm độ chính xác',
           ERROR: 'Điểm độ chính xác là không bắt buộc',
@@ -1376,27 +1465,6 @@ export const VIETNAMESE_MESSAGES = {
         TEACHER_SIGN_DATE: {
           LABEL: 'Ngày ký của giảng viên',
           ERROR: 'Ngày ký của giảng viên là không bắt buộc',
-        },
-      },
-    },
-    SUPERVISORY_COMMENTS: {
-      TITLE: 'Phiếu nhận xét phản biện',
-      FORM: {
-        SUPERVISOR: {
-          LABEL: 'Giảng viên hướng dẫn',
-          ERROR: 'Giảng viên hướng dẫn là không bắt buộc',
-        },
-        MSSV: {
-          LABEL: 'MSSV',
-          ERROR: 'MSSV là bắt buộc',
-        },
-        FULL_NAME: {
-          LABEL: 'Họ tên',
-          ERROR: 'Họ tên là bắt buộc',
-        },
-        PROJECT_TITLE: {
-          LABEL: 'Tên đề tài',
-          ERROR: 'Tên đề tài là không bắt buộc',
         },
       },
     },
