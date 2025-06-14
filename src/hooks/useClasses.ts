@@ -55,7 +55,7 @@ export function useClasses() {
     onSuccess: (newClass) => {
       // Cập nhật cache trực tiếp thay vì invalidate
       queryClient.setQueryData(CLASSES_QUERY_KEY, (oldData: TClass[] = []) => {
-        return [...oldData, newClass];
+        return [newClass, ...oldData];
       });
       toast.success(CLASSES.SUCCESS_CREATE);
     },
