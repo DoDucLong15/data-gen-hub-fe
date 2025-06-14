@@ -66,7 +66,7 @@ export function ClassCard({ classItem }: ClassCardProps) {
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="pt-4 pb-2">
+      <CardContent className="cursor-pointer pt-4 pb-2" onClick={handleViewDetails}>
         <div className="space-y-3">
           <div className="flex items-center text-sm">
             <BookOpen className="mr-2 h-4 w-4 text-gray-500" />

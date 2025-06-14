@@ -10,6 +10,9 @@ import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { Card, CardContent } from '@/components/ui/card';
 import { useI18n } from '@/i18n';
 import { Spinner } from '@/components/ui/spinner';
+import { EProgressAction } from '@/utils/enums/progress.enum';
+import { TemplateSpecificationApi } from '@/apis/template-specification.api';
+import { toast } from 'sonner';
 
 export default function TemplateManagement({
   classId,
@@ -24,6 +27,8 @@ export default function TemplateManagement({
   const [jsonFile, setJsonFile] = useState<File | null>(null);
   const [fileInputKey, setFileInputKey] = useState<number>(0);
   const [downloadingPath, setDownloadingPath] = useState<string | null>(null);
+  const [downloadingExcelDefault, setDownloadingExcelDefault] = useState<boolean>(false);
+  const [downloadingJsonDefault, setDownloadingJsonDefault] = useState<boolean>(false);
   const excelInputRef = useRef<HTMLInputElement>(null);
   const jsonInputRef = useRef<HTMLInputElement>(null);
   const { t, isReady } = useI18n();
@@ -59,6 +64,46 @@ export default function TemplateManagement({
     }
   };
 
+  const handleDownloadExcelDefault = async () => {
+    try {
+      setDownloadingExcelDefault(true);
+      await TemplateSpecificationApi.downloadDefault({
+        name:
+          thesisType === EThesisDocumentType.ASSIGNMENT_SHEET
+            ? 'PGNV'
+            : thesisType === EThesisDocumentType.SUPERVISORY_COMMENTS
+              ? 'NXPB'
+              : 'NXHD',
+        action: EProgressAction.EXPORT,
+        type: 'template',
+      });
+    } catch (error) {
+      toast.error(t('GENERATE_THESIS.TEMPLATE.DOWNLOAD_FAILED'));
+    } finally {
+      setDownloadingExcelDefault(false);
+    }
+  };
+
+  const handleDownloadJsonDefault = async () => {
+    try {
+      setDownloadingJsonDefault(true);
+      await TemplateSpecificationApi.downloadDefault({
+        name:
+          thesisType === EThesisDocumentType.ASSIGNMENT_SHEET
+            ? 'PGNV'
+            : thesisType === EThesisDocumentType.SUPERVISORY_COMMENTS
+              ? 'NXPB'
+              : 'NXHD',
+        action: EProgressAction.EXPORT,
+        type: 'json',
+      });
+    } catch (error) {
+      toast.error(t('GENERATE_THESIS.TEMPLATE.DOWNLOAD_FAILED'));
+    } finally {
+      setDownloadingJsonDefault(false);
+    }
+  };
+
   if (!isReady) return null;
 
   return (
@@ -75,11 +120,11 @@ export default function TemplateManagement({
               <div className="flex items-center gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => handleDownloadTemplate(template?.templateFile!)}
-                  disabled={!template?.templateFile || downloadingPath === template?.templateFile}
+                  onClick={handleDownloadExcelDefault}
+                  disabled={downloadingExcelDefault}
                   className="flex items-center gap-2"
                 >
-                  {downloadingPath === template?.templateFile ? (
+                  {downloadingExcelDefault ? (
                     <RefreshCw className="h-4 w-4 animate-spin" />
                   ) : (
                     <Download className="h-4 w-4" />
@@ -161,11 +206,11 @@ export default function TemplateManagement({
               <div className="flex items-center gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => handleDownloadTemplate(template?.jsonFile!)}
-                  disabled={!template?.jsonFile || downloadingPath === template?.jsonFile}
+                  onClick={handleDownloadJsonDefault}
+                  disabled={downloadingJsonDefault}
                   className="flex items-center gap-2"
                 >
-                  {downloadingPath === template?.jsonFile ? (
+                  {downloadingJsonDefault ? (
                     <RefreshCw className="h-4 w-4 animate-spin" />
                   ) : (
                     <Download className="h-4 w-4" />

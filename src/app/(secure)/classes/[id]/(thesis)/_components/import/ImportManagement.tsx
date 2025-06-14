@@ -10,10 +10,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useImportThesis } from '@/hooks/useImportThesis';
 import { EThesisDocumentType } from '@/utils/enums/thesis-document.enum';
 import { useI18n } from '@/i18n';
+import { TemplateSpecificationApi } from '@/apis/template-specification.api';
+import { EProgressAction } from '@/utils/enums/progress.enum';
 export function ImportManagement({ classId, thesisType }: { classId: string; thesisType: EThesisDocumentType }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
   const [isDownloadingTemplate, setIsDownloadingTemplate] = useState(false);
+  const [isDownloadingDefault, setIsDownloadingDefault] = useState(false);
   const [isUploadingTemplate, setIsUploadingTemplate] = useState(false);
   const { templateImport, importThesisDoc, isImporting, uploadTemplate } = useImportThesis(thesisType, classId);
   const { t, isReady } = useI18n();
@@ -76,6 +79,25 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
     }
   };
 
+  const handleDownloadDefault = async () => {
+    try {
+      setIsDownloadingDefault(true);
+      await TemplateSpecificationApi.downloadDefault({
+        name:
+          thesisType === EThesisDocumentType.ASSIGNMENT_SHEET
+            ? 'PGNV'
+            : thesisType === EThesisDocumentType.SUPERVISORY_COMMENTS
+              ? 'NXPB'
+              : 'NXHD',
+        action: EProgressAction.IMPORT,
+      });
+    } catch (error) {
+      toast.error(t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.ERROR'));
+    } finally {
+      setIsDownloadingDefault(false);
+    }
+  };
+
   if (!isReady) return null;
 
   return (
@@ -86,7 +108,7 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
           <TabsTrigger value="templates">{t('IMPORT_THESIS.TABS.TEMPLATES')}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="import" className="rounded-lg border p-4">
+        <TabsContent value="import" className="rounded-lg border border-slate-300 bg-slate-100/60 p-4">
           <div className="space-y-4">
             <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8">
               <FileText className="mb-4 h-12 w-12 text-gray-400" />
@@ -153,17 +175,32 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
           </div>
         </TabsContent>
 
-        <TabsContent value="templates" className="rounded-lg border p-4">
+        <TabsContent value="templates" className="rounded-lg border border-slate-300 bg-slate-100/60 p-4">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <Card className="shadow-lg transition-shadow hover:shadow-xl">
-              <CardHeader className="border-b bg-gray-50">
-                <CardTitle className="text-lg">{t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.TITLE')}</CardTitle>
-                <CardDescription>{t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.SUBTITLE')}</CardDescription>
+            <Card className="border border-slate-400 bg-white shadow-md transition-shadow hover:shadow-lg">
+              <CardHeader className="border-b border-slate-300 bg-slate-100/50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-lg">{t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.TITLE')}</CardTitle>
+                    <CardDescription>{t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.SUBTITLE')}</CardDescription>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={handleDownloadDefault} disabled={isDownloadingDefault}>
+                    {isDownloadingDefault ? (
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <Download className="mr-2 h-4 w-4" />
+                    )}
+                    Default
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <p className="mb-4 text-sm text-gray-600">{t('IMPORT_THESIS.TEMPLATE_SECTION.DOWNLOAD.DESCRIPTION')}</p>
+                <p className="text-sm font-bold text-gray-500">
+                  Path: {templateImport ? templateImport.jsonFile : 'None'}
+                </p>
               </CardContent>
-              <CardFooter className="border-t bg-gray-50">
+              <CardFooter className="border-t border-slate-300 bg-slate-100/50">
                 <Button
                   variant="outline"
                   className="w-full"
@@ -180,10 +217,14 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
               </CardFooter>
             </Card>
 
-            <Card className="shadow-lg transition-shadow hover:shadow-xl">
-              <CardHeader className="border-b bg-gray-50">
-                <CardTitle className="text-lg">{t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.TITLE')}</CardTitle>
-                <CardDescription>{t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.SUBTITLE')}</CardDescription>
+            <Card className="border border-slate-400 bg-white shadow-md transition-shadow hover:shadow-lg">
+              <CardHeader className="border-b border-slate-300 bg-slate-100/50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-lg">{t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.TITLE')}</CardTitle>
+                    <CardDescription>{t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.SUBTITLE')}</CardDescription>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <p className="mb-4 text-sm text-gray-600">{t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.DESCRIPTION')}</p>
@@ -210,7 +251,7 @@ export function ImportManagement({ classId, thesisType }: { classId: string; the
                   {templateFile ? templateFile.name : t('IMPORT_THESIS.TEMPLATE_SECTION.UPLOAD.NO_FILE')}
                 </span>
               </CardContent>
-              <CardFooter className="border-t bg-gray-50">
+              <CardFooter className="border-t border-slate-300 bg-slate-100/50">
                 <Button
                   className="w-full"
                   onClick={handleTemplateUpload}

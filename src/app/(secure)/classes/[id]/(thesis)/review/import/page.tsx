@@ -9,6 +9,7 @@ import { ThesisTable } from '../../_components/import/ThesisTable';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { EAction, ESubject } from '@/utils/types/authorization.type';
 import { useI18n } from '@/i18n';
+import { Upload, FileText, Activity } from 'lucide-react';
 export default function GuidanceReviewImportPage() {
   const { id } = useParams();
   const { t, isReady } = useI18n();
@@ -24,8 +25,11 @@ export default function GuidanceReviewImportPage() {
         ]}
       >
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.GUIDANCE.IMPORT.IMPORT_MANAGEMENT')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Upload className="h-5 w-5" />
+              {t('THESIS_PAGE.GUIDANCE.IMPORT.IMPORT_MANAGEMENT')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ImportManagement classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
@@ -35,8 +39,11 @@ export default function GuidanceReviewImportPage() {
 
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_GuidanceReviews }]}>
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.GUIDANCE.IMPORT.IMPORTED_SHEETS')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              {t('THESIS_PAGE.GUIDANCE.IMPORT.IMPORTED_SHEETS')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ThesisTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />
@@ -46,8 +53,11 @@ export default function GuidanceReviewImportPage() {
 
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.GUIDANCE.IMPORT.PROCESS_TABLE')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-5 w-5" />
+              {t('THESIS_PAGE.GUIDANCE.IMPORT.PROCESS_TABLE')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.GUIDANCE_REVIEW} />

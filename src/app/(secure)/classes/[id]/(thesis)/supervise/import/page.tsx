@@ -10,6 +10,7 @@ import { ESubject } from '@/utils/types/authorization.type';
 import { EAction } from '@/utils/types/authorization.type';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useI18n } from '@/i18n';
+import { Upload, FileText, Activity } from 'lucide-react';
 export default function SupervisoryCommentImportPage() {
   const { id } = useParams();
   const { t, isReady } = useI18n();
@@ -25,8 +26,11 @@ export default function SupervisoryCommentImportPage() {
         ]}
       >
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORT_MANAGEMENT')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Upload className="h-5 w-5" />
+              {t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORT_MANAGEMENT')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ImportManagement classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -36,8 +40,11 @@ export default function SupervisoryCommentImportPage() {
 
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Thesis_SupervisoryComments }]}>
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORTED_SHEETS')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              {t('THESIS_PAGE.SUPERVISORY.IMPORT.IMPORTED_SHEETS')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ThesisTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
@@ -47,8 +54,11 @@ export default function SupervisoryCommentImportPage() {
 
       <ProtectedComponent permissions={[{ action: EAction.READ, subject: ESubject.Progress }]}>
         <Card>
-          <CardHeader>
-            <CardTitle>{t('THESIS_PAGE.SUPERVISORY.IMPORT.PROCESS_TABLE')}</CardTitle>
+          <CardHeader className="border-b pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-5 w-5" />
+              {t('THESIS_PAGE.SUPERVISORY.IMPORT.PROCESS_TABLE')}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ProcessTable classId={id as string} thesisType={EThesisDocumentType.SUPERVISORY_COMMENTS} />
