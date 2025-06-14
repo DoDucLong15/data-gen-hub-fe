@@ -1,7 +1,7 @@
 import { JSX, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, RefreshCw, AlertCircle, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RefreshCw, AlertCircle, ChevronsLeft, ChevronsRight, Eye } from 'lucide-react';
 import {
   Pagination,
   PaginationContent,
@@ -14,6 +14,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TProcess } from '@/utils/types/progress.type';
 import { useI18n } from '@/i18n';
+import { ProgressLog } from '@/components/common/ProgressLog';
 
 // Component chính cho bảng với phân trang
 export function ProcessTable({
@@ -27,6 +28,8 @@ export function ProcessTable({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isLogModalOpen, setIsLogModalOpen] = useState(false);
+  const [selectedProgressId, setSelectedProgressId] = useState<string>('');
   const { t, isReady } = useI18n();
 
   // Tính toán cho phân trang
@@ -44,6 +47,11 @@ export function ProcessTable({
   const handleItemsPerPageChange = (value: string) => {
     setItemsPerPage(Number(value));
     setCurrentPage(1); // Reset về trang đầu tiên khi thay đổi số lượng item/trang
+  };
+
+  const handleViewLog = (id: string) => {
+    setSelectedProgressId(id);
+    setIsLogModalOpen(true);
   };
 
   // Tạo mảng số trang để hiển thị
@@ -112,6 +120,7 @@ export function ProcessTable({
             <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.ERROR')}</TableHead>
             <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.CREATED_BY')}</TableHead>
             <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.CREATED_AT')}</TableHead>
+            <TableHead>{t('PROCESS_TABLE.TABLE_HEADERS.LOG')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -135,6 +144,16 @@ export function ProcessTable({
               </TableCell>
               <TableCell>{process.createBy}</TableCell>
               <TableCell>{new Date(process.createdAt).toLocaleString()}</TableCell>
+              <TableCell>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="cursor-pointer"
+                  onClick={() => handleViewLog(process.processId)}
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -210,6 +229,14 @@ export function ProcessTable({
           </PaginationContent>
         </Pagination>
       </div>
+
+      {/* Progress Log Modal */}
+      <ProgressLog
+        isOpen={isLogModalOpen}
+        onClose={() => setIsLogModalOpen(false)}
+        progressId={selectedProgressId}
+        title={t('PROCESS_TABLE.LOG_MODAL.TITLE')}
+      />
     </div>
   );
 }
