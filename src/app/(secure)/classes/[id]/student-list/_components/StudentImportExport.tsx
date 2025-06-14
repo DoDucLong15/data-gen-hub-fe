@@ -7,15 +7,17 @@ import { Upload, Download, RefreshCw, AlertCircle, FileText, X } from 'lucide-re
 import { useStudents } from '@/hooks/useStudents';
 import { toast } from 'sonner';
 import { StorageApi } from '@/apis/storage.api';
-import { EProgressStatus } from '@/utils/enums/progress.enum';
+import { EProgressAction, EProgressStatus } from '@/utils/enums/progress.enum';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProcessTable } from './ProcessTable';
 import { useI18n } from '@/i18n';
+import { TemplateSpecificationApi } from '@/apis/template-specification.api';
 
 export function ImportExport({ classId }: { classId: string }) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [templateFile, setTemplateFile] = useState<File | null>(null);
   const [isDownloadingTemplate, setIsDownloadingTemplate] = useState(false);
+  const [isDownloadingDefault, setIsDownloadingDefault] = useState(false);
   const [isUploadingTemplate, setIsUploadingTemplate] = useState(false);
   const { templateImport, processes, processesIsLoading, importStudents, isImporting, uploadTemplate } =
     useStudents(classId);
@@ -79,6 +81,20 @@ export function ImportExport({ classId }: { classId: string }) {
     }
   };
 
+  const handleDownloadDefault = async () => {
+    try {
+      setIsDownloadingDefault(true);
+      await TemplateSpecificationApi.downloadDefault({
+        name: 'DSSV',
+        action: EProgressAction.IMPORT,
+      });
+    } catch (error) {
+      toast.error(t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.ERROR'));
+    } finally {
+      setIsDownloadingDefault(false);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case EProgressStatus.COMPLETED:
@@ -110,12 +126,12 @@ export function ImportExport({ classId }: { classId: string }) {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
+      <Card className="bg-slate-50">
+        <CardHeader className="border-b border-slate-300 bg-slate-100/80">
           <CardTitle className="text-2xl">{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TITLE')}</CardTitle>
           <CardDescription>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.DESCRIPTION')}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-slate-50">
           <Tabs defaultValue="import" className="w-full">
             <TabsList className="mb-6 grid w-full grid-cols-2">
               <TabsTrigger value="import">{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TABS.IMPORT')}</TabsTrigger>
@@ -124,7 +140,7 @@ export function ImportExport({ classId }: { classId: string }) {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="import" className="rounded-lg border p-4">
+            <TabsContent value="import" className="rounded-lg border border-slate-300 bg-slate-100/60 p-4">
               <div className="space-y-4">
                 <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-8">
                   <FileText className="mb-4 h-12 w-12 text-gray-400" />
@@ -200,23 +216,43 @@ export function ImportExport({ classId }: { classId: string }) {
               </div>
             </TabsContent>
 
-            <TabsContent value="templates" className="rounded-lg border p-4">
+            <TabsContent value="templates" className="rounded-lg border border-slate-300 bg-slate-100/60 p-4">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <Card className="shadow-lg transition-shadow hover:shadow-xl">
-                  <CardHeader className="border-b bg-gray-50">
-                    <CardTitle className="text-lg">
-                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.TITLE')}
-                    </CardTitle>
-                    <CardDescription>
-                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.SUBTITLE')}
-                    </CardDescription>
+                <Card className="border border-slate-400 bg-white shadow-md transition-shadow hover:shadow-lg">
+                  <CardHeader className="border-b border-slate-300 bg-slate-100/50">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-lg">
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.TITLE')}
+                        </CardTitle>
+                        <CardDescription>
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.SUBTITLE')}
+                        </CardDescription>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleDownloadDefault}
+                        disabled={isDownloadingDefault}
+                      >
+                        {isDownloadingDefault ? (
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <Download className="mr-2 h-4 w-4" />
+                        )}
+                        {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.DEFAULT_BUTTON')}
+                      </Button>
+                    </div>
                   </CardHeader>
                   <CardContent className="pt-6">
                     <p className="mb-4 text-sm text-gray-600">
                       {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.DOWNLOAD.DESCRIPTION')}
                     </p>
+                    <p className="text-sm font-bold text-gray-500">
+                      Path: {templateImport ? templateImport.jsonFile : 'None'}
+                    </p>
                   </CardContent>
-                  <CardFooter className="border-t bg-gray-50">
+                  <CardFooter className="border-t border-slate-300 bg-slate-100/50">
                     <Button
                       variant="outline"
                       className="w-full"
@@ -233,14 +269,18 @@ export function ImportExport({ classId }: { classId: string }) {
                   </CardFooter>
                 </Card>
 
-                <Card className="shadow-lg transition-shadow hover:shadow-xl">
-                  <CardHeader className="border-b bg-gray-50">
-                    <CardTitle className="text-lg">
-                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.TITLE')}
-                    </CardTitle>
-                    <CardDescription>
-                      {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SUBTITLE')}
-                    </CardDescription>
+                <Card className="border border-slate-400 bg-white shadow-md transition-shadow hover:shadow-lg">
+                  <CardHeader className="border-b border-slate-300 bg-slate-100/50">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-lg">
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.TITLE')}
+                        </CardTitle>
+                        <CardDescription>
+                          {t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.SUBTITLE')}
+                        </CardDescription>
+                      </div>
+                    </div>
                   </CardHeader>
                   <CardContent className="pt-6">
                     <p className="mb-4 text-sm text-gray-600">
@@ -271,7 +311,7 @@ export function ImportExport({ classId }: { classId: string }) {
                         : t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.TEMPLATE.UPLOAD.NO_FILE')}
                     </span>
                   </CardContent>
-                  <CardFooter className="border-t bg-gray-50">
+                  <CardFooter className="border-t border-slate-300 bg-slate-100/50">
                     <Button
                       className="w-full"
                       onClick={handleTemplateUpload}
@@ -294,8 +334,8 @@ export function ImportExport({ classId }: { classId: string }) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
+      <Card className="border border-slate-300 shadow-md">
+        <CardHeader className="border-b border-slate-200 bg-slate-50/80">
           <CardTitle>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.TITLE')}</CardTitle>
           <CardDescription>{t('THESIS_PAGE.STUDENT_LIST.IMPORT_EXPORT.IMPORT.PROGRESS.DESCRIPTION')}</CardDescription>
         </CardHeader>

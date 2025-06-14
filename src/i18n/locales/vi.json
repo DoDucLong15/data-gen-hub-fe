@@ -1412,7 +1412,11 @@
         "TEMPLATE_MANAGEMENT": "Quản lý Template",
         "GENERATE_FORM": "Tạo Phiếu Giao Nhiệm Vụ",
         "GENERATED_SHEETS": "Phiếu đã tạo",
-        "PROCESS_TABLE": "Tiến trình xử lý"
+        "PROCESS_TABLE": "Tiến trình xử lý",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Quản lý template excel để làm mẫu sinh phiếu tự động và file đặc tả json để xử lý dữ liệu",
+        "GENERATE_FORM_TOOLTIP": "Tạo phiếu giao nhiệm vụ từ template excel",
+        "GENERATED_SHEETS_TOOLTIP": "Danh sách phiếu giao nhiệm vụ",
+        "PROCESS_TABLE_TOOLTIP": "Tiến trình xử lý sinh phiếu tự động"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Thực hiện Import",
@@ -1425,7 +1429,11 @@
         "TEMPLATE_MANAGEMENT": "Quản lý Template",
         "GENERATE_FORM": "Tạo Phiếu Nhận Xét Hướng Dẫn",
         "GENERATED_SHEETS": "Phiếu đã tạo",
-        "PROCESS_TABLE": "Tiến trình xử lý"
+        "PROCESS_TABLE": "Tiến trình xử lý",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Quản lý template excel để làm mẫu sinh phiếu tự động và file đặc tả json để xử lý dữ liệu",
+        "GENERATE_FORM_TOOLTIP": "Tạo phiếu nhận xét hướng dẫn từ template excel",
+        "GENERATED_SHEETS_TOOLTIP": "Danh sách phiếu nhận xét hướng dẫn",
+        "PROCESS_TABLE_TOOLTIP": "Tiến trình xử lý sinh phiếu tự động"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Thực hiện Import",
@@ -1438,7 +1446,11 @@
         "TEMPLATE_MANAGEMENT": "Quản lý Template",
         "GENERATE_FORM": "Tạo Phiếu Nhận Xét Phản Biện",
         "GENERATED_SHEETS": "Phiếu đã tạo",
-        "PROCESS_TABLE": "Tiến trình xử lý"
+        "PROCESS_TABLE": "Tiến trình xử lý",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Quản lý template excel để làm mẫu sinh phiếu tự động và file đặc tả json để xử lý dữ liệu",
+        "GENERATE_FORM_TOOLTIP": "Tạo phiếu nhận xét phản biện từ template excel",
+        "GENERATED_SHEETS_TOOLTIP": "Danh sách phiếu nhận xét phản biện",
+        "PROCESS_TABLE_TOOLTIP": "Tiến trình xử lý sinh phiếu tự động"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Thực hiện Import",
@@ -1725,7 +1737,8 @@
               "DESCRIPTION": "Tải mẫu chuẩn để nhập dữ liệu sinh viên. Sử dụng mẫu này để định dạng dữ liệu của bạn chính xác.",
               "BUTTON": "Tải mẫu",
               "ERROR": "Không thể tải mẫu. Vui lòng thử lại.",
-              "NOT_FOUND": "Không tìm thấy mẫu. Vui lòng tải lên một mẫu"
+              "NOT_FOUND": "Không tìm thấy mẫu. Vui lòng tải lên một mẫu",
+              "DEFAULT_BUTTON": "Mặc định"
             },
             "UPLOAD": {
               "TITLE": "Tải lên mẫu tùy chỉnh",

@@ -1412,7 +1412,11 @@
         "TEMPLATE_MANAGEMENT": "Template Management",
         "GENERATE_FORM": "Generate Assignment Sheet",
         "GENERATED_SHEETS": "Generated Sheets",
-        "PROCESS_TABLE": "Processing Progress"
+        "PROCESS_TABLE": "Processing Progress",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Manage excel template for automatic assignment sheet generation and json specification for data processing",
+        "GENERATE_FORM_TOOLTIP": "Generate assignment sheet from excel template",
+        "GENERATED_SHEETS_TOOLTIP": "List of assignment sheets",
+        "PROCESS_TABLE_TOOLTIP": "Processing progress of automatic assignment sheet generation"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Execute Import",
@@ -1425,7 +1429,11 @@
         "TEMPLATE_MANAGEMENT": "Template Management",
         "GENERATE_FORM": "Generate Guidance Review",
         "GENERATED_SHEETS": "Generated Sheets",
-        "PROCESS_TABLE": "Processing Progress"
+        "PROCESS_TABLE": "Processing Progress",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Manage excel template for automatic guidance review generation and json specification for data processing",
+        "GENERATE_FORM_TOOLTIP": "Generate guidance review from excel template",
+        "GENERATED_SHEETS_TOOLTIP": "List of guidance reviews",
+        "PROCESS_TABLE_TOOLTIP": "Processing progress of automatic guidance review generation"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Execute Import",
@@ -1438,7 +1446,11 @@
         "TEMPLATE_MANAGEMENT": "Template Management",
         "GENERATE_FORM": "Generate Supervisory Comments",
         "GENERATED_SHEETS": "Generated Sheets",
-        "PROCESS_TABLE": "Processing Progress"
+        "PROCESS_TABLE": "Processing Progress",
+        "TEMPLATE_MANAGEMENT_TOOLTIP": "Manage excel template for automatic supervisory comments generation and json specification for data processing",
+        "GENERATE_FORM_TOOLTIP": "Generate supervisory comments from excel template",
+        "GENERATED_SHEETS_TOOLTIP": "List of supervisory comments",
+        "PROCESS_TABLE_TOOLTIP": "Processing progress of automatic supervisory comments generation"
       },
       "IMPORT": {
         "IMPORT_MANAGEMENT": "Execute Import",
@@ -1725,7 +1737,8 @@
               "DESCRIPTION": "Download our standard template for student imports. Use this template to format your data correctly.",
               "BUTTON": "Download Template",
               "ERROR": "Failed to download template. Please try again.",
-              "NOT_FOUND": "Template not found. Please upload a template"
+              "NOT_FOUND": "Template not found. Please upload a template",
+              "DEFAULT_BUTTON": "Default"
             },
             "UPLOAD": {
               "TITLE": "Upload Custom Template",
