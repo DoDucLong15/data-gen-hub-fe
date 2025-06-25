@@ -49,7 +49,7 @@ export default function ClassDetailLayout({
 
   return (
     <SidebarProvider>
-      <ClassSideBar className="fixed w-60" />
+      <ClassSideBar className="fixed w-61.5" />
       <SidebarInset className="top-1">
         <header className="flex h-10 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
