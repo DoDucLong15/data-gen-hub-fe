@@ -156,17 +156,17 @@
         "DASHBOARD": "Tổng quan",
         "STUDENT_LIST": "Danh sách sinh viên",
         "ASSIGNMENT": {
-          "TITLE": "Phiếu giao",
+          "TITLE": "Phiếu giao nhiệm vụ",
           "GENERATE": "Tạo phiếu",
           "IMPORT": "Nhập phiếu"
         },
         "REVIEW": {
-          "TITLE": "Phiếu nhận xét",
+          "TITLE": "Phiếu nhận xét hướng dẫn",
           "GENERATE": "Tạo phiếu",
           "IMPORT": "Nhập phiếu"
         },
         "SUPERVISE": {
-          "TITLE": "Phiếu hướng dẫn",
+          "TITLE": "Phiếu nhận xét phản biện",
           "GENERATE": "Tạo phiếu",
           "IMPORT": "Nhập phiếu"
         },
