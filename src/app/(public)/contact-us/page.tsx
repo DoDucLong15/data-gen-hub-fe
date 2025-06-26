@@ -82,11 +82,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{t('CONTACT_US.CONTACT_INFO.EMAIL.LABEL')}</h3>
-                      <Link
-                        href={`mailto:${t('CONTACT_US.CONTACT_INFO.EMAIL.VALUE')}`}
-                        className="text-slate-600 hover:underline"
-                      >
-                        {t('CONTACT_US.CONTACT_INFO.EMAIL.VALUE')}
+                      <Link href={`mailto:llong6412@gmail.com`} className="text-slate-600 hover:underline">
+                        llong6412@gmail.com
                       </Link>
                     </div>
                   </div>
@@ -112,7 +109,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{t('CONTACT_US.CONTACT_INFO.ADDRESS.LABEL')}</h3>
-                      <p className="text-gray-600">{t('CONTACT_US.CONTACT_INFO.ADDRESS.VALUE')}</p>
+                      <p className="text-gray-600">Gia Lâm, Hà Nội</p>
                     </div>
                   </div>
                 </div>
@@ -205,7 +202,7 @@ export default function ContactPage() {
                           />
                         </div>
 
-                        <Button type="submit" size="lg" className="w-full md:w-auto">
+                        <Button type="submit" size="lg" className="w-full cursor-pointer md:w-auto">
                           <Send className="mr-2 h-4 w-4" /> {t('CONTACT_US.FORM.SUBMIT')}
                         </Button>
                       </form>
@@ -245,7 +242,7 @@ export default function ContactPage() {
           <h2 className="mb-4 text-2xl font-bold">{t('CONTACT_US.CTA.TITLE')}</h2>
           <p className="mx-auto mb-6 max-w-2xl text-lg text-blue-100">{t('CONTACT_US.CTA.DESCRIPTION')}</p>
           <Button asChild size="lg" className="bg-white text-slate-700 hover:bg-blue-50">
-            <Link href="/signup">{t('CONTACT_US.CTA.SIGNUP')}</Link>
+            <Link href="/account/register">{t('CONTACT_US.CTA.SIGNUP')}</Link>
           </Button>
         </div>
       </section>

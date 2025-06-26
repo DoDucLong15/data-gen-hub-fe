@@ -329,10 +329,10 @@
     "THESIS_DELETE_FAILED": "Delete thesis failed: {message}",
     "TABS": {
       "IMPORT": "Import",
-      "TEMPLATES": "Template Management"
+      "TEMPLATES": "Specification Management"
     },
     "IMPORT_SECTION": {
-      "TITLE": "Upload Thesis Data",
+      "TITLE": "Upload Document Data",
       "DESCRIPTION": "Drag and drop files here or click to browse",
       "SELECT_FILES": "Select Files",
       "NO_FILES": "No files selected",
@@ -346,22 +346,22 @@
     },
     "TEMPLATE_SECTION": {
       "DOWNLOAD": {
-        "TITLE": "Download Template",
-        "SUBTITLE": "Get the standard import template",
-        "DESCRIPTION": "Download our standard template for thesis imports. Use this template to format your data correctly.",
-        "BUTTON": "Download Template",
+        "TITLE": "Download Specification",
+        "SUBTITLE": "Get the standard import specification",
+        "DESCRIPTION": "Download our standard specification for document imports. Use this specification to format your data correctly.",
+        "BUTTON": "Download Specification",
         "ERROR": "Failed to download template. Please try again.",
-        "NOT_FOUND": "Template not found. Please upload a template"
+        "NOT_FOUND": "Specification not found. Please upload a specification"
       },
       "UPLOAD": {
-        "TITLE": "Upload Custom Template",
-        "SUBTITLE": "Use your own template for imports",
-        "DESCRIPTION": "Upload your own custom template for future imports. The template should be in JSON format.",
-        "SELECT_BUTTON": "Select Template",
-        "UPLOAD_BUTTON": "Upload Template",
+        "TITLE": "Upload Custom Specification",
+        "SUBTITLE": "Use your own specification for imports",
+        "DESCRIPTION": "Upload your own custom specification for future imports. The specification should be in JSON format.",
+        "SELECT_BUTTON": "Select Specification",
+        "UPLOAD_BUTTON": "Upload Specification",
         "NO_FILE": "No file selected",
-        "SUCCESS": "Template uploaded successfully",
-        "ERROR": "Template upload failed. Please try again.",
+        "SUCCESS": "Specification uploaded successfully",
+        "ERROR": "Specification upload failed. Please try again.",
         "UPLOADING": "Uploading..."
       }
     },
@@ -1715,7 +1715,7 @@
           "DESCRIPTION": "Manage student data imports for your class",
           "TABS": {
             "IMPORT": "Import Students",
-            "TEMPLATES": "Template Management"
+            "TEMPLATES": "Specification Management"
           },
           "UPLOAD_SECTION": {
             "TITLE": "Upload Student Data",
@@ -1732,23 +1732,23 @@
           },
           "TEMPLATE": {
             "DOWNLOAD": {
-              "TITLE": "Download Template",
-              "SUBTITLE": "Get the standard import template",
-              "DESCRIPTION": "Download our standard template for student imports. Use this template to format your data correctly.",
-              "BUTTON": "Download Template",
+              "TITLE": "Download Specification",
+              "SUBTITLE": "Get the standard import specification",
+              "DESCRIPTION": "Download our standard specification for student imports. Use this specification to format your data correctly.",
+              "BUTTON": "Download Specification",
               "ERROR": "Failed to download template. Please try again.",
-              "NOT_FOUND": "Template not found. Please upload a template",
+              "NOT_FOUND": "Specification not found. Please upload a specification",
               "DEFAULT_BUTTON": "Default"
             },
             "UPLOAD": {
-              "TITLE": "Upload Custom Template",
-              "SUBTITLE": "Use your own template for imports",
-              "DESCRIPTION": "Upload your own custom template for future imports. The template should be in JSON format.",
-              "SELECT_BUTTON": "Select Template",
-              "UPLOAD_BUTTON": "Upload Template",
+              "TITLE": "Upload Custom Specification",
+              "SUBTITLE": "Use your own specification for imports",
+              "DESCRIPTION": "Upload your own custom specification for future imports. The specification should be in JSON format.",
+              "SELECT_BUTTON": "Select Specification",
+              "UPLOAD_BUTTON": "Upload Specification",
               "NO_FILE": "No file selected",
-              "SUCCESS": "Template uploaded successfully",
-              "ERROR": "Template upload failed. Please try again.",
+              "SUCCESS": "Specification uploaded successfully",
+              "ERROR": "Specification upload failed. Please try again.",
               "UPLOADING": "Uploading..."
             }
           },

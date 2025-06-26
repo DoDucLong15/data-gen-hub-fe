@@ -59,7 +59,7 @@ function Header() {
               />
             </div>
           ) : (
-            <div className="ml-1 mr-6 flex items-center">
+            <div className="mr-6 ml-1 flex items-center">
               <Image
                 src="/logo.svg"
                 alt="logo"

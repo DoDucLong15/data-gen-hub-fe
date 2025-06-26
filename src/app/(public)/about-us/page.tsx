@@ -18,7 +18,7 @@ export default function AboutPage() {
               <h1 className="text-4xl font-bold md:text-5xl">{t('ABOUT_US.HERO.TITLE')}</h1>
               <p className="text-xl text-blue-100 md:text-2xl">{t('ABOUT_US.HERO.DESCRIPTION')}</p>
               <Button asChild size="lg" className="bg-white text-blue-700 hover:bg-blue-50">
-                <Link href="/contact">
+                <Link href="/contact-us">
                   {t('ABOUT_US.HERO.CONTACT_NOW')} <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -83,19 +83,19 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: t('ABOUT_US.TEAM.MEMBERS.CEO.NAME'),
+                name: 'Đỗ Đức Long',
                 role: t('ABOUT_US.TEAM.MEMBERS.CEO.ROLE'),
-                image: '/api/placeholder/300/300',
+                image: '/member.png',
               },
               {
-                name: t('ABOUT_US.TEAM.MEMBERS.CTO.NAME'),
+                name: 'Đỗ Đức Long',
                 role: t('ABOUT_US.TEAM.MEMBERS.CTO.ROLE'),
-                image: '/api/placeholder/300/300',
+                image: '/member.png',
               },
               {
-                name: t('ABOUT_US.TEAM.MEMBERS.HEAD_DEV.NAME'),
+                name: 'Đỗ Đức Long',
                 role: t('ABOUT_US.TEAM.MEMBERS.HEAD_DEV.ROLE'),
-                image: '/api/placeholder/300/300',
+                image: '/member.png',
               },
             ].map((member, index) => (
               <div key={index} className="rounded-lg bg-white p-6 text-center shadow-sm">
@@ -117,10 +117,12 @@ export default function AboutPage() {
           <p className="mx-auto mb-8 max-w-2xl text-xl text-blue-100">{t('ABOUT_US.CTA.DESCRIPTION')}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-white text-slate-700 hover:bg-blue-50">
-              <Link href="/contact">{t('ABOUT_US.CTA.CONTACT_NOW')}</Link>
+              <Link href="/contact-us">{t('ABOUT_US.CTA.CONTACT_NOW')}</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-slate-700 hover:bg-blue-50">
-              <Link href="/features">{t('ABOUT_US.CTA.LEARN_MORE')}</Link>
+              <Link href={process.env.NEXT_PUBLIC_URL_DEMO || ''} target="_blank">
+                {t('ABOUT_US.CTA.LEARN_MORE')}
+              </Link>
             </Button>
           </div>
         </div>

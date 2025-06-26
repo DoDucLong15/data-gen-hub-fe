@@ -329,10 +329,10 @@
     "THESIS_DELETE_FAILED": "Xóa luận văn thất bại: {message}",
     "TABS": {
       "IMPORT": "Nhập dữ liệu",
-      "TEMPLATES": "Quản lý mẫu"
+      "TEMPLATES": "Quản lý đặc tả"
     },
     "IMPORT_SECTION": {
-      "TITLE": "Tải lên dữ liệu luận văn",
+      "TITLE": "Tải lên phiếu",
       "DESCRIPTION": "Kéo và thả file vào đây hoặc nhấp để chọn",
       "SELECT_FILES": "Chọn file",
       "NO_FILES": "Chưa chọn file nào",
@@ -346,22 +346,22 @@
     },
     "TEMPLATE_SECTION": {
       "DOWNLOAD": {
-        "TITLE": "Tải xuống mẫu",
-        "SUBTITLE": "Lấy mẫu nhập liệu chuẩn",
-        "DESCRIPTION": "Tải xuống mẫu chuẩn để nhập dữ liệu luận văn. Sử dụng mẫu này để định dạng dữ liệu của bạn chính xác.",
-        "BUTTON": "Tải xuống mẫu",
-        "ERROR": "Không thể tải xuống mẫu. Vui lòng thử lại.",
-        "NOT_FOUND": "Không tìm thấy mẫu. Vui lòng tải lên mẫu"
+        "TITLE": "Tải xuống đặc tả",
+        "SUBTITLE": "Lấy đặc tả nhập liệu chuẩn",
+        "DESCRIPTION": "Tải xuống đặc tả chuẩn để nhập dữ liệu phiếu. Sử dụng đặc tả này để định dạng dữ liệu của bạn chính xác.",
+        "BUTTON": "Tải xuống đặc tả",
+        "ERROR": "Không thể tải xuống đặc tả. Vui lòng thử lại.",
+        "NOT_FOUND": "Không tìm thấy đặc tả. Vui lòng tải lên đặc tả"
       },
       "UPLOAD": {
-        "TITLE": "Tải lên mẫu tùy chỉnh",
-        "SUBTITLE": "Sử dụng mẫu riêng của bạn",
-        "DESCRIPTION": "Tải lên mẫu tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Mẫu phải ở định dạng JSON.",
-        "SELECT_BUTTON": "Chọn mẫu",
-        "UPLOAD_BUTTON": "Tải lên mẫu",
+        "TITLE": "Tải lên đặc tả tùy chỉnh",
+        "SUBTITLE": "Sử dụng đặc tả riêng của bạn",
+        "DESCRIPTION": "Tải lên đặc tả tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Đặc tả phải ở định dạng JSON.",
+        "SELECT_BUTTON": "Chọn đặc tả",
+        "UPLOAD_BUTTON": "Tải lên đặc tả",
         "NO_FILE": "Chưa chọn file nào",
-        "SUCCESS": "Tải lên mẫu thành công",
-        "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại.",
+        "SUCCESS": "Tải lên đặc tả thành công",
+        "ERROR": "Tải lên đặc tả thất bại. Vui lòng thử lại.",
         "UPLOADING": "Đang tải lên..."
       }
     },
@@ -1608,7 +1608,7 @@
     "STUDENT_LIST": {
       "SEARCH_PLACEHOLDER": "Tìm kiếm MSSV",
       "ADD_STUDENT": "Thêm sinh viên",
-      "EXPORT": "Xuất ra",
+      "EXPORT": "Xuất danh sách",
       "LOADING": "Đang tải...",
       "NO_STUDENTS": "Không tìm thấy sinh viên nào",
       "TABS": {
@@ -1715,7 +1715,7 @@
           "DESCRIPTION": "Quản lý việc nhập dữ liệu sinh viên cho lớp của bạn",
           "TABS": {
             "IMPORT": "Nhập sinh viên",
-            "TEMPLATES": "Quản lý mẫu"
+            "TEMPLATES": "Quản lý đặc tả"
           },
           "UPLOAD_SECTION": {
             "TITLE": "Tải lên dữ liệu sinh viên",
@@ -1732,23 +1732,23 @@
           },
           "TEMPLATE": {
             "DOWNLOAD": {
-              "TITLE": "Tải mẫu",
-              "SUBTITLE": "Tải mẫu nhập liệu chuẩn",
-              "DESCRIPTION": "Tải mẫu chuẩn để nhập dữ liệu sinh viên. Sử dụng mẫu này để định dạng dữ liệu của bạn chính xác.",
-              "BUTTON": "Tải mẫu",
-              "ERROR": "Không thể tải mẫu. Vui lòng thử lại.",
-              "NOT_FOUND": "Không tìm thấy mẫu. Vui lòng tải lên một mẫu",
+              "TITLE": "Tải đặc tả",
+              "SUBTITLE": "Tải đặc tả nhập liệu chuẩn",
+              "DESCRIPTION": "Tải đặc tả chuẩn để nhập dữ liệu sinh viên. Sử dụng đặc tả này để định dạng dữ liệu của bạn chính xác.",
+              "BUTTON": "Tải đặc tả",
+              "ERROR": "Không thể tải đặc tả. Vui lòng thử lại.",
+              "NOT_FOUND": "Không tìm thấy đặc tả. Vui lòng tải lên một đặc tả",
               "DEFAULT_BUTTON": "Mặc định"
             },
             "UPLOAD": {
-              "TITLE": "Tải lên mẫu tùy chỉnh",
-              "SUBTITLE": "Sử dụng mẫu của riêng bạn",
-              "DESCRIPTION": "Tải lên mẫu tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Mẫu phải ở định dạng JSON.",
-              "SELECT_BUTTON": "Chọn mẫu",
-              "UPLOAD_BUTTON": "Tải lên mẫu",
+              "TITLE": "Tải lên đặc tả tùy chỉnh",
+              "SUBTITLE": "Sử dụng đặc tả của riêng bạn",
+              "DESCRIPTION": "Tải lên đặc tả tùy chỉnh của bạn để sử dụng cho các lần nhập sau. Đặc tả phải ở định dạng JSON.",
+              "SELECT_BUTTON": "Chọn đặc tả",
+              "UPLOAD_BUTTON": "Tải lên đặc tả",
               "NO_FILE": "Chưa chọn file nào",
-              "SUCCESS": "Tải lên mẫu thành công",
-              "ERROR": "Tải lên mẫu thất bại. Vui lòng thử lại.",
+              "SUCCESS": "Tải lên đặc tả thành công",
+              "ERROR": "Tải lên đặc tả thất bại. Vui lòng thử lại.",
               "UPLOADING": "Đang tải lên..."
             }
           },
