@@ -105,7 +105,18 @@ export default function ProcessTable({ classId, thesisType }: { classId: string;
                     <TableCell>{indexOfFirstItem + index + 1}</TableCell>
                     <TableCell>{process.action}</TableCell>
                     <TableCell>{process.type}</TableCell>
-                    <TableCell className="truncate">{process.error ? JSON.stringify(process.error) : ''}</TableCell>
+                    <TableCell className="max-w-[200px] truncate">
+                      {process.error ? (
+                        <div
+                          className="overflow-hidden text-ellipsis whitespace-nowrap"
+                          title={JSON.stringify(process.error)}
+                        >
+                          {JSON.stringify(process.error)}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </TableCell>
                     <TableCell>{getStatusBadge(process.status)}</TableCell>
                     <TableCell>
                       {formatDistanceToNow(new Date(process.createdAt), {
