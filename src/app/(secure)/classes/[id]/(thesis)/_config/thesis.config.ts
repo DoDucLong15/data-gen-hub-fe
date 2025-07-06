@@ -7,6 +7,7 @@ export type ColumnConfig = {
   accessorKey: string;
   cell?: (row: any) => React.ReactNode;
   enableSort?: boolean;
+  enableFilter?: boolean;
   hidden?: boolean;
   maxWidth?: string;
   minWidth?: string;
@@ -40,6 +41,10 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       classCode: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.CLASS_CODE.ERROR }).optional(),
       semester: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SEMESTER.ERROR }).optional(),
       school: z.string().min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SCHOOL.ERROR }).optional(),
+      fieldOfExpertise: z
+        .string()
+        .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.FIELD_OF_EXPERTISE.ERROR })
+        .optional(),
       thesisStartDate: z
         .string()
         .min(1, { message: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_START_DATE.ERROR })
@@ -97,6 +102,7 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       realWorldProblemSolved: '',
       // student_sign_date: '',
       // supervisor_sign_date: '',
+      fieldOfExpertise: '',
     },
     columns: [
       { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.MSSV.LABEL, accessorKey: 'mssv' },
@@ -105,14 +111,42 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
         header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.STUDENT_CLASS_NAME.LABEL,
         accessorKey: 'studentClassName',
         hidden: true,
+        enableFilter: true,
       },
-      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle', hidden: true },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PROJECT_TITLE.LABEL,
+        accessorKey: 'projectTitle',
+        hidden: true,
+      },
       { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
-      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PHONE.LABEL, accessorKey: 'phone', hidden: true },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.PHONE.LABEL,
+        accessorKey: 'phone',
+        hidden: true,
+      },
       { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.EMAIL.LABEL, accessorKey: 'email' },
-      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.CLASS_CODE.LABEL, accessorKey: 'classCode', hidden: true },
-      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SEMESTER.LABEL, accessorKey: 'semester', hidden: true },
-      { header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SCHOOL.LABEL, accessorKey: 'school', hidden: true },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.CLASS_CODE.LABEL,
+        accessorKey: 'classCode',
+        hidden: true,
+        enableFilter: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SEMESTER.LABEL,
+        accessorKey: 'semester',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.SCHOOL.LABEL,
+        accessorKey: 'school',
+        hidden: true,
+      },
+      {
+        header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.FIELD_OF_EXPERTISE.LABEL,
+        accessorKey: 'fieldOfExpertise',
+        hidden: true,
+        enableFilter: true,
+      },
       {
         header: THESIS_CONFIG.ASSIGNMENT_SHEET.FORM.THESIS_START_DATE.LABEL,
         accessorKey: 'thesisStartDate',
@@ -263,11 +297,15 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.MSSV.LABEL, accessorKey: 'mssv' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
       { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.SUPERVISOR.LABEL, accessorKey: 'supervisor' },
-      { header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
+      {
+        header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.PROJECT_TITLE.LABEL,
+        accessorKey: 'projectTitle',
+      },
       {
         header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TYPE_OF_THESIS.LABEL,
         accessorKey: 'typeOfThesis',
         hidden: true,
+        enableFilter: true,
       },
       {
         header: THESIS_CONFIG.GUIDANCE_REVIEW.FORM.TOPIC_UNIQUENESS_POINT.LABEL,
@@ -464,11 +502,15 @@ export const entityConfigs: Record<EThesisDocumentType, EntityConfig> = {
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.MSSV.LABEL, accessorKey: 'mssv' },
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.FULL_NAME.LABEL, accessorKey: 'fullName' },
       { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.REVIEWER.LABEL, accessorKey: 'reviewer' },
-      { header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.LABEL, accessorKey: 'projectTitle' },
+      {
+        header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.PROJECT_TITLE.LABEL,
+        accessorKey: 'projectTitle',
+      },
       {
         header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TYPE_OF_THESIS.LABEL,
         accessorKey: 'typeOfThesis',
         hidden: true,
+        enableFilter: true,
       },
       {
         header: THESIS_CONFIG.SUPERVISORY_COMMENTS.FORM.TOPIC_UNIQUENESS_POINT.LABEL,

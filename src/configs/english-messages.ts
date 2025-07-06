@@ -1255,6 +1255,10 @@ export const ENGLISH_MESSAGES = {
           LABEL: 'School',
           ERROR: 'School is optional',
         },
+        FIELD_OF_EXPERTISE: {
+          LABEL: 'Field of Expertise',
+          ERROR: 'Field of expertise is optional',
+        },
         THESIS_START_DATE: {
           LABEL: 'Start Date',
           ERROR: 'Start date is optional',
@@ -1650,6 +1654,7 @@ export const ENGLISH_MESSAGES = {
         IMPORT_EXPORT: 'Import/Export',
       },
       HEADERS: {
+        NO: 'No.',
         MSSV: 'MSSV',
         FULL_NAME: 'Full Name',
         EMAIL: 'Email',

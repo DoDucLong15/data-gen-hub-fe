@@ -225,6 +225,7 @@ export function StudentList({ classId }: StudentListProps) {
                           onCheckedChange={toggleSelectAll}
                         />
                       </TableHead>
+                      <TableHead className="w-10">{t('THESIS_PAGE.STUDENT_LIST.HEADERS.NO')}</TableHead>
                       <TableHead className="w-22">{t('THESIS_PAGE.STUDENT_LIST.HEADERS.MSSV')}</TableHead>
                       <TableHead className="w-40">{t('THESIS_PAGE.STUDENT_LIST.HEADERS.FULL_NAME')}</TableHead>
                       <TableHead className="hidden w-20 md:table-cell">
@@ -250,7 +251,7 @@ export function StudentList({ classId }: StudentListProps) {
                   </TableHeader>
                   <TableBody>
                     {paginatedStudents?.length ? (
-                      paginatedStudents.map((student) => (
+                      paginatedStudents.map((student, index) => (
                         <TableRow key={student.id}>
                           <TableCell>
                             <Checkbox
@@ -258,6 +259,7 @@ export function StudentList({ classId }: StudentListProps) {
                               onCheckedChange={() => toggleSelectStudent(student.id!)}
                             />
                           </TableCell>
+                          <TableCell className="whitespace-nowrap">{(page - 1) * itemsPerPage + index + 1}</TableCell>
                           <TableCell className="whitespace-nowrap">{student.mssv}</TableCell>
                           <TableCell className="whitespace-nowrap">{getFullName(student)}</TableCell>
                           <TableCell className="hidden max-w-[160px] truncate md:table-cell">{student.email}</TableCell>

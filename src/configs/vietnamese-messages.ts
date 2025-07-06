@@ -1256,6 +1256,10 @@ export const VIETNAMESE_MESSAGES = {
           LABEL: 'Trường',
           ERROR: 'Trường là không bắt buộc',
         },
+        FIELD_OF_EXPERTISE: {
+          LABEL: 'Lĩnh vực chuyên môn',
+          ERROR: 'Lĩnh vực chuyên môn là không bắt buộc',
+        },
         THESIS_START_DATE: {
           LABEL: 'Ngày bắt đầu',
           ERROR: 'Ngày bắt đầu là không bắt buộc',
@@ -1651,6 +1655,7 @@ export const VIETNAMESE_MESSAGES = {
         IMPORT_EXPORT: 'Nhập/Xuất',
       },
       HEADERS: {
+        NO: 'STT.',
         MSSV: 'MSSV',
         FULL_NAME: 'Họ và tên',
         EMAIL: 'Email',

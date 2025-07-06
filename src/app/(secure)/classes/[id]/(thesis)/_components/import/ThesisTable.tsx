@@ -40,6 +40,7 @@ import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/i18n';
+import { FilterBar } from './FilterBar';
 
 interface ThesisTableProps {
   thesisType: EThesisDocumentType;
@@ -73,26 +74,40 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [editingEntity, setEditingEntity] = useState<any>(null);
   const [viewingEntity, setViewingEntity] = useState<any>(null);
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const itemsPerPage = 5;
   const [isDownloadingAll, setIsDownloadingAll] = useState(false);
   const [downloadingItemPath, setDownloadingItemPath] = useState<string | null>(null);
 
-  // Reset pagination when search term changes
+  // Reset pagination when search term or filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+  }, [searchTerm, activeFilters]);
 
-  // Filter entities based on search term
-  const filteredEntities =
-    searchTerm.trim() === ''
-      ? listThesis
-      : listThesis.filter((entity: any) => {
-          const lowerSearchTerm = searchTerm.toLowerCase();
-          return config.columns.some((column) => {
-            const value = entity[column.accessorKey];
-            return value && String(value).toLowerCase().includes(lowerSearchTerm);
-          });
-        });
+  // Filter entities based on search term and active filters
+  const filteredEntities = listThesis.filter((entity: any) => {
+    // Search term filter
+    if (searchTerm.trim() !== '') {
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      const matchesSearch = config.columns.some((column) => {
+        const value = entity[column.accessorKey];
+        return value && String(value).toLowerCase().includes(lowerSearchTerm);
+      });
+      if (!matchesSearch) return false;
+    }
+
+    // Active filters
+    for (const [columnKey, filterValues] of Object.entries(activeFilters)) {
+      if (filterValues.length > 0) {
+        const entityValue = entity[columnKey];
+        if (!filterValues.includes(String(entityValue))) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  });
 
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -157,6 +172,10 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
     setIsDetailDialogOpen(true);
   };
 
+  const handleFilterChange = (filters: Record<string, string[]>) => {
+    setActiveFilters(filters);
+  };
+
   // Visible columns (exclude hidden ones)
   const visibleColumns = config.columns.filter((column) => !column.hidden).slice(0, 5);
 
@@ -216,6 +235,9 @@ export function ThesisTable({ thesisType, classId }: ThesisTableProps) {
           </Button>
         )}
       </div>
+
+      {/* Filter bar */}
+      <FilterBar columns={config.columns} data={listThesis} onFilterChange={handleFilterChange} />
 
       {/* Entity table */}
       <div className="rounded-md border">

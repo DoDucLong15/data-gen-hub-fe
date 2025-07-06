@@ -1258,6 +1258,10 @@
           "LABEL": "Trường",
           "ERROR": "Trường là không bắt buộc"
         },
+        "FIELD_OF_EXPERTISE": {
+          "LABEL": "Lĩnh vực chuyên môn",
+          "ERROR": "Lĩnh vực chuyên môn là không bắt buộc"
+        },
         "THESIS_START_DATE": {
           "LABEL": "Ngày bắt đầu",
           "ERROR": "Ngày bắt đầu là không bắt buộc"
@@ -1407,6 +1411,12 @@
     }
   },
   "THESIS_PAGE": {
+    "FILTER_BAR": {
+      "FILTER": "Bộ lọc",
+      "CLEAR_ALL": "Xóa tất cả",
+      "ALL": "Tất cả",
+      "SELECTED": "đã chọn"
+    },
     "ASSIGNMENT": {
       "GENERATE": {
         "TEMPLATE_MANAGEMENT": "Quản lý Template",
@@ -1619,6 +1629,7 @@
       "CREATE_SUCCESS": "Tạo sinh viên thành công",
       "SAVE_ERROR": "Lỗi khi lưu sinh viên",
       "HEADERS": {
+        "NO": "STT.",
         "MSSV": "MSSV",
         "FULL_NAME": "Họ và tên",
         "EMAIL": "Email",
